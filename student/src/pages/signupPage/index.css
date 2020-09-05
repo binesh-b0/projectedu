@@ -1,0 +1,104 @@
+.container-fluid{
+    min-height: 100% !important;
+    height: 100% !important;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-container{
+    height: 80%;
+    margin:8px;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.form-container{
+    background-color: #1976d2;
+    padding-right: 32px;
+    padding-left: 32px;
+}
+.card-details{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.login-button{
+    padding-left: 32px;
+    padding-right: 32px;
+    text-transform: capitalize !important;
+    background-color: #1976d2 !important;
+    color: white !important;
+    min-width: 500px;
+    max-width: 800px;
+}
+.card-image{
+    max-width: 500px;
+}
+.brand{
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 32px;
+}
+.form-control{
+    border:0px solid white;
+    padding: .375rem .75rem;
+}
+label{
+    margin-bottom: .3rem;
+}
+.form-label{
+    font-size: .9rem;
+    color: white;
+}
+.text-muted{
+    color: rgb(226, 226, 226) !important;
+    font-size: .7rem;
+}
+
+.register-button{
+    width: 100% !important;
+    color: #fff !important;
+    background-color:#e53935 !important;
+    border:0px !important; 
+    border-radius: .5rem !important;
+    text-transform: capitalize !important;
+
+}
+.register-button:hover
+{
+color: #fff !important;
+background-color: #e53935 !important; 
+border:0px !important; 
+}
+.welcome-text{
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-top:32px ;
+    margin-bot:16px;
+}
+
+
+.custom-control-label{
+    color: white;
+
+}
+.custom-control-label:before{
+
+    background-color:white;
+    border:none !important;
+  }
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    background-color:#e53935;
+    border:none !important;
+    box-shadow: none;
+
+  }
+
+  .form-control:focus{
+      border:none;
+      box-shadow: none;
+  }

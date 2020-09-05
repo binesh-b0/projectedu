@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React ,{ useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+import signupPage from "./pages/signupPage";
+import signinPage from "./pages/signinPage";
+
+function App(props) {
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  useEffect(() => {
+    if (userInfo) {
+      props.history.push('/signin');
+    }
+    return () => {
+      //
+    };
+  }, [userInfo]);
+
+  console.log(userSignin);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Switch>
+        <Route path="/signin" component={signinPage} />
+        <Route path="/register" component={signupPage} />
+        <Route path="/" exact={true} component={signupPage} />
+        <Route component={Error} />
+      </Switch>
   );
 }
 
