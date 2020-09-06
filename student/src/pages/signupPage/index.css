@@ -2,8 +2,11 @@
     min-height: 100% !important;
     height: 100% !important;
     width: 100%;
+}
+.contents{
     display: flex;
     justify-content: space-around;
+    margin-top:50px;
 }
 
 .card-container{

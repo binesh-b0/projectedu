@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../actions/userActions";
+import SimpleFooter from "../../components/SimpleFooter";
 import "./index.css";
 
 import Button from '@material-ui/core/Button';
@@ -71,11 +72,12 @@ function signupPage(props) {
 
   return (
     <div className="container-fluid">
+    <div className="contents">
       <div className="row my-auto card-container">
         <div className="col-lg-8 card-details">
           <Image className="card-image" src='./images/undraw_certification_aif8.png'/>
           <p className="brand"> HSST portal</p>
-          <Button  variant="contained"  className="login-button" disableElevation>Already hve an account? Login</Button>
+          <Button  variant="contained"  className="login-button" disableElevation>Already have an account? Login</Button>
         </div>  
         <div className="col-lg form-container">
           <div >
@@ -84,6 +86,8 @@ function signupPage(props) {
           </div>
         </div>
       </div>
+      </div>
+      <SimpleFooter />
     </div>
   );
   
@@ -168,7 +172,7 @@ function signupPage(props) {
                   placeholder="Password"
                   size="sm"
                 />
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type="invalid" tooltip>
                 {errors.pass2}
                 </Form.Control.Feedback>
               </Form.Group>
