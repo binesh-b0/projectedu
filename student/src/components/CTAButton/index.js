@@ -5,7 +5,7 @@ const CTAButton = ({ heading = null, style = null, onPress }) => {
     return (
         <button
             onClick={() => onPress()}
-            className={`${styles.btnStyle} ${style}`}
+            className={[styles.btnStyle, style].join(' ')}
         >
             {heading}
         </button>

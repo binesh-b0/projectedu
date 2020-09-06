@@ -1,0 +1,23 @@
+.container {
+    margin-bottom: 16px;
+}
+
+.formStyle {
+    display: flex;
+    flex-direction: column;
+}
+
+.textField {
+    padding-top: 8px;
+}
+
+.img {
+    background-image: url('../../../assets/images/user.svg');
+    width: 150px;
+    height: 150px;
+    margin-bottom: 16px;
+}
+
+.btn {
+    margin-bottom: 16px;
+}
