@@ -3,64 +3,63 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../../actions/userActions';
+import SimpleFooter from "../../components/SimpleFooter";
+import SigninForm from "../../components/forms/SigninForm";
+import "./index.css";
+
+import Button from '@material-ui/core/Button';
+
+import {  Image,} from "react-bootstrap";
 
 
-function signinPage(props) {
+function SigninPage(props) {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
-  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+
   useEffect(() => {
     if (userInfo) {
-      props.history.push(redirect);
+      props.history.push("/verify");
     }
     return () => {
       //
     };
   }, [userInfo]);
+  const onSubmit = ({name,email,pass2}) => {
+    console.log("hi",name,email,pass2);
+    dispatch(signin(email, pass2));
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(signin(email, password));
-
+  };
+  
+  const goToLogin = () =>{
+    props.history.push("/signup");
   }
 
-  return <div className="form">
-    <form onSubmit={submitHandler} >
-      <ul className="form-container">
-        <li>
-          <h2>Sign-In</h2>
-        </li>
-        <li>
-          {loading && <div>Loading...</div>}
-          {error && <div>{error}</div>}
-        </li>
-        <li>
-          <label htmlFor="email">
-            Email
-          </label>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
-          </input>
-        </li>
-        <li>
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
-          </input>
-        </li>
-        <li>
-          <button type="submit" className="button primary">Signin</button>
-        </li>
-        <li>
-          New to amazona?
-        </li>
-        <li>
-          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your amazona account</Link>
-        </li>
-      </ul>
-    </form>
-  </div>
+
+  return (
+    <div className="container-fluid">
+    <div className="contents">
+      <div className="row my-auto card-container">
+        <div className="col-lg-8 card-details">
+          <Image className="card-image d-none d-lg-block" src='./images/undraw_certification_aif8.png'/>
+          <p className="brand"> HSST portal</p>
+          <Button onClick={() => goToLogin()} variant="contained"  className="signup-button" disableElevation>Already have an account? Login</Button>
+        </div>  
+        <div className="col-lg form-container">
+          <div >
+            <p className="welcome-text">Welcome</p>
+            <p className="welcome-sub">Signin to your account</p>
+            <SigninForm onSubmit={onSubmit} />
+            <div style={{'textAlign':'center','margin':'16px'}}>
+            <a className="privacy">privacy policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <SimpleFooter />
+    </div>
+  )
 }
-export default signinPage;
+export default SigninPage;
