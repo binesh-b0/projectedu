@@ -138,5 +138,6 @@ exports.signUpUser = function (req, res) {
 
 exports.addStudentInfo = function (req, res) {
     console.log("userdata ", req.body);
+    console.log("iamge", req.file);
     res.status(200).send({response: 'User data received'});
 }   
