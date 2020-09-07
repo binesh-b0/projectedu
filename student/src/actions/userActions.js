@@ -1,5 +1,6 @@
 import Axios from "axios";
 import Cookie from 'js-cookie';
+import api from '../api/api';
 import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
@@ -34,14 +35,19 @@ const signin = (email, password) => async (dispatch) => {
   }
 }
 
-const register = ( email, password) => async (dispatch) => {
-  dispatch({ type: USER_REGISTER_REQUEST, payload: {  email, password } });
+const register = (email, password) => async (dispatch) => {
+  console.log("entered", email, password);
+  dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
   try {
-    // const { data } = await Axios.post("/api/users/register", {  email, password });
-    const data = {email, password}
+    const data = await api.post("/signup/email", { email, password }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
+    console.log("error ", error);
     dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
   }
 }

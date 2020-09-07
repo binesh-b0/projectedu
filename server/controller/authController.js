@@ -89,6 +89,7 @@ exports.resendVerificationEmail = function (req, res) {
 }
 
 exports.signUpUser = function (req, res) {
+    console.log("Entered");
     const { email, password } = req.body;
 
     if (!email || !password) {

@@ -46,7 +46,7 @@ function SignupPage(props) {
     if (userInfo) {
       setSnk({sev:"success",msg:"Submitted"})
       setOpen(true);
-      props.history.push("/");
+      props.history.push("/verify");
     }
     return () => {
       //
