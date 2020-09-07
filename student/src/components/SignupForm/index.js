@@ -30,7 +30,7 @@ const SignupForm = ({ onSubmit }) => {
       ),
     pass2: yup
       .string()
-      .required("Enter valid password")
+      .required("")
       .oneOf([yup.ref("pass"), null], "Password mismatch"),
     terms: yup.bool().required("Incomplete form"),
   });
@@ -115,7 +115,9 @@ const SignupForm = ({ onSubmit }) => {
               placeholder="Password"
               size="sm"
             />
-            <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" tooltip>
+              {errors.pass2}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.Check

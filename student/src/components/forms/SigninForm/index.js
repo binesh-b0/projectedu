@@ -53,7 +53,7 @@ const SigninForm=({onSubmit})=> {
           isValid,
           errors,
         }) => (
-          <Form style={{'height':'30px'}} ref={formRef}  noValidate onSubmit={handleSubmit}>
+          <Form ref={formRef}  noValidate onSubmit={handleSubmit}>
               
 
               <Form.Group controlId="formBasicEmail">

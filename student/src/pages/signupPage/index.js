@@ -33,7 +33,7 @@ function SignupPage(props) {
   const dispatch = useDispatch();
   //for snack
   const [snk, setSnk] = useState({});
-  const classes = useStyles();
+  // const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   //form onsubmit
   const onSubmit = ({ email, pass2 }) => {
@@ -93,6 +93,7 @@ function SignupPage(props) {
   };
 
   const goToLogin = () => {
+    console.log("niknas");
     props.history.push("/signin");
   };
 

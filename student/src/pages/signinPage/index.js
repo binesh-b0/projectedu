@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../../actions/userActions';
+import { signin,logout } from '../../actions/userActions';
 import SimpleFooter from "../../components/SimpleFooter";
 import SigninForm from "../../components/forms/SigninForm";
 import "./index.css";
@@ -19,7 +19,7 @@ function SigninPage(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo.verify) {
       props.history.push("/verify");
     }
     return () => {
@@ -33,6 +33,7 @@ function SigninPage(props) {
   };
   
   const goToLogin = () =>{
+    dispatch(logout);
     props.history.push("/signup");
   }
 
@@ -44,7 +45,13 @@ function SigninPage(props) {
         <div className="col-lg-8 card-details">
           <Image className="card-image d-none d-lg-block" src='./images/undraw_certification_aif8.png'/>
           <p className="brand"> HSST portal</p>
-          <Button onClick={() => goToLogin()} variant="contained"  className="signup-button" disableElevation>Already have an account? Login</Button>
+          <Button 
+            onClick={() => goToLogin()} 
+            variant="contained" 
+            className="signup-button"
+            disableElevation>
+             Create new account
+          </Button>
         </div>  
         <div className="col-lg form-container">
           <div >

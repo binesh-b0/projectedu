@@ -15,6 +15,10 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 @media(max-width:767px){
+    .container-fluid{
+        padding-left: 0;
+        padding-right: 0;
+    }
     .card-container{
         width: 100%;
         margin: 0px;
@@ -49,7 +53,8 @@
     margin-bottom: 32px;
 }
 .toc{
-    display: inline;
+    position: absolute;
+    bottom: 16px;
     font-size: .8rem;
     color: white;
     text-align: center;
