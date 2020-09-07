@@ -1,0 +1,15 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:#e0e0e0;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 8px;
+  }
+  .copyright{
+    color: rgb(163, 163, 163);
+    font-weight: 400;
+    font-size: .8rem;
+  }
