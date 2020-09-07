@@ -48,3 +48,14 @@
     font-weight: 800;
     margin-bottom: 32px;
 }
+.toc{
+    display: inline;
+    font-size: .8rem;
+    color: white;
+    text-align: center;
+}
+.toc:hover{
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}

@@ -11,6 +11,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import { Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 //style for snack
 const useStyles = makeStyles((theme) => ({
@@ -120,8 +121,8 @@ function SignupPage(props) {
               <p className="welcome-text">Welcome</p>
               {/* {SignupForm()} */}
               <SignupForm onSubmit={onSubmit} />
-              {loading && <div>Loading...</div>}
-              {error && <div>{error}</div>}
+              <div style={{display:"flex",alignContent:"center",justifyContent:"center",margin:"16px"}}>
+              <Link className="toc">Terms and conditions</Link></div>
             </div>
           </div>
         </div>

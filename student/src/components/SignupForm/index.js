@@ -23,7 +23,7 @@ const SignupForm = ({ onSubmit }) => {
     email: yup.string().required("Enter valid email").email(),
     pass: yup
       .string()
-      .required()
+      .required("")
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
         "Password must contain at least 8 characters, one uppercase, one number and one special case character"
@@ -36,7 +36,7 @@ const SignupForm = ({ onSubmit }) => {
   });
   const formRef = useRef(null);
   const handleReset = () => {
-    if (userInfo) formRef.current.reset();
+    formRef.current.reset();
     if (loading === false && error) formRef.current.reset();  //TODO 
   };
   const submit = (a) => {
@@ -97,7 +97,7 @@ const SignupForm = ({ onSubmit }) => {
               placeholder="Password"
               size="sm"
             />
-            <Form.Text className="text-muted">
+            <Form.Text className={!errors.pass ? "text-muted": "d-none"}>
               Password must contain at least 8 characters, one uppercase, one
               number and one special case character
             </Form.Text>

@@ -39,6 +39,7 @@ border:0px !important;
 
 
 .custom-control-label{
+    font-size: .9rem;
     color: white;
 
 }
@@ -64,4 +65,10 @@ border:0px !important;
     padding-left: 32px;
     padding-top: 8px;
     padding-bottom: 32px;
+}
+.invalid-tooltip{
+    position: relative;
+    font-size: .8rem;
+    color: #e53935;
+    background-color: white;
 }
