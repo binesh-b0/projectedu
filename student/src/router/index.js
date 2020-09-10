@@ -32,8 +32,5 @@ const Router = () => {
   );
 };
 
-Router.propTypes = {
-  children: PropTypes.func.isRequired,
-};
 
 export default Router;

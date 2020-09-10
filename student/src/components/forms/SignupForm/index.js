@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./index.css";
+import styles from "./SignupForm.module.css";
 import { useSelector } from "react-redux";
 
 import Button from '@material-ui/core/Button';
@@ -10,11 +10,10 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import InputBase from "@material-ui/core/InputBase";
 
+import Alert from 'react-bootstrap/Alert';
+
 import {
   Form,
-  OverlayTrigger,
-  Tooltip,
-  
   Spinner,
 } from "react-bootstrap";
 import { Formik } from "formik";
@@ -29,7 +28,7 @@ const SignupForm = ({ onSubmit }) => {
   };
 
   const schema = yup.object().shape({
-    email: yup.string().required("Enter valid email").email(),
+    email: yup.string().required("Enter valid email").email("Enter valid email"),
     pass: yup
       .string()
       .required("")
@@ -58,12 +57,14 @@ const SignupForm = ({ onSubmit }) => {
     onSubmit(a);
   };
 
-  const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      Simple tooltip
-    </Tooltip>
-  );
-
+  const renderAlert =(errors,touched) => {
+    if(!!errors.email&&(!touched.email))
+    return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.email}</Alert>);
+    if(!!errors.pass&&(!touched.pass))
+    return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.pass}</Alert>);
+    if(!!errors.pass2&&(!touched.pass2))
+    return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.email}</Alert>);
+  }
   return (
     <Formik
       validationSchema={schema}
@@ -98,17 +99,14 @@ const SignupForm = ({ onSubmit }) => {
         errors,
       }) => (
         <Form ref={formRef} noValidate onSubmit={handleSubmit}>
+        {renderAlert(errors,touched)}
           <Form.Group controlId="formBasicEmail">
-            <InputLabel className="label222" htmlFor="em">
+            <InputLabel className={styles.label222} htmlFor="em">
               Email
             </InputLabel>
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip}
-            >
+
               <InputBase
-                className="form-input form-control"
+                className={styles.form_input}
                 id="em"
                 fullWidth
                 name="email"
@@ -117,21 +115,17 @@ const SignupForm = ({ onSubmit }) => {
                 required
                 error={!!errors.email}
               />
-            </OverlayTrigger>
-            <Form.Control.Feedback type="invalid" tooltip>
-                  Enter valid email
-                </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <InputLabel
-              className="label222"
+              className={styles.label222}
               htmlFor="standard-adornment-password"
             >
               Password
             </InputLabel>
             <InputBase
-              className="form-input"
+              className={styles.form_input}
               id="standard-adornment-password"
               name="pass"
               error={touched.pass && !errors.pass}
@@ -149,17 +143,17 @@ const SignupForm = ({ onSubmit }) => {
                 </InputAdornment>
               }
             />
-            <Form.Text className={true ? "text-muted" : "d-none"}>
+            <Form.Text className={styles.text_muted}>
               Password must contain at least 8 characters, one uppercase, one
               number and one special case character
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formPasswordConf">
-            <InputLabel className="label222" htmlFor="pconf">
+            <InputLabel className={styles.label222} htmlFor="pconf">
               Confirm password
             </InputLabel>
             <InputBase
-              className="form-input"
+              className={styles.form_input}
               id="pconf"
               name="pass2"
               error={!!errors.pass2}
@@ -181,7 +175,7 @@ const SignupForm = ({ onSubmit }) => {
             />
           </Form.Group>
           <Button
-            className="signupform-comp-register-button"
+            className={styles.signupform_comp_register_button}
             color="secondary"
             variant="contained"
             disabled={loading}

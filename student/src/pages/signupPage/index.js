@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../actions/userActions";
+
 import SimpleFooter from "../../components/SimpleFooter";
 import SignupForm from "../../components/forms/SignupForm";
+import SimpleHeader from "../../components/headers/SimpleHeader"
 import styles from "./SignupPage.module.css";
 
 import Button from "@material-ui/core/Button";
@@ -87,11 +89,12 @@ function SignupPage(props) {
     
     <div className={styles.signup_page_container_fluid}>
       <div>{showSnackbar()}</div>
+      <SimpleHeader />
       <div className={styles.signup_page_contents}>
         <div className={`${styles.signup_page_card_container} row my-auto`}>
           <div className={`${styles.signup_page_card_details} col-lg-8`}>
             <Image
-              className={`${styles.signup_page_card_image} d-none d-lg-block`}
+              className={`${styles.signup_page_card_image} d-none d-lg-block d-md-block`}
               src="./images/undraw_certification_aif8.png"
             />
             <p className={styles.signup_page_brand}> HSST portal</p>

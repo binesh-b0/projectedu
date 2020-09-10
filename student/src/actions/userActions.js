@@ -6,6 +6,7 @@ import {
   USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,USER_VERFIY_RESEND, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL
 } from "../constants/userConstants";
+import { setCredentials,removeCredentials } from "../services/authService";
 
 const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
   const { userSignin: { userInfo } } = getState();
@@ -18,7 +19,7 @@ const update = ({ userId, name, email, password }) => async (dispatch, getState)
       }
     });
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-    Cookie.set('userInfo', JSON.stringify(data));
+    // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
   }
@@ -29,7 +30,7 @@ const signin = (email, password) => async (dispatch) => {
   try {
     const { data } = await Axios.post("/api/users/signin", { email, password });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    Cookie.set('userInfo', JSON.stringify(data));
+    setCredentials("token",35432134)
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }
@@ -45,8 +46,7 @@ const register = (email, password) => async (dispatch) => {
     });
     console.log("register req",data);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data,status:200 }); //TODO
-    Cookie.set('userInfo', JSON.stringify(data));
-  
+    // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     console.log("reg req error ", error);
     dispatch({ type: USER_REGISTER_FAIL, payload: error.message,status:511 }); //TODO
@@ -72,7 +72,8 @@ const resendEmail=(email) =>async(dispatch) =>{
 }
 
 const logout = () => (dispatch) => {
-  Cookie.remove("userInfo");
+  // Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
+  removeCredentials();
 }
 export { signin, register, logout, update,resendEmail };

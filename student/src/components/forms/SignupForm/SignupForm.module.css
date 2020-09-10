@@ -1,10 +1,10 @@
 
-.text-muted{
+.text_muted{
     color: rgb(226, 226, 226) !important;
     font-size: .7rem;
 }
 
-.signupform-comp-register-button{
+.signupform_comp_register_button{
     width: 100% !important;
     color: #fff !important;
     background-color:#e53935 !important;
@@ -14,7 +14,7 @@
     height: 37px;
 
 }
-.signupform-comp-register-button:hover
+.signupform_comp_register_button:hover
 {
 color: #fff !important;
 background-color: #e53935 !important; 
@@ -22,24 +22,24 @@ border:0px !important;
 }
 
 
-.custom-control-label{
+.custom_control_label{
     font-size: .9rem;
     color: white;
 
 }
-.custom-control-label:before{
+.custom_control_label:before{
 
     background-color:white;
     border:none !important;
   }
-  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  .custom_checkbox .custom_control_input:checked~.custom_control_label::before{
     background-color:#e53935;
     border:none !important;
     box-shadow: none;
 
   }
 
-  .form-container{
+  .form_container{
     background-color: #1976d2;
     padding-right: 32px;
     padding-left: 32px;
@@ -47,7 +47,7 @@ border:0px !important;
     padding-bottom: 32px;
 }
 
-.form-input{
+.form_input{
     padding-left:16px;
     padding-right: 0px;
     background-color: white;
@@ -61,4 +61,21 @@ border:0px !important;
     font-family: inherit !important;
     font-weight: 550 !important;
     letter-spacing: inherit !important;
+}
+.custom_alert{
+    position: absolute !important;
+    top: 15% !important;
+    max-height: 60px;
+    font-size: .7rem;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left:16px;
+    padding-right: 16px;
+    border: none;
+    left: 0;
+    right: 0;
+    max-width: 70%;
+    text-align: center;
+    background-color: #ff0000dc;
+    color: white;
 }
