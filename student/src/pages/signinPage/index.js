@@ -19,6 +19,7 @@ function SigninPage(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if(userInfo!=null)
     if (userInfo.verify) {
       props.history.push("/verify");
     }
@@ -39,27 +40,27 @@ function SigninPage(props) {
 
 
   return (
-    <div className="container-fluid">
-    <div className="contents">
-      <div className="row my-auto card-container">
-        <div className="col-lg-8 card-details">
-          <Image className="card-image d-none d-lg-block" src='./images/undraw_certification_aif8.png'/>
-          <p className="brand"> HSST portal</p>
+    <div className="signin-page-container-fluid">
+    <div className="signin-page-contents">
+      <div className="row my-auto signin-page-card-container">
+        <div className="col-lg-8 signin-page-card-details">
+          <Image className="signin-page-card-image d-none d-lg-block" src='./images/undraw_certification_aif8.png'/>
+          <p className="signin-page-brand"> HSST portal</p>
           <Button 
             onClick={() => goToLogin()} 
             variant="contained" 
-            className="signup-button"
+            className="signin-page-signup-button"
             disableElevation>
              Create new account
           </Button>
         </div>  
         <div className="col-lg form-container">
           <div >
-            <p className="welcome-text">Welcome</p>
-            <p className="welcome-sub">Signin to your account</p>
+            <p className="signin-page-welcome-text">Welcome</p>
+            <p className="signin-page-welcome-sub">Signin to your account</p>
             <SigninForm onSubmit={onSubmit} />
             <div style={{'textAlign':'center','margin':'16px'}}>
-            <a className="privacy">privacy policy</a>
+            <a className="signin-page-privacy">privacy policy</a>
             </div>
           </div>
         </div>
