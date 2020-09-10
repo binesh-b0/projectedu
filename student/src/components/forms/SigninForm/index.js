@@ -1,19 +1,26 @@
 import React,{useState,useRef} from 'react'
-import './index.css'
+import styles from './SigninForm.module.css'
+import { useSelector } from "react-redux";
 
-import Button from '@material-ui/core/Button';
-
-import {  Form } from "react-bootstrap";
+import {  Form,Spinner } from "react-bootstrap";
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-const eye = <FontAwesomeIcon color='white' icon={faEye} />;
-const eyeSlash = <FontAwesomeIcon color='white' icon={faEyeSlash} />;
+
+import Button from '@material-ui/core/Button';
+import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputBase from "@material-ui/core/InputBase";
+
+import Alert from 'react-bootstrap/Alert';
 
 
 const SigninForm=({onSubmit})=> {
-  
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, status, error } = userRegister;
+
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
@@ -34,10 +41,31 @@ const SigninForm=({onSubmit})=> {
     handleReset();
     onSubmit(a)
  }
+ const renderAlert =(errors,touched) => {
+  if(!!errors.email&&(!touched.email))
+  return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.email}</Alert>);
+  if(!!errors.pass&&(!touched.pass))
+  return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.pass}</Alert>);
+  if(!!errors.pass2&&(!touched.pass2))
+  return(   <Alert className={`${styles.custom_alert} mx-auto`} variant="danger" >{errors.email}</Alert>);
+}
     return (
       <Formik
         validationSchema={schema}
-        onSubmit={submit}
+        onSubmit={(values, { resetForm }) => {
+        if (loading === false && status === 511){
+          resetForm({
+            values: {
+              email: "",
+              pass: "",
+              pass2: "",
+              terms: false,
+            },
+          });
+          handleReset()
+          }
+        submit(values, resetForm);
+      }}
         initialValues = {{
           email:"",
           pass:"",
@@ -54,43 +82,72 @@ const SigninForm=({onSubmit})=> {
           errors,
         }) => (
           <Form ref={formRef}  noValidate onSubmit={handleSubmit}>
-              
+          {renderAlert(errors,touched)}
 
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  name="email"
-                  onChange={handleChange}
-                  isInvalid={!!errors.email}
-                  size="sm" type="email" placeholder="Enter email" required />
- 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  Enter valid email
-                </Form.Control.Feedback>
+              <InputLabel className={styles.label222} htmlFor="em">
+              Email
+            </InputLabel>
+              <InputBase
+                className={styles.form_input}
+                id="em"
+                fullWidth
+                name="email"
+                onChange={handleChange}
+                type="email"
+                required
+              />
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <i className="float-right" onClick={togglePasswordVisiblity}>
-                  {passwordShown ? eye : eyeSlash}
-                </i>
-                <Form.Control
-                 name="pass"
-                  type={passwordShown ? "text" : "password"}
-                  isInvalid={!!errors.pass}
-                  onChange={handleChange}
-                  placeholder="Password"
-                  size="sm"
-
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.pass}
-                </Form.Control.Feedback>
+              <InputLabel
+              className={styles.label222}
+              htmlFor="standard-adornment-password"
+            >
+              Password
+            </InputLabel>
+            <InputBase
+              className={styles.form_input}
+              id="standard-adornment-password"
+              name="pass"
+              error={touched.pass && !errors.pass}
+              type={passwordShown ? "text" : "password"}
+              onChange={handleChange}
+              fullWidth
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisiblity}
+                  >
+                    {passwordShown ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <Form.Text className={styles.text_muted}>
+              Password must contain at least 8 characters, one uppercase, one
+              number and one special case character
+            </Form.Text>
               </Form.Group>
-  
-              <Button className='login-button' color="secondary" variant="contained" disableElevation={true} type="submit">
-                Login   
-              </Button>
+              <Button
+            className={styles.login_button}
+            color="secondary"
+            variant="contained"
+            disabled={loading}
+            disableElevation={true}
+            type="submit"
+          >
+            <Spinner
+                className={loading? "my-auto":"d-none"}
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            {loading? "":"Login"}
+          </Button>
             </Form>
         )}
       </Formik>

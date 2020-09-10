@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { signin,logout } from '../../actions/userActions';
 import SimpleFooter from "../../components/SimpleFooter";
 import SigninForm from "../../components/forms/SigninForm";
-import "./index.css";
+import styles from "./SigninPage.module.css";
 
 import Button from '@material-ui/core/Button';
 
@@ -40,27 +40,27 @@ function SigninPage(props) {
 
 
   return (
-    <div className="signin-page-container-fluid">
-    <div className="signin-page-contents">
-      <div className="row my-auto signin-page-card-container">
-        <div className="col-lg-8 signin-page-card-details">
-          <Image className="signin-page-card-image d-none d-lg-block" src='./images/undraw_certification_aif8.png'/>
-          <p className="signin-page-brand"> HSST portal</p>
+    <div className={styles.signin_page_container_fluid}>
+    <div className={styles.signin_page_contents}>
+      <div className={`row my-auto ${styles.signin_page_card_container}`}>
+        <div className={`col-lg-8 ${styles.signin_page_card_details}`}>
+          <Image className={`${styles.signin_page_card_image} d-none d-lg-block`} src='./images/undraw_certification_aif8.png'/>
+          <p className={styles.signin_page_brand}> HSST portal</p>
           <Button 
             onClick={() => goToLogin()} 
             variant="contained" 
-            className="signin-page-signup-button"
+            className={styles.signin_page_signup_button}
             disableElevation>
              Create new account
           </Button>
         </div>  
-        <div className="col-lg form-container">
+        <div className={`col-lg ${styles.form_container}`}>
           <div >
-            <p className="signin-page-welcome-text">Welcome</p>
-            <p className="signin-page-welcome-sub">Signin to your account</p>
+            <p className={styles.signin_page_welcome_text}>Welcome</p>
+            <p className={styles.signin_page_welcome_sub}>Signin to your account</p>
             <SigninForm onSubmit={onSubmit} />
             <div style={{'textAlign':'center','margin':'16px'}}>
-            <a className="signin-page-privacy">privacy policy</a>
+            <a className={styles.signin_page_privacy}>privacy policy</a>
             </div>
           </div>
         </div>

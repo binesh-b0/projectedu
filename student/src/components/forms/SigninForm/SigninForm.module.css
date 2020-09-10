@@ -1,20 +1,30 @@
 
+
+.form_input{
+    padding-left:16px;
+    padding-right: 0px;
+    background-color: white;
+    border-radius: 5px;
+}
+.form_label{
+    font-size: .9rem;
+    color: white;
+}
 .text_muted{
     color: rgb(226, 226, 226) !important;
     font-size: .7rem;
 }
 
-.signupform_comp_register_button{
+.login_button{
     width: 100% !important;
     color: #fff !important;
     background-color:#e53935 !important;
     border:0px !important; 
     border-radius: .5rem !important;
     text-transform: capitalize !important;
-    height: 37px;
-
+    margin-top: 16px !important;
 }
-.signupform_comp_register_button:hover
+.login_button:hover
 {
 color: #fff !important;
 background-color: #e53935 !important; 
@@ -23,8 +33,7 @@ border:0px !important;
 
 
 .custom_control_label{
-    font-size: .9rem !important;
-    color: white !important;
+    color: white;
 
 }
 .custom_control_label:before{
@@ -39,13 +48,6 @@ border:0px !important;
 
   }
 
-
-.form_input{
-    padding-left:16px;
-    padding-right: 0px;
-    background-color: white;
-    border-radius: 5px;
-}
 .label222{
     
     color:white !important;

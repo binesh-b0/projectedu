@@ -39,13 +39,13 @@ function SignupPage(props) {
   useEffect(() => {
     console.log("useEff",userRegister);
     if (status===200) {
-      props.history.push("/verify");
+      // props.history.push("/verify");
     }
     if (error) {
       if (status === "XXXXX") {      //already signed up
-        props.history.push("/signin");
+        // props.history.push("/signin");
       } else if (status === "xxx") {
-        props.history.push("/verify");  //pending verification  
+        // props.history.push("/verify");  //pending verification  
       } else {
         setSnk({ sev: "error", msg: error });
         setOpen(true);

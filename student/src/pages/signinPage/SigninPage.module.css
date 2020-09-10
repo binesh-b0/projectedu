@@ -1,43 +1,45 @@
-.signin-page-container-fluid{
-    min-height: 100% !important;
+.signin_page_container_fluid{
     height: 100% !important;
     width: 100%;
-}
-.signin-page-contents{
     display: flex;
-    justify-content: space-around;
-    margin-top:50px;
+    flex-direction: column;
+}
+.signin_page_contents{
+    display: flex;
+    flex: 1 0 auto ;
+    justify-content: center;
+    align-content: center;
 }
 
-.signin-page-card-container{
+.signin_page_card_container{
     margin:8px;
-    width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    min-height: 580px;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 @media(max-width:576px){
-    .signin-page-container-fluid{
+    .signin_page_container_fluid{
         padding-left: 0;
         padding-right: 0;
     }
-    .signin-page-card-container{
+    .signin_page_card_container{
         width: 100%;
         margin: 0px;
     }
 }
-.signin-page-welcome-text{
+.signin_page_welcome_text{
     text-align: center;
     color: white;
     font-size: 1.5rem;
     margin-top:42px ;
     margin-bottom:6px;
 }
-.signin-page-welcome-sub{
+.signin_page_welcome_sub{
     text-align: center;
     color: white;
     font-size: 1rem;
     margin-bottom:32px;
 }
-.signin-page-card-details{
+.signin_page_card_details{
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -46,7 +48,7 @@
     justify-content: center;
     padding: 16px;
 }
-.signin-page-signup-button{
+.signin_page_signup_button{
     padding-left: 32px;
     padding-right: 32px;
     text-transform: capitalize !important;
@@ -56,23 +58,30 @@
     max-width: 800px;
     margin-bottom: 16px;
 }
-.signin-page-card-image{
+.signin_page_card_image{
     max-width: 500px;
 }
-.signin-page-brand{
+.signin_page_brand{
     font-size: 1.2rem;
     font-weight: 800;
     margin-bottom: 32px;
 }
-.signin-page-privacy{
+.signin_page_privacy{
     color:white;
     font-size: .8rem;
     font-weight: 600;
 
 }
 /* mouse over link */
-.signin-page-privacy:hover {
+.signin_page_privacy:hover {
     color: white;
     cursor: pointer;
     text-decoration: none;
   }
+  .form_container{
+    background-color: #1976d2;
+    padding-right: 32px;
+    padding-left: 32px;
+    padding-top: 8px;
+    padding-bottom: 32px;
+}

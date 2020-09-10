@@ -1,5 +1,5 @@
 import React from "react";
-import './index.css';
+import styles from './VerificationPage.module.css';
 
 import Image from "react-bootstrap/Image";
 import Button from "@material-ui/core/Button";
@@ -29,7 +29,7 @@ export default function VerificationPage(props) {
   return (
     <div className="container-fluid" style={{paddingTop:"50px"}} >
       <div className="row">
-      <div className="card mx-auto  col-md-5 col-lg-4" style={{ width: "30rem", padding: "32px" }}>
+      <div className="card border-0 shadow-sm mb-5 bg-white rounded mx-auto  col-md-5 col-lg-4" style={{ width: "30rem", padding: "32px" }}>
         <Image className="card-img-top" src="/images/message_send.png" />
         <div className="card-body">
           <h5 className="card-title text-center">Verify Email</h5>
@@ -38,7 +38,7 @@ export default function VerificationPage(props) {
           A veification link has been sent to your email address. Please verify to continue
         </p>
         <Button 
-            className="resend-button" 
+            className={styles.resend_button} 
             variant="contained" 
             color="primary" 
             onClick={resendClicked}
