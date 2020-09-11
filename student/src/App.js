@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Router from './router';
+
 import SignupPage from "./pages/SignupPage";
 import SigninPage from "./pages/SigninPage";
 import VerificationPage from "./pages/VerificationPage"
@@ -13,16 +15,20 @@ function App() {
   const { userInfo } = userSignin;
 
 
-  console.log(userSignin);
-  return (
-      <Switch>
-        <Route path="/signin" component={SigninPage} />
-        <Route path="/signup" component={SignupPage} />
-        <Route path="/verify" component={VerificationPage}/>
-        <Route path="/" exact={true} component={SignupPage} />
-        <Route component={Error} />
-      </Switch>
+  return(
+    <Router/>
+
   );
+  // console.log(userSignin);
+  // return (
+  //     <Switch>
+  //       <Route path="/signin" component={SigninPage} />
+  //       <Route path="/signup" component={SignupPage} />
+  //       <Route path="/verify" component={VerificationPage}/>
+  //       <Route path="/" exact={true} component={SignupPage} />
+  //       <Route component={Error} />
+  //     </Switch>
+  // );
 }
 
 export default App;
