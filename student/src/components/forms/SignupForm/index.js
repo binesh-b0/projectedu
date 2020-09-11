@@ -23,6 +23,10 @@ import {
 } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon color='white' icon={faEye} />;
+const eyeSlash = <FontAwesomeIcon color='white' icon={faEyeSlash} />;
 
 const useStyles = makeStyles({
 
@@ -76,14 +80,14 @@ const SignupForm = ({ onSubmit }) => {
     email: yup.string().required("Enter valid email").email("Enter valid email"),
     pass: yup
       .string()
-      .required("")
+      .required("This feild is required")
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
         "Password must contain at least 8 characters, one uppercase, one number and one special case character"
       ),
     pass2: yup
       .string()
-      .required("")
+      .required("This feild is required")
       .oneOf([yup.ref("pass"), null], "Password mismatch"),
     terms: yup.bool().required("Incomplete form"),
   });
@@ -146,64 +150,52 @@ const SignupForm = ({ onSubmit }) => {
         <Form ref={formRef} noValidate onSubmit={handleSubmit}>
         {/* {renderAlert(errors,touched)} */}
           <Form.Group controlId="formBasicEmail">
-            <InputLabel className={styles.label222} htmlFor="em">
-              Email
-            </InputLabel>
-              <InputBase
-                className={styles.form_input}
-                id="em"
-                fullWidth
-                name="email"
-                onChange={handleChange}
-                type="email"
-                required
-              />
+          <Form.Label className={styles.label222}>Email</Form.Label>
+            <Form.Control
+              className={`${styles.form_input} mx-auto w-100`}
+              name="email"
+              isInvalid={!!errors.email}
+              onChange={handleChange}
+              type="email"
+              required
+            />
+            <Form.Control.Feedback className={styles.invalid} type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <InputLabel
-              className={styles.label222}
-              htmlFor="standard-adornment-password"
-            >
-              Password
-            </InputLabel>
-            <InputBase
-              className={styles.form_input}
-              id="standard-adornment-password"
+          <Form.Label className={styles.label222}>Password</Form.Label>
+            <i className="float-right" onClick={togglePasswordVisiblity}>
+              {passwordShown ? eye : eyeSlash}
+            </i>
+            <Form.Control
+              className={`${styles.form_input} mx-auto w-100`}
               name="pass"
-              error={touched.pass && !errors.pass}
               type={passwordShown ? "text" : "password"}
+              isInvalid={!!errors.pass}
               onChange={handleChange}
-              fullWidth
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={togglePasswordVisiblity}
-                  >
-                    {passwordShown ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
             />
-            <Form.Text className={styles.text_muted}>
+            <Form.Control.Feedback className={styles.invalid} type="invalid">
+              {errors.pass}
+            </Form.Control.Feedback>
+            <Form.Text className={!errors.pass?styles.text_muted:"d-none"}>
               Password must contain at least 8 characters, one uppercase, one
               number and one special case character
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formPasswordConf">
-            <InputLabel className={styles.label222} htmlFor="pconf">
-              Confirm password
-            </InputLabel>
-            <InputBase
-              className={styles.form_input}
-              id="pconf"
-              name="pass2"
-              error={!!errors.pass2}
+          <Form.Label className={styles.label222}>Password</Form.Label>
+            <Form.Control
+              className={`${styles.form_input} mx-auto w-100`}
+              name="pass"
               type={passwordShown ? "text" : "password"}
+              isInvalid={!!errors.pass2}
               onChange={handleChange}
-              fullWidth
             />
+            <Form.Control.Feedback className={styles.invalid} type="invalid">
+              {errors.pass2}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
            <FormControlLabel className={styles.custom_control_label}

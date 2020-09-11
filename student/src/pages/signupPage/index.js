@@ -115,7 +115,7 @@ function SignupPage(props) {
               {/* {SignupForm()} */}
               <SignupForm onSubmit={onSubmit} />
               <div style={{display:"flex",alignContent:"center",justifyContent:"center",margin:"16px"}}>
-              <Link className={styles.signup_page_toc}>Terms and conditions</Link></div>
+              <a className={styles.signup_page_toc}>Terms and conditions</a></div>
             </div>
           </div>
         </div>
