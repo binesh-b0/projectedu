@@ -16,6 +16,10 @@ import InputBase from "@material-ui/core/InputBase";
 
 import Alert from 'react-bootstrap/Alert';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon color='white' icon={faEye} />;
+const eyeSlash = <FontAwesomeIcon color='white' icon={faEyeSlash} />;
 
 const SigninForm=({onSubmit})=> {
   const userRegister = useSelector((state) => state.userRegister);
@@ -27,8 +31,8 @@ const SigninForm=({onSubmit})=> {
   };
 
   const schema = yup.object().shape({
-    email: yup.string().required("Enter valid email").email(),
-    pass: yup.string().required(),
+    email: yup.string().required("Enter valid email").email("Email is not valid"),
+    pass: yup.string().required("Enter password"),
   });
   const formRef = useRef(null);
   const handleReset = () => {
@@ -85,50 +89,38 @@ const SigninForm=({onSubmit})=> {
           {renderAlert(errors,touched)}
 
               <Form.Group controlId="formBasicEmail">
-              <InputLabel className={styles.label222} htmlFor="em">
+              <Form.Label className={styles.label222} htmlFor="em">
               Email
-            </InputLabel>
-              <InputBase
-                className={styles.form_input}
+            </Form.Label>
+              <Form.Control
+                className={`${styles.form_input} mx-auto w-100`}
                 id="em"
-                fullWidth
                 name="email"
+                isInvalid={!!errors.email}
                 onChange={handleChange}
                 type="email"
                 required
               />
+                   <Form.Control.Feedback className={styles.invalid} type="invalid">{errors.email}</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
-              <InputLabel
-              className={styles.label222}
-              htmlFor="standard-adornment-password"
-            >
-              Password
-            </InputLabel>
-            <InputBase
-              className={styles.form_input}
-              id="standard-adornment-password"
-              name="pass"
-              error={touched.pass && !errors.pass}
-              type={passwordShown ? "text" : "password"}
-              onChange={handleChange}
-              fullWidth
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={togglePasswordVisiblity}
-                  >
-                    {passwordShown ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <Form.Text className={styles.text_muted}>
-              Password must contain at least 8 characters, one uppercase, one
-              number and one special case character
-            </Form.Text>
+              <Form.Label className={styles.label222} >Password</Form.Label>
+                <i className="float-right" onClick={togglePasswordVisiblity}>
+                  {passwordShown ? eye : eyeSlash}
+                </i>
+                <Form.Control
+                 className={`${styles.form_input} mx-auto w-100`}
+                 name="pass"
+                  type={passwordShown ? "text" : "password"}
+                  isInvalid={!!errors.pass}
+                  onChange={handleChange}
+                  placeholder="Password"
+
+                />
+                <Form.Control.Feedback  className={styles.invalid} type="invalid">
+                  {errors.pass}
+                </Form.Control.Feedback>
               </Form.Group>
               <Button
             className={styles.login_button}

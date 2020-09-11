@@ -23,7 +23,20 @@
         padding-right: 0;
     }
     .signup_page_card_container{
-        width: 100%;
+        flex-direction: column-reverse;
+        width: 100% !important;
+        margin: 0px;
+    }
+}
+@media(max-width:768px){
+    .signup_page_container_fluid{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .signup_page_card_container{
+        margin-top: 32px !important;
+        flex-direction: column-reverse;
+        width: 80%;
         margin: 0px;
     }
 }

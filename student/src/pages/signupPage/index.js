@@ -93,7 +93,7 @@ function SignupPage(props) {
       <div>{showSnackbar()}</div>
       <SimpleHeader goToLogin={goToLogin} loc="signin"/>
       <div className={styles.signup_page_contents}>
-        <div className={`${styles.signup_page_card_container} row my-auto`}>
+        <div className={`${styles.signup_page_card_container} row`}>
           <div className={`${styles.signup_page_card_details} col-lg-8`}>
             <Image
               className={`${styles.signup_page_card_image} d-none d-lg-block d-md-block`}

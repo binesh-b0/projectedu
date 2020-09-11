@@ -4,7 +4,9 @@
     padding-left:16px;
     padding-right: 0px;
     background-color: white;
+    width: 100% !important;
     border-radius: 5px;
+    max-height: 35px;
 }
 .form_label{
     font-size: .9rem;
@@ -59,7 +61,7 @@ border:0px !important;
 }
 .custom_alert{
     position: absolute !important;
-    top: 15% !important;
+    top: 20% !important;
     max-height: 60px;
     font-size: .7rem;
     padding-top: 4px;
@@ -71,6 +73,10 @@ border:0px !important;
     right: 0;
     max-width: 70%;
     text-align: center;
-    background-color: #ff0000dc;
+    background-color: #d40909;
     color: white;
+}
+.invalid{
+    font-size: .8rem;
+    color: yellow;
 }

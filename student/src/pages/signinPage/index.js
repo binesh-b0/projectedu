@@ -84,7 +84,7 @@ function SigninPage(props) {
           <SimpleHeader goToLogin={goToSignup} loc="login"/>
 
     <div className={styles.signin_page_contents}>
-      <div className={`row my-auto ${styles.signin_page_card_container}`}>
+      <div className={`row  ${styles.signin_page_card_container}`}>
         <div className={`col-lg-8 ${styles.signin_page_card_details}`}>
           <Image className={`${styles.signin_page_card_image} d-none d-lg-block`} src='./images/undraw_certification_aif8.png'/>
           <p className={styles.signin_page_brand}> HSST portal</p>
