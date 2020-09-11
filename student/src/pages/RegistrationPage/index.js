@@ -5,7 +5,7 @@ import { Stepper, Step, StepLabel } from '@material-ui/core';
 import First from './firstRoute';
 import Second from './secondRoute';
 import Third from './thirdRoute';
-import Fourth from './fourthRoute/';
+import Fourth from './fourthRoute';
 
 const Registration = () => {
     const [activeStep, setActiveStep] = useState(0);

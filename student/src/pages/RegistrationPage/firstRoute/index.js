@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import styles from './style.module.css';
 import { connect } from 'react-redux';
-import { addUserInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 
 const FirstRoute = ({ userInfo }) => {
@@ -73,23 +72,4 @@ const FirstRoute = ({ userInfo }) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    // console.log('the user profile is' + JSON.stringify(state));
-    console.log(state);
-    return {
-        userInfo: state.userProfile,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addUserInfo: (data) => {
-            dispatch(addUserInfo(data));
-        },
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(FirstRoute);
+export default FirstRoute;
