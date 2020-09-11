@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import styles from './SigninForm.module.css'
 import { useSelector } from "react-redux";
 
@@ -7,12 +7,6 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 
 import Button from '@material-ui/core/Button';
-import IconButton from "@material-ui/core/IconButton";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import InputBase from "@material-ui/core/InputBase";
 
 import Alert from 'react-bootstrap/Alert';
 
@@ -22,14 +16,17 @@ const eye = <FontAwesomeIcon color='white' icon={faEye} />;
 const eyeSlash = <FontAwesomeIcon color='white' icon={faEyeSlash} />;
 
 const SigninForm=({onSubmit})=> {
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, status, error } = userRegister;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, status, error } = userSignin;
 
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
+  useEffect(() => {
+    console.log("loading",loading)
+  }, [loading])
   const schema = yup.object().shape({
     email: yup.string().required("Enter valid email").email("Email is not valid"),
     pass: yup.string().required("Enter password"),
@@ -57,12 +54,11 @@ const SigninForm=({onSubmit})=> {
       <Formik
         validationSchema={schema}
         onSubmit={(values, { resetForm }) => {
-        if (loading === false && status === 511){
+        if (loading === false ){
           resetForm({
             values: {
               email: "",
               pass: "",
-              pass2: "",
               terms: false,
             },
           });
@@ -89,12 +85,12 @@ const SigninForm=({onSubmit})=> {
           {renderAlert(errors,touched)}
 
               <Form.Group controlId="formBasicEmail">
-              <Form.Label className={styles.label222} htmlFor="em">
+              <Form.Label className={styles.label222} >
               Email
             </Form.Label>
               <Form.Control
                 className={`${styles.form_input} mx-auto w-100`}
-                id="em"
+
                 name="email"
                 isInvalid={!!errors.email}
                 onChange={handleChange}

@@ -114,7 +114,7 @@ const SignupForm = ({ onSubmit }) => {
     <Formik
       validationSchema={schema}
       onSubmit={(values, { resetForm }) => {
-        if (loading === false && status === 511){
+        if (true){
           resetForm({
             values: {
               email: "",
@@ -144,7 +144,7 @@ const SignupForm = ({ onSubmit }) => {
         errors,
       }) => (
         <Form ref={formRef} noValidate onSubmit={handleSubmit}>
-        {renderAlert(errors,touched)}
+        {/* {renderAlert(errors,touched)} */}
           <Form.Group controlId="formBasicEmail">
             <InputLabel className={styles.label222} htmlFor="em">
               Email

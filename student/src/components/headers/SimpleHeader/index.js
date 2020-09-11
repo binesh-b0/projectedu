@@ -3,14 +3,13 @@ import styles from "./SimpleHeader.module.css";
 
 import { Navbar, Nav } from "react-bootstrap";
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Divider from '@material-ui/core/Divider';
 
 export default function SimpleHeader({goToLogin,goToSignup,loc}) {
 
   return (
     <div className={styles.header}>
-      <Navbar classsName={styles.bg_light} expand="lg">
+      <Navbar style={{backgroundColor:"white"}} expand="lg">
         <Navbar.Brand style={{color:"#1976d2"}}>HSST Portal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

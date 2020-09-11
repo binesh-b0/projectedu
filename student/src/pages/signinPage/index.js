@@ -37,9 +37,15 @@ function SigninPage(props) {
   }
 
   useEffect(() => {
+    if(Cookie.get("tk"))
+    props.history.replace("/");
+
+  })
+  useEffect(() => {
+    console.log("stattt",status,loading);
     if (status===200 && !loading) {
-      if(Cookie.get("signRE"))
-      props.history.push("/");
+      if(Cookie.get("signRe")===true)
+      props.history.replace("/");
     }
     if (error) {
       if (status === "XXXXX") {      //already signed up
@@ -84,7 +90,7 @@ function SigninPage(props) {
           <SimpleHeader goToLogin={goToSignup} loc="login"/>
 
     <div className={styles.signin_page_contents}>
-      <div className={`row  ${styles.signin_page_card_container}`}>
+      <div className={`row ${styles.signin_page_card_container}`}>
         <div className={`col-lg-8 ${styles.signin_page_card_details}`}>
           <Image className={`${styles.signin_page_card_image} d-none d-lg-block`} src='./images/undraw_certification_aif8.png'/>
           <p className={styles.signin_page_brand}> HSST portal</p>

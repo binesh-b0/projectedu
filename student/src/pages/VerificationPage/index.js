@@ -9,7 +9,7 @@ import { resendEmail } from "../../actions/userActions";
 
 export default function VerificationPage(props) {
   const userRegister = useSelector((state) => state.userRegister);
-  const { error, status,userInfo } = userRegister;
+  const { userInfo } = userRegister;
 
   const dispatch = useDispatch();
 

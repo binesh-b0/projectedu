@@ -49,7 +49,7 @@ function SignupPage(props) {
       } else if (status === "xxx") {
         // props.history.push("/verify");  //pending verification  
       } else {
-        setSnk({ sev: "error", msg: error });
+        setSnk({ sev: "error", msg: error.error });
         setOpen(true);
       }
     }
