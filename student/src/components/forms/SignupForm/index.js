@@ -80,7 +80,7 @@ const SignupForm = ({ onSubmit }) => {
     email: yup.string().required("Enter valid email").email("Enter valid email"),
     pass: yup
       .string()
-      .required("This feild is required")
+      .required("Password must contain at least 8 characters, one uppercase, one number and one special case character")
       .matches(
         /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
         "Password must contain at least 8 characters, one uppercase, one number and one special case character"
@@ -188,7 +188,7 @@ const SignupForm = ({ onSubmit }) => {
           <Form.Label className={styles.label222}>Password</Form.Label>
             <Form.Control
               className={`${styles.form_input} mx-auto w-100`}
-              name="pass"
+              name="pass2"
               type={passwordShown ? "text" : "password"}
               isInvalid={!!errors.pass2}
               onChange={handleChange}
