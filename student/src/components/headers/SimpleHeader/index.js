@@ -6,17 +6,18 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Divider from '@material-ui/core/Divider';
 
-export default function index() {
+export default function SimpleHeader({goToLogin,goToSignup,loc}) {
+
   return (
     <div className={styles.header}>
       <Navbar classsName={styles.bg_light} expand="lg">
-        <Navbar.Brand style={{color:"gray"}}></Navbar.Brand>
+        <Navbar.Brand style={{color:"#1976d2"}}>HSST Portal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-              <Button className={styles.header_button}>Signin</Button>
+              <Button className={styles.header_button} onClick={loc==="signin"?goToLogin:goToSignup}>Signin</Button>
               <Divider orientation="vertical" flexItem />
-              <Button className={styles.header_button}>Signup</Button>
+              <Button className={styles.header_button} onClick={loc==="login"?goToLogin:goToSignup}>Signup</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

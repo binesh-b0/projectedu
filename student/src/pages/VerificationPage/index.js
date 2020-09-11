@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styles from './VerificationPage.module.css';
+import Cookie from 'js-cookie';
 
 import Image from "react-bootstrap/Image";
 import Button from "@material-ui/core/Button";
@@ -25,6 +26,9 @@ export default function VerificationPage(props) {
         props.history.push('/signup');}
     }
 
+    useEffect(() => {
+      Cookie.set("regRE",false);
+    } )
 
   return (
     <div className="container-fluid" style={{paddingTop:"50px"}} >

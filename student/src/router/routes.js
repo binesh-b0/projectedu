@@ -6,8 +6,7 @@ export default () => [
     path: '/',
     exact: true,
     component: Home,
-    loading: 'Custom loading for home page...',
-    error: 'Custom error for home page',
+
     meta: {
       [AUTH_ONLY]: true,
     },

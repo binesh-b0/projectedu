@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../actions/userActions";
+import Cookie from 'js-cookie';
 
 import SimpleFooter from "../../components/SimpleFooter";
 import SignupForm from "../../components/forms/SignupForm";
@@ -38,8 +39,9 @@ function SignupPage(props) {
 //if submit status is changed
   useEffect(() => {
     console.log("useEff",userRegister);
-    if (status===200) {
-      // props.history.push("/verify");
+    if (status===200 && !loading) {
+      if((Cookie.get("regRe")))
+      props.history.push("/verify");
     }
     if (error) {
       if (status === "XXXXX") {      //already signed up
@@ -89,7 +91,7 @@ function SignupPage(props) {
     
     <div className={styles.signup_page_container_fluid}>
       <div>{showSnackbar()}</div>
-      <SimpleHeader />
+      <SimpleHeader goToLogin={goToLogin} loc="signin"/>
       <div className={styles.signup_page_contents}>
         <div className={`${styles.signup_page_card_container} row my-auto`}>
           <div className={`${styles.signup_page_card_details} col-lg-8`}>

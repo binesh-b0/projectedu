@@ -1,6 +1,8 @@
 import Axios from "axios";
 import Cookie from 'js-cookie';
 import api from '../api/api';
+
+
 import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
@@ -28,11 +30,18 @@ const update = ({ userId, name, email, password }) => async (dispatch, getState)
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
-    const { data } = await Axios.post("/api/users/signin", { email, password });
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    setCredentials("token",35432134)
+    const { data } = await api.post("/login/email", { email, password });
+    Cookie.set("signRe",true);
+    setCredentials(data.response)
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data,status:200 });
   } catch (error) {
-    dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
+    Cookie.set("signRe",false);
+    const res = {...error}
+    console.log("sign req error ", res);
+    if(res.response)
+    dispatch({ type: USER_SIGNIN_FAIL, payload: res.response.data,status:res.response.status });
+    else dispatch({ type: USER_REGISTER_FAIL, payload: "Not found",status:404 })
+
   }
 }
 
@@ -45,11 +54,18 @@ const register = (email, password) => async (dispatch) => {
       }
     });
     console.log("register req",data);
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data,status:200 }); //TODO
+    console.log("st",data.status);
+    if(data.status===200){
+    Cookie.set("regRe",true);
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: {email},status: 200 });} //TODO
     // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
-    console.log("reg req error ", error);
-    dispatch({ type: USER_REGISTER_FAIL, payload: error.message,status:511 }); //TODO
+    const res = {...error}
+    Cookie.set("regRe",false);
+    console.log("reg req error ", res);
+    if(res.response)
+    dispatch({ type: USER_REGISTER_FAIL, payload: res.response.data,status:res.response.status });
+    else dispatch({ type: USER_REGISTER_FAIL, payload: "Not found",status:404 })
   }
 }
 
@@ -62,7 +78,7 @@ const resendEmail=(email) =>async(dispatch) =>{
         'Content-Type':'application/json'
       }
     });
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data }); //TODO
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: {email} }); //TODO
 
   }
   catch(err){
