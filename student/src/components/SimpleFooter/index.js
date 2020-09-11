@@ -4,7 +4,7 @@ import './index.css';
 const SimpleFooter = () => {
   return (
     <div className="footer">
-      <p>Copyright@2020</p>
+      <p className="copyright my-auto">Copyright@2020</p>
     </div>
   );
 }

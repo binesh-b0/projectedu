@@ -4,32 +4,27 @@ import { useSelector } from 'react-redux';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import signupPage from './pages/signupPage';
-import signinPage from './pages/signinPage';
-import registration from './pages/registration';
+import Router from './router';
 
-function App(props) {
+import SignupPage from './pages/SignupPage';
+import SigninPage from './pages/SigninPage';
+import VerificationPage from './pages/VerificationPage';
+
+function App() {
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
 
-    useEffect(() => {
-        if (userInfo) {
-            props.history.push('/signin');
-        }
-        return () => {
-            //
-        };
-    }, [props.history, userInfo]);
-
-    console.log(userSignin);
-    return (
-        <Switch>
-            <Route path='/signin' component={signinPage} />
-            <Route path='/register' component={registration} />
-            <Route path='/' exact={true} component={signupPage} />
-            <Route component={Error} />
-        </Switch>
-    );
+    return <Router />;
+    // console.log(userSignin);
+    // return (
+    //     <Switch>
+    //       <Route path="/signin" component={SigninPage} />
+    //       <Route path="/signup" component={SignupPage} />
+    //       <Route path="/verify" component={VerificationPage}/>
+    //       <Route path="/" exact={true} component={SignupPage} />
+    //       <Route component={Error} />
+    //     </Switch>
+    // );
 }
 
 export default App;
