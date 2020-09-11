@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from './node_modules/react';
-import { Link } from './node_modules/react-router-dom';
-import { useSelector, useDispatch } from './node_modules/react-redux';
+import React, { useEffect, useState } from 'react';
+// import { Link } from '''dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { signin, logout } from '../../actions/userActions';
 import SimpleFooter from '../../components/SimpleFooter';
 import SimpleHeader from '../../components/headers/SimpleHeader';
 import SigninForm from '../../components/forms/SigninForm';
 import styles from './SigninPage.module.css';
-import Cookie from './node_modules/js-cookie';
+import Cookie from 'js-cookie';
 
-import Button from './node_modules/@material-ui/core/Button';
-import Snackbar from './node_modules/@material-ui/core/Snackbar';
-import MuiAlert from '../SignupPage/node_modules/@material-ui/lab/Alertal-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
-import { Image } from './node_modules/react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;

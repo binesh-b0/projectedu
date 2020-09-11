@@ -59,7 +59,6 @@ const FirstRoute = ({ userInfo }) => {
                 <TextField
                     className={classes.textField}
                     label='Full Name'
-                    value={userInfo.fullName}
                     variant='outlined'
                 />
                 <TextField

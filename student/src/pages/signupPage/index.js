@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from './node_modules/react';
-import { useSelector, useDispatch } from './node_modules/react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
-import Cookie from './node_modules/js-cookie';
+import Cookie from 'js-cookie';
 
 import SimpleFooter from '../../components/SimpleFooter';
 import SignupForm from '../../components/forms/SignupForm';
 import SimpleHeader from '../../components/headers/SimpleHeader';
 import styles from './SignupPage.module.css';
 
-import Button from './node_modules/@material-ui/core/Button';
-import Snackbar from './node_modules/@material-ui/core/Snackbar';
-import MuiAlert from './node_modules/@material-ui/lab/Alertules/@material-ui/lab/Alert';
-import { Image } from './node_modules/react-bootstrap';
-import { Link } from './node_modules/react-router-dom';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 //for alert in snack
 function Alert(props) {
