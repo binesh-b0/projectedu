@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import styles from './style.module.css';
 import Button from '../../components/CTAButton';
 import { Stepper, Step, StepLabel } from '@material-ui/core';
-import First from './firstRoute/firstRoute';
-import Second from './secondRoute/secondRoute';
-import Third from './thirdRoute/thirdRoute';
+import First from './firstRoute';
+import Second from './secondRoute';
+import Third from './thirdRoute';
+import Fourth from './fourthRoute/';
 
 const Registration = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -12,6 +13,7 @@ const Registration = () => {
         'Personal Information',
         'Contact Details',
         'Educational Information',
+        'Certifications',
     ];
 
     const handlePrev = () => {
@@ -48,8 +50,10 @@ const Registration = () => {
                         <First />
                     ) : activeStep === 1 ? (
                         <Second />
-                    ) : (
+                    ) : activeStep === 2 ? (
                         <Third />
+                    ) : (
+                        <Fourth />
                     )}
                     <div>
                         <div className={styles.buttonDiv}>

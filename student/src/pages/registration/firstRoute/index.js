@@ -7,9 +7,11 @@ import {
     FormControlLabel,
 } from '@material-ui/core';
 import styles from './style.module.css';
+import { connect } from 'react-redux';
+import { addUserInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 
-const FirstRoute = () => {
+const FirstRoute = ({ userInfo }) => {
     const [gender, setGender] = useState('male');
 
     const useStyles = makeStyles({
@@ -21,7 +23,11 @@ const FirstRoute = () => {
     return (
         <div className={styles.container}>
             <form className={styles.formStyle}>
-                <img className={styles.img} />
+                <img
+                    className={styles.img}
+                    src={require('../../../assets/images/user.svg')}
+                    alt='Upload imgage'
+                />
                 <Button heading='Upload' style={styles.btn} />
                 <TextField
                     className={classes.textField}
@@ -54,6 +60,7 @@ const FirstRoute = () => {
                 <TextField
                     className={classes.textField}
                     label='Full Name'
+                    value={userInfo.fullName}
                     variant='outlined'
                 />
                 <TextField
@@ -66,4 +73,23 @@ const FirstRoute = () => {
     );
 };
 
-export default FirstRoute;
+const mapStateToProps = (state) => {
+    // console.log('the user profile is' + JSON.stringify(state));
+    console.log(state);
+    return {
+        userInfo: state.userProfile,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addUserInfo: (data) => {
+            dispatch(addUserInfo(data));
+        },
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FirstRoute);
