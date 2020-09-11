@@ -11,9 +11,9 @@ exports.sendVerificationMail = function (encodedString) {
 
     var mailOptions = {
         from: 'lanciar2017@gmail.com',
-        to: 'amal.chandrasekhar@gmail.com',
+        to: 'admin@maxffort.com',
         subject: 'Verify email',
-        html: '<h4>Verification</h4><p>Please verify your account for completing your authentication</p><a href="http://localhost:8080/rest/v1/emailVerify/'+encodedString+'">Click here to verify</a>'
+        html: '<h4>Verification</h4><p>Please verify your account for completing your authentication</p><a href="http://28ee46a948b4.ngrok.io/rest/v1/emailVerify/'+encodedString+'">Click here to verify</a>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

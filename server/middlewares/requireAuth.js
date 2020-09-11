@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const connection = require('../database/conn');
 
 module.exports = (req, res, next) => {
-    const { authorization } = req.header;
+    const authorization = req.header('authorization');
+    console.log(authorization);
     if(!authorization){
         return res.status(401).send({error: 'You must be logged in'});
     }
