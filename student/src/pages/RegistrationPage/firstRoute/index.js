@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { changeProfileRegInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 import ImageUploader from 'react-images-upload';
+import { findByLabelText } from '@testing-library/react';
 
 const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
     const { fullName, gender, dob, guardianName } = userProfile;
@@ -20,13 +21,6 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
-
-    const [picture, setPicture] = useState();
-
-    const onDrop = (picture) => {
-        console.log(picture);
-        setPicture(picture);
-    };
 
     const classes = useStyles();
 
@@ -38,14 +32,6 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
                     src={require('../../../assets/images/user.svg')}
                     alt='Upload imgage'
                 />
-                <ImageUploader
-                    withIcon={false}
-                    onChange={onDrop}
-                    withLabel={false}
-                    imgExtension={['.jpg', '.png']}
-                    singleImage={true}
-                ></ImageUploader>
-
                 {/* <img
                     className={styles.img}
                     src={require('../../../assets/images/user.svg')}

@@ -108,6 +108,7 @@ const initialState = {
         board12: 'test',
         location12: 'test',
     },
+    degree: [],
 };
 
 const userProfileReducer = (state = initialState, action) => {

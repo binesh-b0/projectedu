@@ -13,6 +13,18 @@ import { changeProfileSchoolInfo } from '../../../actions/userActions';
 const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
     const [expanded, setExpanded] = useState(false);
 
+    // const [degrees, setDegrees] = useState([]);
+
+    const [collegeName, setCollegeName] = useState('');
+    const [degree, setDegree] = useState('');
+    const [cgpa, setCgpa] = useState('');
+    const [location, setLocation] = useState('');
+
+    // const changeDegree = (data) => {
+    //     const len = degree.length - 1;
+    //     setDegree()
+    // };
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
@@ -148,16 +160,33 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                             className={classes.textField}
                             label='College Name'
                             variant='outlined'
+                            value={collegeName}
+                            onChange={(event) =>
+                                setCollegeName(event.target.value)
+                            }
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label='Degree'
+                            variant='outlined'
+                            onChange={(event) => setDegree(event.target.value)}
+                            value={degree}
                         />
                         <TextField
                             className={classes.textField}
                             label='CGPA/Percentage'
                             variant='outlined'
+                            onChange={(event) => setCgpa(event.target.value)}
+                            value={cgpa}
                         />
                         <TextField
                             className={classes.textField}
                             label='Location'
                             variant='outlined'
+                            onChange={(event) =>
+                                setLocation(event.target.value)
+                            }
+                            value={location}
                         />
                     </form>
                 </AccordionDetails>
