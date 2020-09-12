@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./SigninForm.module.css";
+import PasswordResetDialog from "../../dialogs/PasswordResetDialog";
 import { useSelector } from "react-redux";
 
 import { Form, Spinner } from "react-bootstrap";
@@ -8,18 +9,27 @@ import * as yup from "yup";
 
 import Button from "@material-ui/core/Button";
 
-import Alert from "react-bootstrap/Alert";
+import Alert from "react-bootstrap/Alert";  
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon color="white" icon={faEye} />;
 const eyeSlash = <FontAwesomeIcon color="white" icon={faEyeSlash} />;
 
-const SigninForm = ({ onSubmit }) => {
+const SigninForm = ({ onSubmit,resetPasswordOnSubmit }) => {
   const userSignin = useSelector((state) => state.userSignin);
   const { loading, status, error } = userSignin;
 
   const [passwordShown, setPasswordShown] = useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
@@ -66,6 +76,8 @@ const SigninForm = ({ onSubmit }) => {
       );
   };
   return (
+    <div>
+    <PasswordResetDialog resetPasswordOnSubmit={resetPasswordOnSubmit} handleClickOpen={handleClickOpen} handleClose={handleClose} open={openDialog}/>
     <Formik
       validationSchema={schema}
       onSubmit={(values, { resetForm }) => {
@@ -128,6 +140,7 @@ const SigninForm = ({ onSubmit }) => {
             <Form.Control.Feedback className={styles.invalid} type="invalid">
               {errors.pass}
             </Form.Control.Feedback>
+            <Button className={`${styles.password_reset_button}`} onClick={()=>setOpenDialog(true)}>Forgot password?</Button>
           </Form.Group>
           <Button
             className={styles.login_button}
@@ -150,6 +163,7 @@ const SigninForm = ({ onSubmit }) => {
         </Form>
       )}
     </Formik>
+    </div>
   );
 };
 
