@@ -14,6 +14,10 @@ import {
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
+    ADD_PROFILE_REG_DATA,
+    ADD_PROFILE_REG_ADDRESS_DATA,
+    ADD_PROFILE_REG_RES_ADDRESS_DATA,
+    ADD_PROFILE_REG_SCHOOL_DATA,
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
@@ -137,8 +141,42 @@ const resendEmail = (email) => async (dispatch) => {
 };
 
 const logout = () => (dispatch) => {
-    // Cookie.remove("userInfo");
     dispatch({ type: USER_LOGOUT });
     removeCredentials();
 };
-export { signin, register, logout, update, resendEmail };
+
+const changeProfileRegInfo = (data) => {
+    return {
+        type: ADD_PROFILE_REG_DATA,
+        payload: data,
+    };
+};
+
+const changeProfileRegAddressInfo = (typ, data) => {
+    console.log(typ);
+    return {
+        type:
+            typ === 'perm'
+                ? ADD_PROFILE_REG_ADDRESS_DATA
+                : ADD_PROFILE_REG_RES_ADDRESS_DATA,
+        payload: data,
+    };
+};
+
+const changeProfileSchoolInfo = (data) => {
+    return {
+        type: ADD_PROFILE_REG_SCHOOL_DATA,
+        payload: data,
+    };
+};
+
+export {
+    signin,
+    register,
+    logout,
+    update,
+    resendEmail,
+    changeProfileRegInfo,
+    changeProfileRegAddressInfo,
+    changeProfileSchoolInfo,
+};

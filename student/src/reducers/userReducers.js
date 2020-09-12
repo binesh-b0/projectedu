@@ -8,9 +8,12 @@ import {
     USER_LOGOUT,
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
-    ADD_PROFILE_DATA,
+    ADD_PROFILE_REG_DATA,
     USER_VERFIY_RESEND,
     USER_UPDATE_FAIL,
+    ADD_PROFILE_REG_ADDRESS_DATA,
+    ADD_PROFILE_REG_RES_ADDRESS_DATA,
+    ADD_PROFILE_REG_SCHOOL_DATA,
 } from '../constants/userConstants';
 
 function userSigninReducer(state = {}, action) {
@@ -71,14 +74,68 @@ function userRegisterReducer(state = {}, action) {
     }
 }
 
-const userProfileReducer = (state = {}, action) => {
+const initialState = {
+    fullName: 'Eldho',
+    gender: 'M',
+    dob: '',
+    guardianName: '',
+    relationToGuardian: '',
+    addressInfo: {
+        res: {
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            state: '',
+            zipcode: '',
+            phoneNo: '',
+        },
+        perm: {
+            addressLine1: '',
+            addressLine2: '',
+            city: '',
+            state: '',
+            zipcode: '',
+            phoneNo: '',
+        },
+    },
+    academics: {
+        schoolName10: 'test',
+        cgpa10: '9',
+        board10: 'test',
+        location10: 'test',
+        schoolName12: 'test',
+        cgpa12: '9',
+        board12: 'test',
+        location12: 'test',
+    },
+};
+
+const userProfileReducer = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
-        case ADD_PROFILE_DATA:
+        case ADD_PROFILE_REG_DATA:
+            return { ...state, ...action.payload };
+        case ADD_PROFILE_REG_ADDRESS_DATA:
             return {
                 ...state,
-                userInfo: { ...state.userInfo, ...action.payload },
+                addressInfo: {
+                    ...state.addressInfo,
+                    perm: { ...state.addressInfo.perm, ...action.payload },
+                },
             };
-
+        case ADD_PROFILE_REG_RES_ADDRESS_DATA:
+            return {
+                ...state,
+                addressInfo: {
+                    ...state.addressInfo,
+                    res: { ...state.addressInfo.res, ...action.payload },
+                },
+            };
+        case ADD_PROFILE_REG_SCHOOL_DATA:
+            return {
+                ...state,
+                academics: { ...state.academics, ...action.payload },
+            };
         default:
             return state;
     }
