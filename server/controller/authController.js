@@ -7,6 +7,8 @@ const connection = require('../database/conn');
 const mailer = require('../helper/mailer');
 const { resolve } = require('path');
 const util = require('util');
+const { stringify } = require('querystring');
+const { type } = require('os');
 
 const storage = new Storage({
     projectId: process.env.GCLOUD_PROJECT,
@@ -225,12 +227,12 @@ exports.signUpUser = function (req, res) {
 }
 
 exports.addStudentInfo = function (req, res) {
-
-    console.log('Files ', req.files);
-    console.log(JSON.stringify(req.body));
-    console.log("test", util.inspect(req.body, false, null));
-    console.log("Req", req.body.userInfo);
-    console.log("addr", req.body.addressInfo);
+    userInfo = JSON.parse(req.body.userInfo);
+    addressInfo = JSON.parse(req.body.addressInfo);
+    academics = JSON.parse(req.body.academics);
+    degree = JSON.parse(req.body.degree);
+    certifications = JSON.parse(req.body.certifications);
+    
 
     var imageUrls = {
         profilePic: null,
@@ -319,10 +321,10 @@ exports.addStudentInfo = function (req, res) {
     promises.push(finalPromise);
 
     Promise.all(promises).then(_ => {
-        const { fullName, gender, dob, guardianName, relationToGuardian } = req.body.userInfo;
-        const { residence, permanent } = req.body.addressInfo;
-        console.log(residence);
-        const { schoolName10, cgpa10, board10, location10, schoolName12, cgpa12, board12, location12 } = req.body.academics;
+        const { fullName, gender, dob, guardianName, relationToGuardian } = userInfo;
+        const { residence, permanent } = addressInfo;
+        console.log("Residence", residence);
+        const { schoolName10, cgpa10, board10, location10, schoolName12, cgpa12, board12, location12 } = academics;
         try {
             connection.query(
                 "INSERT INTO Students (CredentialId, FullName, Gender, Dob, GuardianName, RelationToGuardian, ProfilePic) VALUES (?,?,?,?,?,?,?)",
@@ -347,7 +349,7 @@ exports.addStudentInfo = function (req, res) {
                                         return res.status(500).send({ error: 'Internal Server Error' });
                                     }
                                     var queryString = "INSERT INTO Degree (StudentId,CollegeName, Cgpa, Degree, Location) VALUES ";
-                                    req.body.degree.forEach(degree => {
+                                    degree.forEach(degree => {
                                         queryString += "('" + studentInfoId + "','" + degree.collegeName + "','" + degree.cgpa + "','" + degree.degree + "','" + degree.location + "'),";
                                     });
     
@@ -359,7 +361,7 @@ exports.addStudentInfo = function (req, res) {
                                                 return res.status(500).send({ error: 'Internal Server Error' });
                                             }
                                             var queryString = "INSERT INTO Certifications (StudentId, CertificationName, CompletionDate, ValidityDate, Institute, CertificateUrl) VALUES ";
-                                            req.body.certifications.forEach((certificate, index) => {
+                                            certifications.forEach((certificate, index) => {
                                                 queryString += "('" + studentInfoId + "','" + certificate.certificationName + "','" + certificate.completionDate + "','" + certificate.validityDate + "','" + certificate.institute + "','" + imageUrls.certPics[index] + "'),";
                                             });
     

@@ -26,11 +26,12 @@ const submitUserData = () => async (dispatch, getState) => {
             degree,
             certifications,
         } = new getState().userProfile;
-        formData.append('userInfo', userInfo);
-        formData.append('addressInfo', addressInfo);
-        formData.append('academics', academics);
+        formData.append('userInfo', JSON.stringify(userInfo));
+        formData.append('addressInfo', JSON.stringify(addressInfo));
+        formData.append('academics', JSON.stringify(academics));
         formData.append('degree', degree);
-        formData.append('certifications', certifications);
+        formData.append('certifications', JSON.stringify(certifications));
+        console.log(userInfo);
         const config = {
             method: 'POST',
             url,
