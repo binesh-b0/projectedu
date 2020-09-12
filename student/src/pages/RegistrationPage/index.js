@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import styles from './style.module.css';
 import Button from '../../components/CTAButton';
 import { Stepper, Step, StepLabel } from '@material-ui/core';
+import { connect } from 'react-redux';
 import First from './firstRoute';
 import Second from './secondRoute';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
+import { submitUserData } from '../../actions/userActions';
 
-const Registration = () => {
+const Registration = ({ submitData }) => {
     const [activeStep, setActiveStep] = useState(0);
+    const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
         'Contact Details',
@@ -19,11 +22,19 @@ const Registration = () => {
     const handlePrev = () => {
         if (activeStep > 0) {
             setActiveStep(activeStep - 1);
+            setNextButtonText('Continue');
         }
     };
     const handleNext = () => {
         if (activeStep >= 0) {
             setActiveStep(activeStep + 1);
+        }
+        if (activeStep >= 2) {
+            setNextButtonText('Submit');
+        }
+        if (activeStep === 3) {
+            console.log('Finished');
+            submitData();
         }
     };
 
@@ -64,7 +75,7 @@ const Registration = () => {
                                 />
                             ) : null}
                             <Button
-                                heading='Continue'
+                                heading={nextButtonText}
                                 onPress={handleNext}
                                 style={styles.btn}
                             />
@@ -76,4 +87,13 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        submitData: () => dispatch(submitUserData()),
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Registration);
