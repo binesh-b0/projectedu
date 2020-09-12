@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     TextField,
     Radio,
@@ -16,28 +16,54 @@ import { findByLabelText } from '@testing-library/react';
 const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
     const { fullName, gender, dob, guardianName } = userProfile;
 
-    // const [gender, setGender] = useState('male');
+    const inputFile = useRef(null);
 
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
+        btnStyle: {
+            backgroundColor: 'rgb(39, 101, 195)',
+            borderRadius: 10,
+            borderWidth: 0,
+            color: 'white',
+            paddingRight: 32,
+            paddingLeft: 32,
+            paddingTop: 4,
+            paddingBottom: 4,
+        },
     });
 
+    const [picture, setPicture] = useState(
+        require('../../../assets/images/user.svg')
+    );
     const classes = useStyles();
+
+    const onDrop = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', (data) => {
+            console.log(data);
+            setPicture(data.target.result);
+        });
+        reader.readAsDataURL(file);
+    };
 
     return (
         <div className={styles.container}>
             <form className={styles.formStyle}>
                 <img
+                    onClick={() => inputFile.current.click()}
                     className={styles.img}
-                    src={require('../../../assets/images/user.svg')}
+                    src={picture}
                     alt='Upload imgage'
                 />
-                {/* <img
-                    className={styles.img}
-                    src={require('../../../assets/images/user.svg')}
-                    alt='Upload imgage'
-                /> */}
-                {/* <Button heading='Upload' style={styles.btn} /> */}
+                <input
+                    type='file'
+                    ref={inputFile}
+                    accept='image/*'
+                    className={styles.hideImg}
+                    onChange={onDrop}
+                />
+
                 <TextField
                     className={classes.textField}
                     label='Full Name'
@@ -74,8 +100,15 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
 
                 <TextField
                     className={classes.textField}
-                    label='DOB'
+                    label='Date Of Birth'
+                    type='date'
                     variant='outlined'
+                    value={dob}
+                    onChange={(event) => {
+                        changeProfileRegInfo({
+                            dob: event.target.value,
+                        });
+                    }}
                 />
                 <TextField
                     className={classes.textField}
@@ -96,7 +129,7 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
 const mapStateToProp = (state) => {
     console.log(state);
     return {
-        userProfile: state.userProfile,
+        userProfile: state.userProfile.userInfo,
     };
 };
 

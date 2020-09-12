@@ -1,5 +1,7 @@
 .container {
-    margin-bottom: 16px;
+    margin-bottom: 32px;
+    margin-right: 32px;
+    margin-left: 32px;
 }
 
 .formStyle {
@@ -14,6 +16,11 @@
 .img {
     width: 150px;
     height: 150px;
+    cursor: pointer;
+}
+
+.hideImg {
+    display: none;
 }
 
 .btn {

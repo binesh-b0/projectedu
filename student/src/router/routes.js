@@ -30,6 +30,10 @@ export default () => [
         path: '/register',
         exact: true,
         component: Register,
+
+        //     meta: {
+        //         [AUTH_ONLY]: true,
+        //     },
     },
     {
         path: '*',

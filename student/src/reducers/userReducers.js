@@ -75,11 +75,13 @@ function userRegisterReducer(state = {}, action) {
 }
 
 const initialState = {
-    fullName: 'Eldho',
-    gender: 'M',
-    dob: '',
-    guardianName: '',
-    relationToGuardian: '',
+    userInfo: {
+        fullName: '',
+        gender: 'M',
+        dob: '2000-10-01',
+        guardianName: '',
+        relationToGuardian: '',
+    },
     addressInfo: {
         res: {
             addressLine1: '',
@@ -99,23 +101,42 @@ const initialState = {
         },
     },
     academics: {
-        schoolName10: 'test',
-        cgpa10: '9',
-        board10: 'test',
-        location10: 'test',
-        schoolName12: 'test',
-        cgpa12: '9',
-        board12: 'test',
-        location12: 'test',
+        schoolName10: '',
+        cgpa10: '',
+        board10: '',
+        location10: '',
+        schoolName12: '',
+        cgpa12: '',
+        board12: '',
+        location12: '',
     },
-    degree: [],
+    degree: [
+        {
+            collegeName: '',
+            cgpa: '',
+            rollNo: '',
+            degree: '',
+            location: '',
+        },
+    ],
+    certifications: [
+        {
+            certificationName: '',
+            completionDate: '2020-12-09',
+            validityDate: '2021-12-08',
+            institute: '',
+        },
+    ],
 };
 
 const userProfileReducer = (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
         case ADD_PROFILE_REG_DATA:
-            return { ...state, ...action.payload };
+            return {
+                ...state,
+                userInfo: { ...state.userInfo, ...action.payload },
+            };
         case ADD_PROFILE_REG_ADDRESS_DATA:
             return {
                 ...state,
@@ -136,6 +157,11 @@ const userProfileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 academics: { ...state.academics, ...action.payload },
+            };
+        case 'ADD_PROFILE_REG_COLLEGE_DATA':
+            return {
+                ...state,
+                degree: { ...state.academics, ...action.payload },
             };
         default:
             return state;

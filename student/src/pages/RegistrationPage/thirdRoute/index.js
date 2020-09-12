@@ -59,6 +59,7 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                             className={classes.textField}
                             label='CGPA/Percentage'
                             variant='outlined'
+                            type='number'
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     cgpa10: event.target.value,
@@ -115,6 +116,7 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                             className={classes.textField}
                             label='CGPA/Percentage'
                             variant='outlined'
+                            type='number'
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     cgpa12: event.target.value,
@@ -176,6 +178,7 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                             className={classes.textField}
                             label='CGPA/Percentage'
                             variant='outlined'
+                            type='number'
                             onChange={(event) => setCgpa(event.target.value)}
                             value={cgpa}
                         />

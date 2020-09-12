@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './style.module.css';
 import { TextField, makeStyles, Avatar } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -7,8 +7,13 @@ import { changeProfileSchoolInfo } from '../../../actions/userActions';
 const FourthRoute = () => {
     const [certificationName, setcertificationName] = useState('');
     const [completionDate, setcompletionDate] = useState('');
-    const [validityDate, setvalidityDate] = useState('');
+    const [validityDate, setvalidityDate] = useState('2020-12-10');
     const [institute, setinstitute] = useState('');
+    const [picture, setPicture] = useState(
+        require('../../../assets/images/uploadimg.svg')
+    );
+
+    const inputFile = useRef(null);
 
     const useStyles = makeStyles({
         textField: {
@@ -19,6 +24,15 @@ const FourthRoute = () => {
             color: '#2262c6',
         },
     });
+
+    const selectImage = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', (data) => {
+            setPicture(data.target.result);
+        });
+        reader.readAsDataURL(file);
+    };
 
     const styleObj = useStyles();
 
@@ -44,6 +58,7 @@ const FourthRoute = () => {
                 <TextField
                     className={styleObj.textField}
                     label='Validity'
+                    type='date'
                     value={validityDate}
                     onChange={(event) => setvalidityDate(event.target.value)}
                     variant='outlined'
@@ -58,8 +73,18 @@ const FourthRoute = () => {
             </form>
             <img
                 className={styles.img}
-                src={require('../../../assets/images/uploadimg.svg')}
+                src={picture}
+                onClick={() => inputFile.current.click()}
+                // src={require('../../../assets/images/uploadimg.svg')}
                 alt='upload certificate'
+            />
+            <input
+                type='file'
+                id='file'
+                accept='image/*'
+                ref={inputFile}
+                onChange={selectImage}
+                style={{ display: 'none' }}
             />
         </div>
     );

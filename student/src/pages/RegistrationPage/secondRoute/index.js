@@ -67,6 +67,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                     <TextField
                         className={classes.textField}
                         label='Zip-Code'
+                        type='number'
                         variant='outlined'
                         onChange={(event) => {
                             onChangeData('perm', {
@@ -79,6 +80,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                         className={classes.textField}
                         label='Phone Number'
                         variant='outlined'
+                        type='tel'
                         onChange={(event) => {
                             onChangeData('perm', {
                                 phoneNo: event.target.value,
@@ -139,6 +141,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                         className={classes.textField}
                         label='Zip-Code'
                         variant='outlined'
+                        type='number'
                         onChange={(event) => {
                             onChangeData('res', {
                                 zipcode: event.target.value,
@@ -149,6 +152,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                     <TextField
                         className={classes.textField}
                         label='Phone Number'
+                        type='tel'
                         variant='outlined'
                         onChange={(event) => {
                             onChangeData('res', {

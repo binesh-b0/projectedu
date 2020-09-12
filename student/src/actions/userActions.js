@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import Cookie from 'js-cookie';
 import api from '../api/api';
+import { getCredentials } from '../services/authService';
+import { BASE_URL } from '../api/api';
 
 import {
     USER_SIGNIN_REQUEST,
@@ -20,6 +22,39 @@ import {
     ADD_PROFILE_REG_SCHOOL_DATA,
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
+
+const submitUserData = () => async (dispatch, getState) => {
+    console.log(getState());
+    try {
+        const url = BASE_URL + '/rest/v1/addStudentInfo';
+        const formData = new FormData();
+        const {
+            userInfo,
+            addressInfo,
+            academics,
+            degree,
+            certifications,
+        } = new getState().userProfile;
+        formData.append('userInfo', userInfo);
+        formData.append('addressInfo', addressInfo);
+        formData.append('academics', academics);
+        formData.append('degree', degree);
+        formData.append('certifications', certifications);
+        const config = {
+            method: 'POST',
+            url,
+            data: formData,
+            headers: {
+                Authorization: `Bearer ${getCredentials()}`,
+            },
+        };
+        const response = await Axios(config);
+        console.log('The response is ' + JSON.stringify(response.data));
+    } catch (error) {
+        console.log(error);
+        console.log(error.response);
+    }
+};
 
 const update = ({ userId, name, email, password }) => async (
     dispatch,
@@ -53,6 +88,7 @@ const signin = (email, password) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
     try {
         const { data } = await api.post('/login/email', { email, password });
+        console.log(data);
         Cookie.set('signRe', true);
         setCredentials(data.response);
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data, status: 200 });
@@ -179,4 +215,5 @@ export {
     changeProfileRegInfo,
     changeProfileRegAddressInfo,
     changeProfileSchoolInfo,
+    submitUserData,
 };
