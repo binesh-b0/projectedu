@@ -81,11 +81,12 @@ export default function ResetPassword(props) {
     onSubmit: (values) => {
         setLoading(true);
         setSt(0)
-        updatePassword(values.pass).then((val)=>setSt(val))
+        updatePassword(props.match.params.token,values.pass).then((val)=>setSt(val))
     },
   });
 useEffect(() => {
-    console.log(st);
+
+    console.log(props.match.params.token);
     if(st===200)
         props.history.replace("/")
     if(st>0){

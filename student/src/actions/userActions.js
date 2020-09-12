@@ -128,7 +128,7 @@ const resetPassword = (email) => async (dispatch) => {
     console.log('reset password', email);
     dispatch({ type: USER_PASSWORD_RESET_REQUEST });
     try {
-        const data = await api.post('/resetuserpass',{ email },
+        const data = await api.post('/forgotPassword',{ email },
             {
                 headers: {
                     'Content-Type': 'application/json',

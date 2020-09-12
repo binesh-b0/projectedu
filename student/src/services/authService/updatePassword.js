@@ -1,9 +1,9 @@
 import api from '../../api/api';
 import setCredentials from "./setCredentials";
 
-const updatePassword = async (password) => {
+const updatePassword = async (token,password) => {
     try {
-        const data = await api.post('/updateuserpass',{ password },
+        const data = await api.post('/passwordReset',{ encodedString:token,password },
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -11,7 +11,7 @@ const updatePassword = async (password) => {
             }
         );
         console.log(data);
-        // setCredentials("akjndajsjndoansdoandoaisndo")
+        // setCredentials(tk)
         return 200;
     } catch (err) {
         console.log(err);

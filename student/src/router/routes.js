@@ -32,7 +32,7 @@ export default () => [
         component: Register,
     },
     {
-        path: '/reset',
+        path: '/reset/:token',
         exact: true,
         component: Reset,
     },

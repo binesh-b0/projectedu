@@ -40,7 +40,7 @@ export default function PasswordResetDialog({
 
   const renderAlert = () => {
       if (pstatus === 200)
-        return <Alert severity="success">Password reset successfull</Alert>;
+        return <Alert severity="success">Reset link sent successfully</Alert>;
       else if (pstatus>0) return <Alert severity="error">Error</Alert>;
   };
   const renderMsg = () => {
