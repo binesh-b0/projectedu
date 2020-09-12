@@ -35,19 +35,25 @@ const submitUserData = () => async (dispatch, getState) => {
             degree,
             certifications,
         } = new getState().userProfile;
-        formData.append('userInfo', userInfo);
-        formData.append('addressInfo', addressInfo);
-        formData.append('academics', academics);
-        formData.append('degree', degree);
-        formData.append('certifications', certifications);
+        console.log('addressInfo is ', JSON.stringify(addressInfo));
+        formData.append('userInfo', JSON.stringify(userInfo));
+        formData.append('addressInfo', JSON.stringify(addressInfo));
+        formData.append('academics', JSON.stringify(academics));
+        formData.append('degree', JSON.stringify(degree));
+        formData.append('certifications', JSON.stringify(certifications));
         const config = {
             method: 'POST',
             url,
             data: formData,
             headers: {
                 Authorization: `Bearer ${getCredentials()}`,
+                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
             },
         };
+
+        console.log('the request ' + formData.get('userInfo'));
+        console.log(config);
         const response = await Axios(config);
         console.log('The response is ' + JSON.stringify(response.data));
     } catch (error) {

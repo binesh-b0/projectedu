@@ -6,8 +6,8 @@ import { changeProfileSchoolInfo } from '../../../actions/userActions';
 
 const FourthRoute = () => {
     const [certificationName, setcertificationName] = useState('');
-    const [completionDate, setcompletionDate] = useState('');
-    const [validityDate, setvalidityDate] = useState('2020-12-10');
+    const [completionDate, setcompletionDate] = useState('2000-12-10');
+    const [validityDate, setvalidityDate] = useState('2000-12-10');
     const [institute, setinstitute] = useState('');
     const [picture, setPicture] = useState(
         require('../../../assets/images/uploadimg.svg')
@@ -51,6 +51,7 @@ const FourthRoute = () => {
                 <TextField
                     className={styleObj.textField}
                     label='Course Completed Date'
+                    type='date'
                     value={completionDate}
                     onChange={(event) => setcompletionDate(event.target.value)}
                     variant='outlined'

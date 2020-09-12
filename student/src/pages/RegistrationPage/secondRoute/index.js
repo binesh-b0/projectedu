@@ -8,7 +8,7 @@ import {
 } from '../../../actions/userActions';
 
 const SecondRoute = ({ addressInfo, onChangeData }) => {
-    const { res, perm } = addressInfo;
+    const { residence, permanent } = addressInfo;
 
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
@@ -24,7 +24,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                         className={classes.textField}
                         label='Addressline 1'
                         variant='outlined'
-                        value={perm.addressLine1}
+                        value={permanent.addressLine1}
                         onChange={(event) => {
                             onChangeData('perm', {
                                 addressLine1: event.target.value,
@@ -40,7 +40,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 addressLine2: event.target.value,
                             });
                         }}
-                        value={perm.addressLine2}
+                        value={permanent.addressLine2}
                     />
                     <TextField
                         className={classes.textField}
@@ -51,7 +51,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 city: event.target.value,
                             });
                         }}
-                        value={perm.city}
+                        value={permanent.city}
                     />
                     <TextField
                         className={classes.textField}
@@ -62,7 +62,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 state: event.target.value,
                             });
                         }}
-                        value={perm.state}
+                        value={permanent.state}
                     />
                     <TextField
                         className={classes.textField}
@@ -74,7 +74,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 zipcode: event.target.value,
                             });
                         }}
-                        value={perm.zipcode}
+                        value={permanent.zipcode}
                     />
                     <TextField
                         className={classes.textField}
@@ -86,7 +86,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 phoneNo: event.target.value,
                             });
                         }}
-                        value={perm.phoneNo}
+                        value={permanent.phoneNo}
                     />
                 </form>
             </div>
@@ -102,7 +102,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 addressLine1: event.target.value,
                             });
                         }}
-                        value={res.addressLine1}
+                        value={residence.addressLine1}
                     />
                     <TextField
                         className={classes.textField}
@@ -113,7 +113,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 addressLine2: event.target.value,
                             });
                         }}
-                        value={res.addressLine2}
+                        value={residence.addressLine2}
                     />
                     <TextField
                         className={classes.textField}
@@ -124,7 +124,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 city: event.target.value,
                             });
                         }}
-                        value={res.town}
+                        value={residence.town}
                     />
                     <TextField
                         className={classes.textField}
@@ -135,7 +135,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 state: event.target.value,
                             });
                         }}
-                        value={res.state}
+                        value={residence.state}
                     />
                     <TextField
                         className={classes.textField}
@@ -147,7 +147,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 zipcode: event.target.value,
                             });
                         }}
-                        value={res.zipcode}
+                        value={residence.zipcode}
                     />
                     <TextField
                         className={classes.textField}
@@ -159,7 +159,7 @@ const SecondRoute = ({ addressInfo, onChangeData }) => {
                                 phoneNo: event.target.value,
                             });
                         }}
-                        value={res.phoneNo}
+                        value={residence.phoneNo}
                     />
                 </form>
             </div>

@@ -83,7 +83,7 @@ const initialState = {
         relationToGuardian: '',
     },
     addressInfo: {
-        res: {
+        residence: {
             addressLine1: '',
             addressLine2: '',
             city: '',
@@ -91,7 +91,7 @@ const initialState = {
             zipcode: '',
             phoneNo: '',
         },
-        perm: {
+        permanent: {
             addressLine1: '',
             addressLine2: '',
             city: '',
@@ -130,7 +130,6 @@ const initialState = {
 };
 
 const userProfileReducer = (state = initialState, action) => {
-    console.log(action);
     switch (action.type) {
         case ADD_PROFILE_REG_DATA:
             return {
@@ -142,7 +141,10 @@ const userProfileReducer = (state = initialState, action) => {
                 ...state,
                 addressInfo: {
                     ...state.addressInfo,
-                    perm: { ...state.addressInfo.perm, ...action.payload },
+                    permanent: {
+                        ...state.addressInfo.permanent,
+                        ...action.payload,
+                    },
                 },
             };
         case ADD_PROFILE_REG_RES_ADDRESS_DATA:
@@ -150,7 +152,10 @@ const userProfileReducer = (state = initialState, action) => {
                 ...state,
                 addressInfo: {
                     ...state.addressInfo,
-                    res: { ...state.addressInfo.res, ...action.payload },
+                    residence: {
+                        ...state.addressInfo.residence,
+                        ...action.payload,
+                    },
                 },
             };
         case ADD_PROFILE_REG_SCHOOL_DATA:
