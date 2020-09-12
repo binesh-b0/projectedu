@@ -19,5 +19,10 @@ routes.post('/rest/v1/resendVerification', authController.resendVerificationEmai
 
 routes.post('/rest/v1/addStudentInfo', [requireAuth, upload.fields([{name: 'profilePic', maxCount: 1}, {name: 'certifications', maxCount: 10}])], authController.addStudentInfo);
 
+routes.post('/rest/v1/forgotPassword', authController.forgotPassword);
+
+routes.get('/rest/v1/passwordResetLink/:encodedString', authController.resetPasswordRouting);
+
+routes.post('/rest/v1/passwordReset', authController.resetPassword);
 
 module.exports = routes;
