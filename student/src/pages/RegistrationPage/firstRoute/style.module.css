@@ -1,0 +1,29 @@
+.container {
+    margin-bottom: 32px;
+    margin-right: 32px;
+    margin-left: 32px;
+}
+
+.formStyle {
+    display: flex;
+    flex-direction: column;
+}
+
+.textField {
+    padding-top: 8px;
+}
+
+.img {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}
+
+.hideImg {
+    display: none;
+}
+
+.btn {
+    padding: 0px;
+    box-shadow: none;
+}
