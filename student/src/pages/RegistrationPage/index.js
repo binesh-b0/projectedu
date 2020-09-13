@@ -5,12 +5,20 @@ import { Stepper, Step, StepLabel } from '@material-ui/core';
 import { connect } from 'react-redux';
 import First from './firstRoute';
 import Second from './secondRoute';
+import Snackbar from '@material-ui/core/Snackbar';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
+import MuiAlert from '@material-ui/lab/Alert';
 import { submitUserData } from '../../actions/userActions';
 
-const Registration = ({ submitData }) => {
-    const [activeStep, setActiveStep] = useState(3);
+function Alert(props) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
+
+const Registration = ({ submitData, userProfile }) => {
+    const [snk, setSnk] = useState('');
+    const [open, setOpen] = useState(false);
+    const [activeStep, setActiveStep] = useState(0);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
@@ -25,6 +33,30 @@ const Registration = ({ submitData }) => {
             setNextButtonText('Continue');
         }
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnk('');
+        setOpen(false);
+    };
+
+    const showSnackbar = () => {
+        return (
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleClose} severity={'error'}>
+                    {snk}
+                </Alert>
+            </Snackbar>
+        );
+    };
+
     const handleNext = () => {
         if (activeStep >= 0) {
             setActiveStep(activeStep + 1);
@@ -34,12 +66,97 @@ const Registration = ({ submitData }) => {
         }
         if (activeStep === 3) {
             console.log('Finished');
-            submitData();
+            const error = checkIfDataIsNull();
+            if (error) {
+                setOpen(true);
+                setSnk('Complete all fields');
+            } else submitData();
         }
+    };
+
+    const checkIfDataIsNull = () => {
+        const {
+            userInfo,
+            profilePic,
+            addressInfo,
+            academics,
+            degree,
+            certifications,
+            certificationPic,
+        } = userProfile;
+        const {
+            fullName,
+            gender,
+            dob,
+            guardianName,
+            relationToGuardian,
+        } = userInfo;
+
+        const { residence, permanent } = addressInfo;
+
+        const {
+            addressLine1,
+            addressLine2,
+            city,
+            state,
+            zipcode,
+            phoneNo,
+        } = residence;
+
+        const {
+            schoolName10,
+            cgpa10,
+            board10,
+            location10,
+            schoolName12,
+            cgpa12,
+            board12,
+            location12,
+        } = academics;
+
+        if (
+            !fullName &&
+            !gender &&
+            !dob &&
+            !guardianName &&
+            !relationToGuardian &&
+            !profilePic
+        ) {
+            return 'userInfo';
+        } else {
+            console.log('user inof is ', userInfo);
+        }
+        if (
+            permanent.addressLine1 &&
+            permanent.addressLine2 &&
+            permanent.city &&
+            permanent.state &&
+            permanent.zipcode &&
+            permanent.phoneNo
+        )
+            return 'peraddress';
+
+        if (addressLine1 && addressLine2 && city && state && zipcode && phoneNo)
+            return 'resaddress';
+
+        if (
+            !schoolName10 &&
+            !cgpa10 &&
+            !board10 &&
+            !location10 &&
+            !schoolName12 &&
+            !cgpa12 &&
+            !board12 &&
+            !location12
+        )
+            return 'academics';
+
+        return false;
     };
 
     return (
         <div className={styles.container}>
+            {showSnackbar()}
             <h2 className={styles.heading}>HSST Portal</h2>
             <div className={styles.subContainer}>
                 <div className={styles.firstDiv}>
@@ -93,7 +210,13 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
+const mapStateToProps = (state) => {
+    return {
+        userProfile: state.userProfile,
+    };
+};
+
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Registration);
