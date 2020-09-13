@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField, makeStyles } from '@material-ui/core';
 import styles from './style.module.css';
 import { connect } from 'react-redux';
+import { string } from 'yup';
 import {
     changeProfileRegAddressInfo,
     changeProfileRegInfo,

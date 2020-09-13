@@ -8,3 +8,10 @@
     display: flex;
     flex-direction: column;
 }
+
+.btn {
+    margin-top: 16px;
+    background-color: white;
+    color: rgb(39, 101, 195);
+    border: 2px solid rgb(39, 101, 195);
+}

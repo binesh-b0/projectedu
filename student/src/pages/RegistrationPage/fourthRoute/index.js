@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import styles from './style.module.css';
 import { TextField, makeStyles, Avatar } from '@material-ui/core';
 import { connect } from 'react-redux';
+import Button from '../../../components/CTAButton';
 import { changeProfileSchoolInfo } from '../../../actions/userActions';
 
 const FourthRoute = () => {
@@ -71,12 +72,12 @@ const FourthRoute = () => {
                     onChange={(event) => setinstitute(event.target.value)}
                     variant='outlined'
                 />
+                <Button style={styles.btn} heading='Add more' />
             </form>
             <img
                 className={styles.img}
                 src={picture}
                 onClick={() => inputFile.current.click()}
-                // src={require('../../../assets/images/uploadimg.svg')}
                 alt='upload certificate'
             />
             <input

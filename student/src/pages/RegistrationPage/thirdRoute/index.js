@@ -9,21 +9,15 @@ import {
 import styles from './style.module.css';
 import { connect } from 'react-redux';
 import { changeProfileSchoolInfo } from '../../../actions/userActions';
+import Button from '../../../components/CTAButton';
 
 const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
     const [expanded, setExpanded] = useState(false);
-
-    // const [degrees, setDegrees] = useState([]);
 
     const [collegeName, setCollegeName] = useState('');
     const [degree, setDegree] = useState('');
     const [cgpa, setCgpa] = useState('');
     const [location, setLocation] = useState('');
-
-    // const changeDegree = (data) => {
-    //     const len = degree.length - 1;
-    //     setDegree()
-    // };
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -194,6 +188,7 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                     </form>
                 </AccordionDetails>
             </Accordion>
+            <Button heading={'Add more degree'} style={styles.btn} />
         </div>
     );
 };

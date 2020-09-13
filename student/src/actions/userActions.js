@@ -34,6 +34,7 @@ const submitUserData = () => async (dispatch, getState) => {
             academics,
             degree,
             certifications,
+            profilePic,
         } = new getState().userProfile;
         console.log('addressInfo is ', JSON.stringify(addressInfo));
         formData.append('userInfo', JSON.stringify(userInfo));
@@ -41,6 +42,8 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('academics', JSON.stringify(academics));
         formData.append('degree', JSON.stringify(degree));
         formData.append('certifications', JSON.stringify(certifications));
+        formData.append('profilePic', profilePic);
+
         const config = {
             method: 'POST',
             url,
@@ -212,6 +215,14 @@ const changeProfileSchoolInfo = (data) => {
     };
 };
 
+const changeProfilePicture = (data) => {
+    console.log('Called');
+    return {
+        type: 'ADD_PROFILE_PICTURE',
+        payload: data,
+    };
+};
+
 export {
     signin,
     register,
@@ -222,4 +233,5 @@ export {
     changeProfileRegAddressInfo,
     changeProfileSchoolInfo,
     submitUserData,
+    changeProfilePicture,
 };

@@ -10,7 +10,7 @@ import Fourth from './fourthRoute';
 import { submitUserData } from '../../actions/userActions';
 
 const Registration = ({ submitData }) => {
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(2);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',

@@ -82,6 +82,7 @@ const initialState = {
         guardianName: '',
         relationToGuardian: '',
     },
+    profilePic: '',
     addressInfo: {
         residence: {
             addressLine1: '',
@@ -162,6 +163,12 @@ const userProfileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 academics: { ...state.academics, ...action.payload },
+            };
+        case 'ADD_PROFILE_PICTURE':
+            console.log(action.payload);
+            return {
+                ...state,
+                profilePic: action.payload,
             };
         case 'ADD_PROFILE_REG_COLLEGE_DATA':
             return {

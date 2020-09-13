@@ -8,12 +8,19 @@ import {
 } from '@material-ui/core';
 import styles from './style.module.css';
 import { connect } from 'react-redux';
-import { changeProfileRegInfo } from '../../../actions/userActions';
+import {
+    changeProfileRegInfo,
+    changeProfilePicture,
+} from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 import ImageUploader from 'react-images-upload';
 import { findByLabelText } from '@testing-library/react';
 
-const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
+const FirstRoute = ({
+    userProfile,
+    changeProfileRegInfo,
+    changeProfilePicture,
+}) => {
     const { fullName, gender, dob, guardianName } = userProfile;
 
     const inputFile = useRef(null);
@@ -43,6 +50,8 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
         reader.addEventListener('load', (data) => {
             console.log(data);
             setPicture(data.target.result);
+            // changeProfilePicture(data.target.result);
+            changeProfilePicture(file);
         });
         reader.readAsDataURL(file);
     };
@@ -54,7 +63,7 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
                     onClick={() => inputFile.current.click()}
                     className={styles.img}
                     src={picture}
-                    alt='Upload imgage'
+                    alt='Upload'
                 />
                 <input
                     type='file'
@@ -126,14 +135,22 @@ const FirstRoute = ({ userProfile, changeProfileRegInfo }) => {
     );
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeProfilePicture: (data) => dispatch(changeProfilePicture(data)),
+        changeProfileRegInfo: (data) => dispatch(changeProfileRegInfo(data)),
+    };
+};
+
 const mapStateToProp = (state) => {
     console.log(state);
     return {
         userProfile: state.userProfile.userInfo,
+        profilePic: state.userProfile.profilePic,
     };
 };
 
 export default connect(
     mapStateToProp,
-    { changeProfileRegInfo }
+    mapDispatchToProps
 )(FirstRoute);
