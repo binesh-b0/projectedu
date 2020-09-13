@@ -30,8 +30,11 @@ const Registration = ({ submitData, userProfile }) => {
     const handlePrev = () => {
         if (activeStep > 0) {
             setActiveStep(activeStep - 1);
-            setNextButtonText('Continue');
         }
+    };
+
+    const handleSubmit = () => {
+        submitData();
     };
 
     const handleClose = (event, reason) => {
@@ -61,17 +64,17 @@ const Registration = ({ submitData, userProfile }) => {
         if (activeStep >= 0) {
             setActiveStep(activeStep + 1);
         }
-        if (activeStep >= 2) {
-            setNextButtonText('Submit');
-        }
-        if (activeStep === 3) {
-            console.log('Finished');
-            const error = checkIfDataIsNull();
-            if (error) {
-                setOpen(true);
-                setSnk(error + ' is not complete');
-            } else submitData();
-        }
+        // if (activeStep >= 2) {
+        //     setNextButtonText('Submit');
+        // }
+        // if (activeStep === 3) {
+        //     console.log('Finished');
+        //     const error = checkIfDataIsNull();
+        //     if (error) {
+        //         setOpen(true);
+        //         setSnk(error + ' is not complete');
+        //     } else submitData();
+        // }
     };
 
     const checkIfDataIsNull = () => {
@@ -178,16 +181,28 @@ const Registration = ({ submitData, userProfile }) => {
                         })}
                     </Stepper>
                     {activeStep === 0 ? (
-                        <First />
+                        <First
+                            handleNext={() => handleNext()}
+                            handlePrev={() => handlePrev()}
+                        />
                     ) : activeStep === 1 ? (
-                        <Second />
+                        <Second
+                            handleNext={() => handleNext()}
+                            handlePrev={() => handlePrev()}
+                        />
                     ) : activeStep === 2 ? (
-                        <Third />
+                        <Third
+                            handleNext={() => handleNext()}
+                            handlePrev={() => handlePrev()}
+                        />
                     ) : (
-                        <Fourth />
+                        <Fourth
+                            handleNext={() => handleNext()}
+                            handleSubmit={() => handleSubmit()}
+                        />
                     )}
                     {/* <div> */}
-                    <div className={styles.buttonDiv}>
+                    {/* <div className={styles.buttonDiv}>
                         {activeStep !== 0 ? (
                             <Button heading='Previous' onPress={handlePrev} />
                         ) : null}
@@ -196,7 +211,7 @@ const Registration = ({ submitData, userProfile }) => {
                             onPress={handleNext}
                             style={styles.btn}
                         />
-                    </div>
+                    </div> */}
                     {/* </div> */}
                 </div>
             </div>

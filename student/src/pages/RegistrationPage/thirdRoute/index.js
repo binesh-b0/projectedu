@@ -12,7 +12,12 @@ import { changeProfileSchoolInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 import Degree from '../../../components/Degree';
 
-const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
+const ThirdRoute = ({
+    schoolInfo,
+    onChangeSchoolData,
+    handleNext,
+    handlePrev,
+}) => {
     const [expanded, setExpanded] = useState(false);
     const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
 
@@ -171,6 +176,10 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                     style={styles.btn}
                     onPress={() => removeLastDegree()}
                 />
+            </div>
+            <div className={styles.btnDiv}>
+                <Button heading='Previous' onPress={handlePrev} />
+                <Button heading='Continue' onPress={handleNext} />
             </div>
         </div>
     );

@@ -19,6 +19,8 @@ import { findByLabelText } from '@testing-library/react';
 const FirstRoute = ({
     userProfile,
     changeProfileRegInfo,
+    handleNext,
+    handlePrev,
     changeProfilePicture,
 }) => {
     const { fullName, gender, dob, guardianName } = userProfile;
@@ -129,6 +131,11 @@ const FirstRoute = ({
                         });
                     }}
                     value={guardianName}
+                />
+                <Button
+                    heading='Continue'
+                    onPress={handleNext}
+                    style={styles.btn}
                 />
             </form>
         </div>

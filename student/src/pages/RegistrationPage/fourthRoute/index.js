@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Certificate from '../../../components/Certificate';
 import Button from '../../../components/CTAButton';
 
-const FourthRoute = () => {
+const FourthRoute = ({ handlePrev, handleSubmit }) => {
     const [certificates, setCertificates] = useState([{ id: 1 }]);
     const [expanded, setExpanded] = useState(false);
 
@@ -47,6 +47,10 @@ const FourthRoute = () => {
                     style={styles.btn}
                     onPress={() => removeCertificate()}
                 />
+            </div>
+            <div className={styles.btnDiv}>
+                <Button heading='Previous' onPress={handlePrev} />
+                <Button heading='Submit' onPress={handleSubmit} />
             </div>
         </div>
     );

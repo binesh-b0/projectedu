@@ -1,9 +1,14 @@
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex: 1;
     /* background-color: red; */
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: row;
 }
 
 .subDiv {
@@ -38,4 +43,10 @@
     padding: 16px;
     flex-direction: column;
     border-radius: 10px;
+}
+
+.btnDiv {
+    display: flex;
+    justify-content: space-between;
+    margin: 32px;
 }
