@@ -10,16 +10,20 @@ import {
     USER_SIGNIN_FAIL,
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
-    USER_VERFIY_RESEND,
-    USER_REGISTER_FAIL,
-    USER_LOGOUT,
-    USER_UPDATE_REQUEST,
-    USER_UPDATE_SUCCESS,
-    USER_UPDATE_FAIL,
     ADD_PROFILE_REG_DATA,
     ADD_PROFILE_REG_ADDRESS_DATA,
     ADD_PROFILE_REG_RES_ADDRESS_DATA,
     ADD_PROFILE_REG_SCHOOL_DATA,
+    USER_VERFIY_RESEND,
+    USER_REGISTER_FAIL,
+    USER_PASSWORD_RESET_REQUEST,
+    USER_PASSWORD_RESET_SUCCESS,
+    USER_PASSWORD_RESET_FAIL,
+    USER_PASSWORD_RESET_COMPLETE,
+    USER_LOGOUT,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
@@ -189,7 +193,31 @@ const resendEmail = (email) => async (dispatch) => {
         }); //TODO
     }
 };
-
+const resetPassword = (email) => async (dispatch) => {
+    console.log('reset password', email);
+    dispatch({ type: USER_PASSWORD_RESET_REQUEST });
+    try {
+        const data = await api.post(
+            '/forgotPassword',
+            { email },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        dispatch({ type: USER_PASSWORD_RESET_SUCCESS }); //TODO
+    } catch (err) {
+        dispatch({
+            type: USER_PASSWORD_RESET_FAIL,
+            payload: 'Email not found',
+            pstatus: 511,
+        }); //TODO
+    }
+};
+const passwordResetComplete = () => (dispatch) => {
+    dispatch({ type: USER_PASSWORD_RESET_COMPLETE });
+};
 const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT });
     removeCredentials();
@@ -263,4 +291,6 @@ export {
     addDegreeDetails,
     addCertificateDetails,
     addCertificatePicture,
+    resetPassword,
+    passwordResetComplete,
 };
