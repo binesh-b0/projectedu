@@ -19,6 +19,7 @@ const Certificate = ({
     onChange,
     id,
     addCertificateDetails,
+    addCertificatePicture,
     certificateDetails,
 }) => {
     const [picture, setPicture] = useState(
@@ -47,8 +48,8 @@ const Certificate = ({
         const file = event.target.files[0];
         const reader = new FileReader();
         reader.addEventListener('load', (data) => {
+            addCertificatePicture(file);
             setPicture(data.target.result);
-            addCertificatePicture(data);
         });
         reader.readAsDataURL(file);
     };
@@ -145,6 +146,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
+    console.log(state.userProfile.certifications);
     return {
         certificateDetails: state.userProfile.certifications,
     };

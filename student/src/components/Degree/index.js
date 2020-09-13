@@ -32,6 +32,7 @@ const Degree = ({
     const classes = useStyles();
 
     const addDataToStore = (data) => {
+        console.log('The data in blah is ', data);
         addDegreeDetails({ id: id, ...data });
     };
 

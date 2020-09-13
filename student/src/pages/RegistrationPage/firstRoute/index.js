@@ -39,7 +39,6 @@ const FirstRoute = ({
         },
     });
 
-
     const [picture, setPicture] = useState(
         require('../../../assets/images/user.svg')
     );

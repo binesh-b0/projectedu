@@ -41,17 +41,17 @@ const submitUserData = () => async (dispatch, getState) => {
             profilePic,
             certificationPic,
         } = new getState().userProfile;
+        console.log('The data is ', certifications);
         console.log('addressInfo is ', JSON.stringify(addressInfo));
         formData.append('userInfo', JSON.stringify(userInfo));
         formData.append('addressInfo', JSON.stringify(addressInfo));
         formData.append('academics', JSON.stringify(academics));
-        formData.append('degree', JSON.stringify(Object.values(degree)));
-        formData.append(
-            'certifications',
-            JSON.stringify(Object.values(certifications))
-        );
+        formData.append('degree', Object.values(degree));
+        formData.append('certifications', Object.values(certifications));
         formData.append('certifications', certificationPic);
         formData.append('profilePic', profilePic);
+
+        // console.log(Object.values(certifications));
 
         const config = {
             method: 'POST',
