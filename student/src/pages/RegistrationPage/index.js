@@ -69,7 +69,7 @@ const Registration = ({ submitData, userProfile }) => {
             const error = checkIfDataIsNull();
             if (error) {
                 setOpen(true);
-                setSnk('Complete all fields');
+                setSnk(error + ' is not complete');
             } else submitData();
         }
     };
@@ -115,29 +115,32 @@ const Registration = ({ submitData, userProfile }) => {
         } = academics;
 
         if (
-            !fullName &&
-            !gender &&
-            !dob &&
-            !guardianName &&
-            !relationToGuardian &&
-            !profilePic
+            fullName === '' &&
+            guardianName === '' &&
+            relationToGuardian === '' &&
+            profilePic === ''
         ) {
-            return 'userInfo';
-        } else {
-            console.log('user inof is ', userInfo);
+            return 'Personal information';
         }
         if (
-            permanent.addressLine1 &&
-            permanent.addressLine2 &&
-            permanent.city &&
-            permanent.state &&
-            permanent.zipcode &&
-            permanent.phoneNo
+            !permanent.addressLine1 &&
+            !permanent.addressLine2 &&
+            !permanent.city &&
+            !permanent.state &&
+            !permanent.zipcode &&
+            !permanent.phoneNo
+        ) {
+            return 'Contact Details';
+        }
+        if (
+            !addressLine1 &&
+            !addressLine2 &&
+            !city &&
+            !state &&
+            !zipcode &&
+            !phoneNo
         )
-            return 'peraddress';
-
-        if (addressLine1 && addressLine2 && city && state && zipcode && phoneNo)
-            return 'resaddress';
+            return 'Contact Details';
 
         if (
             !schoolName10 &&
@@ -149,7 +152,7 @@ const Registration = ({ submitData, userProfile }) => {
             !board12 &&
             !location12
         )
-            return 'academics';
+            return 'Education Information';
 
         return false;
     };
@@ -183,21 +186,18 @@ const Registration = ({ submitData, userProfile }) => {
                     ) : (
                         <Fourth />
                     )}
-                    <div>
-                        <div className={styles.buttonDiv}>
-                            {activeStep !== 0 ? (
-                                <Button
-                                    heading='Previous'
-                                    onPress={handlePrev}
-                                />
-                            ) : null}
-                            <Button
-                                heading={nextButtonText}
-                                onPress={handleNext}
-                                style={styles.btn}
-                            />
-                        </div>
+                    {/* <div> */}
+                    <div className={styles.buttonDiv}>
+                        {activeStep !== 0 ? (
+                            <Button heading='Previous' onPress={handlePrev} />
+                        ) : null}
+                        <Button
+                            heading={nextButtonText}
+                            onPress={handleNext}
+                            style={styles.btn}
+                        />
                     </div>
+                    {/* </div> */}
                 </div>
             </div>
         </div>
