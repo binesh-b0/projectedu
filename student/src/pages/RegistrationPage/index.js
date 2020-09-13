@@ -18,7 +18,7 @@ function Alert(props) {
 const Registration = ({ submitData, userProfile }) => {
     const [snk, setSnk] = useState('');
     const [open, setOpen] = useState(false);
-    const [activeStep, setActiveStep] = useState(3);
+    const [activeStep, setActiveStep] = useState(2);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',

@@ -5,8 +5,14 @@ import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Certificate from '../../../components/Certificate';
 import Button from '../../../components/CTAButton';
+import { removeCertificateDetail } from '../../../actions/userActions';
 
-const FourthRoute = ({ handlePrev, handleSubmit, certificateDetails }) => {
+const FourthRoute = ({
+    handlePrev,
+    handleSubmit,
+    certificateDetails,
+    removeCertificateDetail,
+}) => {
     const [certificates, setCertificates] = useState([{ id: 1 }]);
     const [expanded, setExpanded] = useState(false);
 
@@ -29,9 +35,10 @@ const FourthRoute = ({ handlePrev, handleSubmit, certificateDetails }) => {
     };
 
     const removeCertificate = () => {
-        if (certificates.length >= 2) {
-            setCertificates(certificates.slice(0, -1));
-        }
+        // if (certificates.length >= 2) {
+        setCertificates(certificates.slice(0, -1));
+        // }
+        removeCertificateDetail(certificates.pop().id);
     };
 
     return (
@@ -70,6 +77,8 @@ const mapDispatchToProps = (disptch) => {
         onChange: (data) => {
             disptch();
         },
+        removeCertificateDetail: (data) =>
+            disptch(removeCertificateDetail(data)),
     };
 };
 

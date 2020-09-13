@@ -277,6 +277,20 @@ const addCertificatePicture = (data) => {
     };
 };
 
+const removeCertificateDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const removeDegreeDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_COLLEGE_DATA',
+        payload: data,
+    };
+};
+
 export {
     signin,
     register,
@@ -293,4 +307,6 @@ export {
     addCertificatePicture,
     resetPassword,
     passwordResetComplete,
+    removeDegreeDetail,
+    removeCertificateDetail,
 };

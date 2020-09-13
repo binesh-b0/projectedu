@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import {
     addCertificateDetails,
     addCertificatePicture,
+    removeCertificateDetail,
 } from '../../actions/userActions';
 
 const Certificate = ({
@@ -151,6 +152,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addCertificateDetails: (data) => dispatch(addCertificateDetails(data)),
         addCertificatePicture: (data) => dispatch(addCertificatePicture(data)),
+        removeCertificateDetail: (data) =>
+            dispatch(removeCertificateDetail(data)),
     };
 };
 

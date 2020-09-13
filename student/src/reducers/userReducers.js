@@ -207,6 +207,17 @@ const userProfileReducer = (state = initialState, action) => {
                     },
                 },
             };
+
+        case 'REMOVE_REG_CERTIFICATE_DATA':
+            const tempCer = state.certifications;
+            delete tempCer[action.payload];
+            return { ...state, certifications: tempCer };
+
+        case 'REMOVE_REG_COLLEGE_DATA':
+            const tempData = state.degree;
+            delete tempData[action.payload];
+            return { ...state, degree: tempData };
+
         case 'ADD_PROFILE_DEGREE_CERTIFICATE':
             return {
                 ...state,

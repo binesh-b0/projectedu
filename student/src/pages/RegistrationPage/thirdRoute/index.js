@@ -9,7 +9,10 @@ import {
 } from '@material-ui/core';
 import styles from './style.module.css';
 import { connect } from 'react-redux';
-import { changeProfileSchoolInfo } from '../../../actions/userActions';
+import {
+    changeProfileSchoolInfo,
+    removeDegreeDetail,
+} from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 import Degree from '../../../components/Degree';
 
@@ -19,6 +22,7 @@ const ThirdRoute = ({
     handleNext,
     handlePrev,
     degreeDetails,
+    removeDegree,
 }) => {
     const [expanded, setExpanded] = useState(false);
     const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
@@ -47,6 +51,7 @@ const ThirdRoute = ({
 
     const removeLastDegree = () => {
         setDegrees(degrees.slice(0, -1));
+        removeDegree(degrees.pop().id);
     };
 
     return (
@@ -198,6 +203,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onChangeSchoolData: (data) => {
             dispatch(changeProfileSchoolInfo(data));
+        },
+        removeDegree: (data) => {
+            dispatch(removeDegreeDetail(data));
         },
     };
 };
