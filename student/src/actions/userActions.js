@@ -35,13 +35,18 @@ const submitUserData = () => async (dispatch, getState) => {
             degree,
             certifications,
             profilePic,
+            certificationPic,
         } = new getState().userProfile;
         console.log('addressInfo is ', JSON.stringify(addressInfo));
         formData.append('userInfo', JSON.stringify(userInfo));
         formData.append('addressInfo', JSON.stringify(addressInfo));
         formData.append('academics', JSON.stringify(academics));
-        formData.append('degree', JSON.stringify(degree));
-        formData.append('certifications', JSON.stringify(certifications));
+        formData.append('degree', JSON.stringify(Object.values(degree)));
+        formData.append(
+            'certifications',
+            JSON.stringify(Object.values(certifications))
+        );
+        formData.append('certifications', certificationPic);
         formData.append('profilePic', profilePic);
 
         const config = {
@@ -231,9 +236,15 @@ const addDegreeDetails = (data) => {
 };
 
 const addCertificateDetails = (data) => {
-    console.log(data);
     return {
         type: 'ADD_PROFILE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const addCertificatePicture = (data) => {
+    return {
+        type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
         payload: data,
     };
 };
@@ -251,4 +262,5 @@ export {
     changeProfilePicture,
     addDegreeDetails,
     addCertificateDetails,
+    addCertificatePicture,
 };

@@ -128,6 +128,7 @@ const initialState = {
         //     institute: '',
         // },
     },
+    certificationPic: [],
 };
 
 const userProfileReducer = (state = initialState, action) => {
@@ -191,6 +192,11 @@ const userProfileReducer = (state = initialState, action) => {
                         ...action.payload,
                     },
                 },
+            };
+        case 'ADD_PROFILE_DEGREE_CERTIFICATE':
+            return {
+                ...state,
+                certificationPic: [...state.certificationPic, action.payload],
             };
         default:
             return state;

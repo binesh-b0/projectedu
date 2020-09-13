@@ -32,8 +32,7 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
     };
 
     const removeLastDegree = () => {
-        degrees.pop();
-        setDegrees(degrees);
+        setDegrees(degrees.slice(0, -1));
     };
 
     return (
@@ -161,51 +160,6 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                     />
                 );
             })}
-            {/* <Accordion
-                expanded={expanded === 'panel3'}
-                onChange={handleChange('panel3')}
-            >
-                <AccordionSummary>
-                    <p>Enter your College Educational Details</p>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <form className={styles.form}>
-                        <TextField
-                            className={classes.textField}
-                            label='College Name'
-                            variant='outlined'
-                            value={collegeName}
-                            onChange={(event) =>
-                                setCollegeName(event.target.value)
-                            }
-                        />
-                        <TextField
-                            className={classes.textField}
-                            label='Degree'
-                            variant='outlined'
-                            onChange={(event) => setDegree(event.target.value)}
-                            value={degree}
-                        />
-                        <TextField
-                            className={classes.textField}
-                            label='CGPA/Percentage'
-                            variant='outlined'
-                            type='number'
-                            onChange={(event) => setCgpa(event.target.value)}
-                            value={cgpa}
-                        />
-                        <TextField
-                            className={classes.textField}
-                            label='Location'
-                            variant='outlined'
-                            onChange={(event) =>
-                                setLocation(event.target.value)
-                            }
-                            value={location}
-                        />
-                    </form>
-                </AccordionDetails>
-           </Accordion> */}
             <div className={styles.btnDiv}>
                 <Button
                     heading={'Add more degree'}

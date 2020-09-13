@@ -9,13 +9,29 @@ import {
 } from '@material-ui/core';
 import styles from './certificate.module.css';
 import { connect } from 'react-redux';
-import { addCertificateDetails } from '../../actions/userActions';
-import Button from '../../components/CTAButton';
+import {
+    addCertificateDetails,
+    addCertificatePicture,
+} from '../../actions/userActions';
 
-const Certificate = (expanded, onChange, id) => {
+const Certificate = ({
+    expanded,
+    onChange,
+    id,
+    addCertificateDetails,
+    certificateDetails,
+}) => {
     const [picture, setPicture] = useState(
         require('../../assets/images/uploadimg.svg')
     );
+
+    const [details, setDetails] = useState({});
+
+    useEffect(() => {
+        if (certificateDetails.id) {
+            setDetails({ ...certificateDetails.id });
+        }
+    }, [certificateDetails.id]);
 
     const useStyles = makeStyles({
         textField: {
@@ -32,6 +48,7 @@ const Certificate = (expanded, onChange, id) => {
         const reader = new FileReader();
         reader.addEventListener('load', (data) => {
             setPicture(data.target.result);
+            addCertificatePicture(data);
         });
         reader.readAsDataURL(file);
     };
@@ -55,7 +72,7 @@ const Certificate = (expanded, onChange, id) => {
                             className={styleObj.textField}
                             label='Certificate Name'
                             variant='outlined'
-                            // value={certificationName}
+                            value={certificateDetails.certificationName}
                             onChange={(event) =>
                                 addDataToStore({
                                     certificationName: event.target.value,
@@ -66,7 +83,7 @@ const Certificate = (expanded, onChange, id) => {
                             className={styleObj.textField}
                             label='Course Completed Date'
                             type='date'
-                            // value={completionDate}
+                            value={certificateDetails.completionDate}
                             onChange={(event) =>
                                 addDataToStore({
                                     completionDate: event.target.value,
@@ -78,7 +95,7 @@ const Certificate = (expanded, onChange, id) => {
                             className={styleObj.textField}
                             label='Validity'
                             type='date'
-                            // value={validityDate}
+                            value={certificateDetails.validityDate}
                             onChange={(event) =>
                                 addDataToStore({
                                     validityData: event.target.value,
@@ -89,7 +106,7 @@ const Certificate = (expanded, onChange, id) => {
                         <TextField
                             className={styleObj.textField}
                             label='Issuing Authority'
-                            // value={institute}
+                            value={certificateDetails.institute}
                             onChange={(event) =>
                                 addDataToStore({
                                     institute: event.target.value,
@@ -121,11 +138,11 @@ const Certificate = (expanded, onChange, id) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addCertificateDetails: (data) => dispatch(addCertificateDetails(data)),
+        addCertificatePicture: (data) => dispatch(addCertificatePicture(data)),
     };
 };
 
 const mapStateToProps = (state) => {
-    console.log(state.userProfile.certifications);
     return {
         certificateDetails: state.userProfile.certifications,
     };

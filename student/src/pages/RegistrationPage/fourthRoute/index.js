@@ -6,27 +6,9 @@ import Certificate from '../../../components/Certificate';
 import Button from '../../../components/CTAButton';
 
 const FourthRoute = () => {
-    // const [certificationName, setcertificationName] = useState('');
-    // const [completionDate, setcompletionDate] = useState('2000-12-10');
-    // const [validityDate, setvalidityDate] = useState('2000-12-10');
-    // const [institute, setinstitute] = useState('');
-    // const [picture, setPicture] = useState(
-    //     require('../../../assets/images/uploadimg.svg')
-    // );
-
-    const [certificates, setCertificateds] = useState([{ id: 1 }, { id: 2 }]);
+    const [certificates, setCertificates] = useState([{ id: 1 }]);
     const [expanded, setExpanded] = useState(false);
-    // const inputFile = useRef(null);
 
-    // const useStyles = makeStyles({
-    //     textField: {
-    //         marginTop: 16,
-    //     },
-    //     imgStyle: {
-    //         backgroundColor: '#EFECE8',
-    //         color: '#2262c6',
-    //     },
-    // });
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
         console.log(expanded);
@@ -34,18 +16,14 @@ const FourthRoute = () => {
 
     const addMoreCertificates = () => {
         const len = certificates.length + 1;
-        setCertificateds([...certificates, { id: len }]);
+        setCertificates([...certificates, { id: len }]);
     };
-    // const selectImage = (event) => {
-    //     const file = event.target.files[0];
-    //     const reader = new FileReader();
-    //     reader.addEventListener('load', (data) => {
-    //         setPicture(data.target.result);
-    //     });
-    //     reader.readAsDataURL(file);
-    // };
 
-    // const styleObj = useStyles();
+    const removeCertificate = () => {
+        if (certificates.length >= 2) {
+            setCertificates(certificates.slice(0, -1));
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -58,60 +36,18 @@ const FourthRoute = () => {
                     />
                 );
             })}
-            <Button
-                heading='Add more'
-                style={styles.btn}
-                onPress={() => addMoreCertificates()}
-            />
-            {/* <form className={styles.textContainer}>
-                <TextField
-                    className={styleObj.textField}
-                    label='Certificate Name'
-                    variant='outlined'
-                    value={certificationName}
-                    onChange={(event) =>
-                        setcertificationName(event.target.value)
-                    }
+            <div className={styles.btnDiv}>
+                <Button
+                    heading='Add more certificates'
+                    style={styles.btn}
+                    onPress={() => addMoreCertificates()}
                 />
-                <TextField
-                    className={styleObj.textField}
-                    label='Course Completed Date'
-                    type='date'
-                    value={completionDate}
-                    onChange={(event) => setcompletionDate(event.target.value)}
-                    variant='outlined'
+                <Button
+                    heading='Remove last certificate'
+                    style={styles.btn}
+                    onPress={() => removeCertificate()}
                 />
-                <TextField
-                    className={styleObj.textField}
-                    label='Validity'
-                    type='date'
-                    value={validityDate}
-                    onChange={(event) => setvalidityDate(event.target.value)}
-                    variant='outlined'
-                />
-                <TextField
-                    className={styleObj.textField}
-                    label='Issuing Authority'
-                    value={institute}
-                    onChange={(event) => setinstitute(event.target.value)}
-                    variant='outlined'
-                />
-                <Button style={styles.btn} heading='Add more' />
-            </form>
-            <img
-                className={styles.img}
-                src={picture}
-                onClick={() => inputFile.current.click()}
-                alt='upload certificate'
-            />
-            <input
-                type='file'
-                id='file'
-                accept='image/*'
-                ref={inputFile}
-                onChange={selectImage}
-                style={{ display: 'none' }}
-            /> */}
+            </div>
         </div>
     );
 };
