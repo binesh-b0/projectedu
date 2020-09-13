@@ -117,6 +117,7 @@ const SigninForm = ({ onSubmit,resetPasswordOnSubmit }) => {
               name="email"
               isInvalid={!!errors.email}
               onChange={handleChange}
+              disabled={loading}
               type="email"
               required
             />
@@ -134,6 +135,7 @@ const SigninForm = ({ onSubmit,resetPasswordOnSubmit }) => {
               className={`${styles.form_input} mx-auto w-100`}
               name="pass"
               type={passwordShown ? "text" : "password"}
+              disabled={loading}
               isInvalid={!!errors.pass}
               onChange={handleChange}
             />
