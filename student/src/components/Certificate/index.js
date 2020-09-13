@@ -83,6 +83,7 @@ const Certificate = ({
                             className={styleObj.textField}
                             label='Course Completed Date'
                             type='date'
+                            defaultValue='2000-01-01'
                             value={certificateDetails.completionDate}
                             onChange={(event) =>
                                 addDataToStore({
@@ -95,6 +96,7 @@ const Certificate = ({
                             className={styleObj.textField}
                             label='Validity'
                             type='date'
+                            defaultValue='2000-01-01'
                             value={certificateDetails.validityDate}
                             onChange={(event) =>
                                 addDataToStore({
