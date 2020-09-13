@@ -10,22 +10,31 @@ import styles from './style.module.css';
 import { connect } from 'react-redux';
 import { changeProfileSchoolInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
+import Degree from '../../../components/Degree';
 
 const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
     const [expanded, setExpanded] = useState(false);
-
-    const [collegeName, setCollegeName] = useState('');
-    const [degree, setDegree] = useState('');
-    const [cgpa, setCgpa] = useState('');
-    const [location, setLocation] = useState('');
+    const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
+        console.log(expanded);
     };
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
     const classes = useStyles();
+
+    const addMoreDegreeButton = () => {
+        const len = degrees.length + 3;
+        setDegrees([...degrees, { id: 'panel' + len }]);
+        console.log(degrees);
+    };
+
+    const removeLastDegree = () => {
+        degrees.pop();
+        setDegrees(degrees);
+    };
 
     return (
         <div className={styles.container}>
@@ -143,7 +152,16 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                     </form>
                 </AccordionDetails>
             </Accordion>
-            <Accordion
+            {degrees.map((degree) => {
+                return (
+                    <Degree
+                        expanded={expanded}
+                        id={degree.id}
+                        onChange={(id) => handleChange(id)}
+                    />
+                );
+            })}
+            {/* <Accordion
                 expanded={expanded === 'panel3'}
                 onChange={handleChange('panel3')}
             >
@@ -187,8 +205,19 @@ const ThirdRoute = ({ schoolInfo, onChangeSchoolData }) => {
                         />
                     </form>
                 </AccordionDetails>
-            </Accordion>
-            <Button heading={'Add more degree'} style={styles.btn} />
+           </Accordion> */}
+            <div className={styles.btnDiv}>
+                <Button
+                    heading={'Add more degree'}
+                    style={styles.btn}
+                    onPress={() => addMoreDegreeButton()}
+                />
+                <Button
+                    heading={'Remove last degree'}
+                    style={styles.btn}
+                    onPress={() => removeLastDegree()}
+                />
+            </div>
         </div>
     );
 };

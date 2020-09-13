@@ -1,45 +1,69 @@
 import React, { useState, useRef } from 'react';
 import styles from './style.module.css';
-import { TextField, makeStyles, Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
+import Certificate from '../../../components/Certificate';
 import Button from '../../../components/CTAButton';
-import { changeProfileSchoolInfo } from '../../../actions/userActions';
 
 const FourthRoute = () => {
-    const [certificationName, setcertificationName] = useState('');
-    const [completionDate, setcompletionDate] = useState('2000-12-10');
-    const [validityDate, setvalidityDate] = useState('2000-12-10');
-    const [institute, setinstitute] = useState('');
-    const [picture, setPicture] = useState(
-        require('../../../assets/images/uploadimg.svg')
-    );
+    // const [certificationName, setcertificationName] = useState('');
+    // const [completionDate, setcompletionDate] = useState('2000-12-10');
+    // const [validityDate, setvalidityDate] = useState('2000-12-10');
+    // const [institute, setinstitute] = useState('');
+    // const [picture, setPicture] = useState(
+    //     require('../../../assets/images/uploadimg.svg')
+    // );
 
-    const inputFile = useRef(null);
+    const [certificates, setCertificateds] = useState([{ id: 1 }, { id: 2 }]);
+    const [expanded, setExpanded] = useState(false);
+    // const inputFile = useRef(null);
 
-    const useStyles = makeStyles({
-        textField: {
-            marginTop: 16,
-        },
-        imgStyle: {
-            backgroundColor: '#EFECE8',
-            color: '#2262c6',
-        },
-    });
-
-    const selectImage = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', (data) => {
-            setPicture(data.target.result);
-        });
-        reader.readAsDataURL(file);
+    // const useStyles = makeStyles({
+    //     textField: {
+    //         marginTop: 16,
+    //     },
+    //     imgStyle: {
+    //         backgroundColor: '#EFECE8',
+    //         color: '#2262c6',
+    //     },
+    // });
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        console.log(expanded);
     };
 
-    const styleObj = useStyles();
+    const addMoreCertificates = () => {
+        const len = certificates.length + 1;
+        setCertificateds([...certificates, { id: len }]);
+    };
+    // const selectImage = (event) => {
+    //     const file = event.target.files[0];
+    //     const reader = new FileReader();
+    //     reader.addEventListener('load', (data) => {
+    //         setPicture(data.target.result);
+    //     });
+    //     reader.readAsDataURL(file);
+    // };
+
+    // const styleObj = useStyles();
 
     return (
         <div className={styles.container}>
-            <form className={styles.textContainer}>
+            {certificates.map((certificate) => {
+                return (
+                    <Certificate
+                        expanded={expanded}
+                        id={certificate.id}
+                        onChange={(id) => handleChange(id)}
+                    />
+                );
+            })}
+            <Button
+                heading='Add more'
+                style={styles.btn}
+                onPress={() => addMoreCertificates()}
+            />
+            {/* <form className={styles.textContainer}>
                 <TextField
                     className={styleObj.textField}
                     label='Certificate Name'
@@ -87,7 +111,7 @@ const FourthRoute = () => {
                 ref={inputFile}
                 onChange={selectImage}
                 style={{ display: 'none' }}
-            />
+            /> */}
         </div>
     );
 };

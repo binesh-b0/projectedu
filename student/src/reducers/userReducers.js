@@ -111,23 +111,23 @@ const initialState = {
         board12: '',
         location12: '',
     },
-    degree: [
-        {
-            collegeName: '',
-            cgpa: '',
-            rollNo: '',
-            degree: '',
-            location: '',
-        },
-    ],
-    certifications: [
-        {
-            certificationName: '',
-            completionDate: '2020-12-09',
-            validityDate: '2021-12-08',
-            institute: '',
-        },
-    ],
+    degree: {
+        // {
+        //     collegeName: '',
+        //     cgpa: '',
+        //     rollNo: '',
+        //     degree: '',
+        //     location: '',
+        // },
+    },
+    certifications: {
+        // {
+        //     certificationName: '',
+        //     completionDate: '2020-12-09',
+        //     validityDate: '2021-12-08',
+        //     institute: '',
+        // },
+    },
 };
 
 const userProfileReducer = (state = initialState, action) => {
@@ -170,10 +170,27 @@ const userProfileReducer = (state = initialState, action) => {
                 ...state,
                 profilePic: action.payload,
             };
+        case 'ADD_PROFILE_REG_CERTIFICATE_DATA':
+            return {
+                ...state,
+                certifications: {
+                    ...state.certifications,
+                    [action.payload.id]: {
+                        ...action.payload.id,
+                        ...action.payload,
+                    },
+                },
+            };
         case 'ADD_PROFILE_REG_COLLEGE_DATA':
             return {
                 ...state,
-                degree: { ...state.academics, ...action.payload },
+                degree: {
+                    ...state.degree,
+                    [action.payload.id]: {
+                        ...action.payload.id,
+                        ...action.payload,
+                    },
+                },
             };
         default:
             return state;

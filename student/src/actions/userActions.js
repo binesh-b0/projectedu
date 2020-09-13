@@ -223,6 +223,21 @@ const changeProfilePicture = (data) => {
     };
 };
 
+const addDegreeDetails = (data) => {
+    return {
+        type: 'ADD_PROFILE_REG_COLLEGE_DATA',
+        payload: data,
+    };
+};
+
+const addCertificateDetails = (data) => {
+    console.log(data);
+    return {
+        type: 'ADD_PROFILE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
 export {
     signin,
     register,
@@ -234,4 +249,6 @@ export {
     changeProfileSchoolInfo,
     submitUserData,
     changeProfilePicture,
+    addDegreeDetails,
+    addCertificateDetails,
 };
