@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import {
     TextField,
@@ -33,6 +34,10 @@ const Certificate = ({
             setDetails({ ...certificateDetails.id });
         }
     }, [certificateDetails.id]);
+
+    useEffect(() => {
+        setDetails({ ...certificateDetails[id] });
+    }, []);
 
     const useStyles = makeStyles({
         textField: {
@@ -73,7 +78,8 @@ const Certificate = ({
                             className={styleObj.textField}
                             label='Certificate Name'
                             variant='outlined'
-                            value={certificateDetails.certificationName}
+                            InputLabelProps={{ shrink: true }}
+                            value={details ? details.certificationName : ''}
                             onChange={(event) =>
                                 addDataToStore({
                                     certificationName: event.target.value,
@@ -85,7 +91,8 @@ const Certificate = ({
                             label='Course Completed Date'
                             type='date'
                             defaultValue='2000-01-01'
-                            value={certificateDetails.completionDate}
+                            InputLabelProps={{ shrink: true }}
+                            value={details ? details.completionDate : ''}
                             onChange={(event) =>
                                 addDataToStore({
                                     completionDate: event.target.value,
@@ -98,7 +105,8 @@ const Certificate = ({
                             label='Validity'
                             type='date'
                             defaultValue='2000-01-01'
-                            value={certificateDetails.validityDate}
+                            InputLabelProps={{ shrink: true }}
+                            value={details ? details.validityDate : ''}
                             onChange={(event) =>
                                 addDataToStore({
                                     validityData: event.target.value,
@@ -109,7 +117,8 @@ const Certificate = ({
                         <TextField
                             className={styleObj.textField}
                             label='Issuing Authority'
-                            value={certificateDetails.institute}
+                            value={details ? details.institute : ''}
+                            InputLabelProps={{ shrink: true }}
                             onChange={(event) =>
                                 addDataToStore({
                                     institute: event.target.value,

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import {
     Accordion,
     AccordionSummary,
@@ -17,19 +18,27 @@ const ThirdRoute = ({
     onChangeSchoolData,
     handleNext,
     handlePrev,
+    degreeDetails,
 }) => {
     const [expanded, setExpanded] = useState(false);
     const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
 
+    useEffect(() => {
+        const ids = Object.keys(degreeDetails);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === 'panel3') continue;
+            else setDegrees([...degrees, { id: ids[i] }]);
+        }
+    }, []);
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-        console.log(expanded);
     };
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
-    const classes = useStyles();
 
+    const classes = useStyles();
     const addMoreDegreeButton = () => {
         const len = degrees.length + 3;
         setDegrees([...degrees, { id: 'panel' + len }]);
@@ -196,6 +205,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         schoolInfo: state.userProfile.academics,
+        degreeDetails: state.userProfile.degree,
     };
 };
 

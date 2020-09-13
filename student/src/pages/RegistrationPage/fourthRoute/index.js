@@ -1,13 +1,22 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './style.module.css';
 import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Certificate from '../../../components/Certificate';
 import Button from '../../../components/CTAButton';
 
-const FourthRoute = ({ handlePrev, handleSubmit }) => {
+const FourthRoute = ({ handlePrev, handleSubmit, certificateDetails }) => {
     const [certificates, setCertificates] = useState([{ id: 1 }]);
     const [expanded, setExpanded] = useState(false);
+
+    useEffect(() => {
+        const ids = Object.keys(certificateDetails);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === 1) continue;
+            else setCertificates([...certificates, { id: ids[i] }]);
+        }
+    }, []);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -65,7 +74,9 @@ const mapDispatchToProps = (disptch) => {
 };
 
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        certificateDetails: state.userProfile.certifications,
+    };
 };
 
 export default connect(
