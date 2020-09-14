@@ -72,7 +72,7 @@ const FourthRoute = ({
                     disableElevation
                     onClick={handleSubmit}
                 >
-                    Continue
+                    Submit
                 </Button>
             </div>
         </div>

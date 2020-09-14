@@ -51,29 +51,29 @@ const ThirdRoute = ({
     const validate = () => {
         console.log('error blah is ', error, schoolInfo.schoolName10.length);
         schoolInfo.schoolName10.length < 1
-            ? setError((prevState) => ({ ...prevState, sn: false }))
-            : setError((prevState) => ({ ...prevState, sn: true }));
+            ? setError((prevState) => ({ ...prevState, sn: true }))
+            : setError((prevState) => ({ ...prevState, sn: false }));
         schoolInfo.cgpa10.length < 1
-            ? setError((prevState) => ({ ...prevState, cg: false }))
-            : setError((prevState) => ({ ...prevState, cg: true }));
+            ? setError((prevState) => ({ ...prevState, cg: true }))
+            : setError((prevState) => ({ ...prevState, cg: false }));
         schoolInfo.board10.length < 1
-            ? setError((prevState) => ({ ...prevState, board: false }))
-            : setError((prevState) => ({ ...prevState, board: true }));
+            ? setError((prevState) => ({ ...prevState, board: true }))
+            : setError((prevState) => ({ ...prevState, board: false }));
         schoolInfo.location10.length < 1
-            ? setError((prevState) => ({ ...prevState, location: false }))
-            : setError((prevState) => ({ ...prevState, location: true }));
+            ? setError((prevState) => ({ ...prevState, location: true }))
+            : setError((prevState) => ({ ...prevState, location: false }));
         schoolInfo.schoolName12.length < 1
-            ? setError((prevState) => ({ ...prevState, sn1: false }))
-            : setError((prevState) => ({ ...prevState, sn1: true }));
+            ? setError((prevState) => ({ ...prevState, sn1: true }))
+            : setError((prevState) => ({ ...prevState, sn1: false }));
         schoolInfo.cgpa12.length < 1
-            ? setError((prevState) => ({ ...prevState, cg1: false }))
-            : setError((prevState) => ({ ...prevState, cg1: true }));
+            ? setError((prevState) => ({ ...prevState, cg1: true }))
+            : setError((prevState) => ({ ...prevState, cg1: false }));
         schoolInfo.board12.length < 1
-            ? setError((prevState) => ({ ...prevState, board1: false }))
-            : setError((prevState) => ({ ...prevState, board1: true }));
+            ? setError((prevState) => ({ ...prevState, board1: true }))
+            : setError((prevState) => ({ ...prevState, board1: false }));
         schoolInfo.location12.length < 1
-            ? setError((prevState) => ({ ...prevState, location1: false }))
-            : setError((prevState) => ({ ...prevState, location1: true }));
+            ? setError((prevState) => ({ ...prevState, location1: true }))
+            : setError((prevState) => ({ ...prevState, location1: false }));
         for (const [key, value] of Object.entries(error)) {
             console.log(value);
             if (!value) return false;
@@ -128,7 +128,7 @@ const ThirdRoute = ({
                             variant='outlined'
                             value={schoolInfo.schoolName10}
                             helperText={!error.sn ? 'Required' : ''}
-                            error={!error.sn}
+                            error={error.sn}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     schoolName10: event.target.value,
@@ -174,7 +174,7 @@ const ThirdRoute = ({
                             label={markType === 'C' ? 'CGPA' : 'Percentage'}
                             variant='outlined'
                             type='number'
-                            error={!error.cg}
+                            error={error.cg}
                             helperText={!error.cg ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
@@ -185,7 +185,7 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
-                            error={!error.board}
+                            error={error.board}
                             helperText={!error.board ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
@@ -199,7 +199,7 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             label='Location'
-                            error={!error.location}
+                            error={error.location}
                             helperText={!error.location ? 'Required' : ''}
                             variant='outlined'
                             onChange={(event) => {
@@ -225,7 +225,7 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='School Name'
                             variant='outlined'
-                            error={!error.sn1}
+                            error={error.sn1}
                             helperText={!error.sn1 ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
@@ -271,7 +271,7 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             label={markType2 === 'C' ? 'CGPA' : 'Percentage'}
-                            error={!error.cg1}
+                            error={error.cg1}
                             helperText={!error.cg1 ? 'Required' : ''}
                             variant='outlined'
                             type='number'
@@ -284,7 +284,7 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
-                            error={!error.board1}
+                            error={error.board1}
                             helperText={!error.board1 ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
@@ -297,7 +297,7 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
-                            error={!error.location1}
+                            error={error.location1}
                             helperText={!error.location1 ? 'Required' : ''}
                             label='Location'
                             variant='outlined'
@@ -339,8 +339,7 @@ const ThirdRoute = ({
                     color='primary'
                     disableElevation
                     onClick={() => {
-                        // if (validate())
-                        handleNext();
+                        if (validate()) handleNext();
                     }}
                 >
                     Continue
