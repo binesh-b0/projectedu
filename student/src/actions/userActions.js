@@ -51,7 +51,7 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('certifications', certificationPic);
         formData.append('profilePic', profilePic);
 
-        // console.log(Object.values(certifications));
+        console.log(Object.values(degree));
 
         const config = {
             method: 'POST',
@@ -242,6 +242,7 @@ const changeProfileRegAddressInfo = (typ, data) => {
 };
 
 const changeProfileSchoolInfo = (data) => {
+    console.log(data);
     return {
         type: ADD_PROFILE_REG_SCHOOL_DATA,
         payload: data,
@@ -271,8 +272,23 @@ const addCertificateDetails = (data) => {
 };
 
 const addCertificatePicture = (data) => {
+    console.log(data);
     return {
         type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
+        payload: data,
+    };
+};
+
+const removeCertificateDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const removeDegreeDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_COLLEGE_DATA',
         payload: data,
     };
 };
@@ -293,4 +309,6 @@ export {
     addCertificatePicture,
     resetPassword,
     passwordResetComplete,
+    removeDegreeDetail,
+    removeCertificateDetail,
 };

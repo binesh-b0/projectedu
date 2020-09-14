@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
     Accordion,
@@ -26,13 +27,17 @@ const Degree = ({
         }
     }, [degreeDetails.id]);
 
+    useEffect(() => {
+        // console.log('The degree value is ', degreeDetails, id);
+        setDetails({ ...degreeDetails[id] });
+    }, []);
+
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
     const classes = useStyles();
 
     const addDataToStore = (data) => {
-        console.log('The data in blah is ', data);
         addDegreeDetails({ id: id, ...data });
     };
 
@@ -44,6 +49,7 @@ const Degree = ({
             <AccordionDetails>
                 <form className={styles.form}>
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='College Name'
                         variant='outlined'
@@ -55,6 +61,7 @@ const Degree = ({
                         value={details ? details.collegeName : ''}
                     />
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='Degree'
                         variant='outlined'
@@ -64,6 +71,7 @@ const Degree = ({
                         value={details ? details.degree : ''}
                     />
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='CGPA/Percentage'
                         variant='outlined'
@@ -74,6 +82,7 @@ const Degree = ({
                         value={details ? details.cgpa : ''}
                     />
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='Location'
                         variant='outlined'

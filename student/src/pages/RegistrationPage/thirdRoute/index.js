@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
     TextField,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
     makeStyles,
 } from '@material-ui/core';
+import { useFormik } from 'formik';
 import styles from './style.module.css';
+import Button from '@material-ui/core/Button';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 import { connect } from 'react-redux';
-import { changeProfileSchoolInfo } from '../../../actions/userActions';
-import Button from '../../../components/CTAButton';
+import {
+    changeProfileSchoolInfo,
+    removeDegreeDetail,
+} from '../../../actions/userActions';
+import MYButton from '../../../components/CTAButton';
 import Degree from '../../../components/Degree';
 
 const ThirdRoute = ({
@@ -17,19 +30,76 @@ const ThirdRoute = ({
     onChangeSchoolData,
     handleNext,
     handlePrev,
+    degreeDetails,
+    removeDegree,
 }) => {
     const [expanded, setExpanded] = useState(false);
     const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
+    const [markType, setMarkType] = useState('C');
+    const [markType2, setMarkType2] = useState('C');
+
+    const [error, setError] = useState({
+        sn: false,
+        cg: false,
+        board: false,
+        location: false,
+        sn1: false,
+        cg1: false,
+        board1: false,
+        location1: false,
+    });
+    const validate = () => {
+        console.log('error blah is ', error, schoolInfo.schoolName10.length);
+        schoolInfo.schoolName10.length < 1
+            ? setError((prevState) => ({ ...prevState, sn: false }))
+            : setError((prevState) => ({ ...prevState, sn: true }));
+        schoolInfo.cgpa10.length < 1
+            ? setError((prevState) => ({ ...prevState, cg: false }))
+            : setError((prevState) => ({ ...prevState, cg: true }));
+        schoolInfo.board10.length < 1
+            ? setError((prevState) => ({ ...prevState, board: false }))
+            : setError((prevState) => ({ ...prevState, board: true }));
+        schoolInfo.location10.length < 1
+            ? setError((prevState) => ({ ...prevState, location: false }))
+            : setError((prevState) => ({ ...prevState, location: true }));
+        schoolInfo.schoolName12.length < 1
+            ? setError((prevState) => ({ ...prevState, sn1: false }))
+            : setError((prevState) => ({ ...prevState, sn1: true }));
+        schoolInfo.cgpa12.length < 1
+            ? setError((prevState) => ({ ...prevState, cg1: false }))
+            : setError((prevState) => ({ ...prevState, cg1: true }));
+        schoolInfo.board12.length < 1
+            ? setError((prevState) => ({ ...prevState, board1: false }))
+            : setError((prevState) => ({ ...prevState, board1: true }));
+        schoolInfo.location12.length < 1
+            ? setError((prevState) => ({ ...prevState, location1: false }))
+            : setError((prevState) => ({ ...prevState, location1: true }));
+        for (const [key, value] of Object.entries(error)) {
+            console.log(value);
+            if (!value) return false;
+        }
+        // Object.entries(error).map((val) => {
+        //     if (!val) return val;
+        // });
+        return true;
+    };
+
+    useEffect(() => {
+        const ids = Object.keys(degreeDetails);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === 'panel3') continue;
+            else setDegrees([...degrees, { id: ids[i] }]);
+        }
+    }, []);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-        console.log(expanded);
     };
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
-    const classes = useStyles();
 
+    const classes = useStyles();
     const addMoreDegreeButton = () => {
         const len = degrees.length + 3;
         setDegrees([...degrees, { id: 'panel' + len }]);
@@ -38,6 +108,7 @@ const ThirdRoute = ({
 
     const removeLastDegree = () => {
         setDegrees(degrees.slice(0, -1));
+        removeDegree(degrees.pop().id);
     };
 
     return (
@@ -56,17 +127,55 @@ const ThirdRoute = ({
                             label='School Name'
                             variant='outlined'
                             value={schoolInfo.schoolName10}
+                            helperText={!error.sn ? 'Required' : ''}
+                            error={!error.sn}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     schoolName10: event.target.value,
                                 });
                             }}
                         />
+                        <FormControl
+                            component='fieldset'
+                            // error={
+                            //     !!formik.errors.gender && formik.touched.gender
+                            // }
+                        >
+                            <FormLabel component='legend'></FormLabel>
+                            <RadioGroup
+                                name='gender'
+                                row
+                                value={markType}
+                                // value={formik.values.gender}
+                                onChange={(event) =>
+                                    setMarkType(event.target.value)
+                                }
+                                // onChange={formik.handleChange}
+                            >
+                                <FormControlLabel
+                                    value='C'
+                                    label='CGPA'
+                                    control={<Radio />}
+                                />
+                                <FormControlLabel
+                                    value='P'
+                                    label='Percentage'
+                                    control={<Radio />}
+                                />
+                            </RadioGroup>
+                            <FormHelperText style={{ marginTop: '-2px' }}>
+                                {/* {!!formik.errors.gender && formik.touched.gender
+                                    ? formik.errors.gender
+                                    : false} */}
+                            </FormHelperText>
+                        </FormControl>
                         <TextField
                             className={classes.textField}
-                            label='CGPA/Percentage'
+                            label={markType === 'C' ? 'CGPA' : 'Percentage'}
                             variant='outlined'
                             type='number'
+                            error={!error.cg}
+                            helperText={!error.cg ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     cgpa10: event.target.value,
@@ -76,6 +185,8 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
+                            error={!error.board}
+                            helperText={!error.board ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
                             onChange={(event) => {
@@ -88,6 +199,8 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             label='Location'
+                            error={!error.location}
+                            helperText={!error.location ? 'Required' : ''}
                             variant='outlined'
                             onChange={(event) => {
                                 onChangeSchoolData({
@@ -112,6 +225,8 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='School Name'
                             variant='outlined'
+                            error={!error.sn1}
+                            helperText={!error.sn1 ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     schoolName12: event.target.value,
@@ -119,9 +234,45 @@ const ThirdRoute = ({
                             }}
                             value={schoolInfo.schoolName12}
                         />
+                        <FormControl
+                            component='fieldset'
+                            // error={
+                            //     !!formik.errors.gender && formik.touched.gender
+                            // }
+                        >
+                            <FormLabel component='legend'></FormLabel>
+                            <RadioGroup
+                                name='gender'
+                                row
+                                value={markType2}
+                                // value={formik.values.gender}
+                                onChange={(event) =>
+                                    setMarkType2(event.target.value)
+                                }
+                                // onChange={formik.handleChange}
+                            >
+                                <FormControlLabel
+                                    value='C'
+                                    label='CGPA'
+                                    control={<Radio />}
+                                />
+                                <FormControlLabel
+                                    value='P'
+                                    label='Percentage'
+                                    control={<Radio />}
+                                />
+                            </RadioGroup>
+                            <FormHelperText style={{ marginTop: '-2px' }}>
+                                {/* {!!formik.errors.gender && formik.touched.gender
+                                    ? formik.errors.gender
+                                    : false} */}
+                            </FormHelperText>
+                        </FormControl>
                         <TextField
                             className={classes.textField}
-                            label='CGPA/Percentage'
+                            label={markType2 === 'C' ? 'CGPA' : 'Percentage'}
+                            error={!error.cg1}
+                            helperText={!error.cg1 ? 'Required' : ''}
                             variant='outlined'
                             type='number'
                             onChange={(event) => {
@@ -133,6 +284,8 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
+                            error={!error.board1}
+                            helperText={!error.board1 ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
                             onChange={(event) => {
@@ -144,6 +297,8 @@ const ThirdRoute = ({
                         />
                         <TextField
                             className={classes.textField}
+                            error={!error.location1}
+                            helperText={!error.location1 ? 'Required' : ''}
                             label='Location'
                             variant='outlined'
                             onChange={(event) => {
@@ -166,20 +321,30 @@ const ThirdRoute = ({
                 );
             })}
             <div className={styles.btnDiv}>
-                <Button
+                <MYButton
                     heading={'Add more degree'}
                     style={styles.btn}
                     onPress={() => addMoreDegreeButton()}
                 />
-                <Button
+                <MYButton
                     heading={'Remove last degree'}
                     style={styles.btn}
                     onPress={() => removeLastDegree()}
                 />
             </div>
             <div className={styles.btnDiv}>
-                <Button heading='Previous' onPress={handlePrev} />
-                <Button heading='Continue' onPress={handleNext} />
+                <Button onClick={handlePrev}>Previous</Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    disableElevation
+                    onClick={() => {
+                        // if (validate())
+                        handleNext();
+                    }}
+                >
+                    Continue
+                </Button>
             </div>
         </div>
     );
@@ -190,6 +355,9 @@ const mapDispatchToProps = (dispatch) => {
         onChangeSchoolData: (data) => {
             dispatch(changeProfileSchoolInfo(data));
         },
+        removeDegree: (data) => {
+            dispatch(removeDegreeDetail(data));
+        },
     };
 };
 
@@ -197,6 +365,7 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         schoolInfo: state.userProfile.academics,
+        degreeDetails: state.userProfile.degree,
     };
 };
 

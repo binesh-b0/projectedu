@@ -185,12 +185,13 @@ const userProfileReducer = (state = initialState, action) => {
                 profilePic: action.payload,
             };
         case 'ADD_PROFILE_REG_CERTIFICATE_DATA':
+            console.log(action.payload);
             return {
                 ...state,
                 certifications: {
                     ...state.certifications,
                     [action.payload.id]: {
-                        ...action.payload.id,
+                        ...state.certifications[action.payload.id],
                         ...action.payload,
                     },
                 },
@@ -201,13 +202,23 @@ const userProfileReducer = (state = initialState, action) => {
                 degree: {
                     ...state.degree,
                     [action.payload.id]: {
-                        ...action.payload.id,
+                        ...state.degree[action.payload.id],
                         ...action.payload,
                     },
                 },
             };
+
+        case 'REMOVE_REG_CERTIFICATE_DATA':
+            const tempCer = state.certifications;
+            delete tempCer[action.payload];
+            return { ...state, certifications: tempCer };
+
+        case 'REMOVE_REG_COLLEGE_DATA':
+            const tempData = state.degree;
+            delete tempData[action.payload];
+            return { ...state, degree: tempData };
+
         case 'ADD_PROFILE_DEGREE_CERTIFICATE':
-            console.log(action.payload);
             return {
                 ...state,
                 certificationPic: [...state.certificationPic, action.payload],
