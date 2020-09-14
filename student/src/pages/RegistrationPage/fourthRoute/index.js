@@ -18,8 +18,9 @@ const FourthRoute = ({
 
     useEffect(() => {
         const ids = Object.keys(certificateDetails);
+        console.log(ids);
         for (let i = 0; i < ids.length; i++) {
-            if (ids[i] === 1) continue;
+            if (ids[i] == 1) continue;
             else setCertificates([...certificates, { id: ids[i] }]);
         }
     }, []);
@@ -35,9 +36,7 @@ const FourthRoute = ({
     };
 
     const removeCertificate = () => {
-        // if (certificates.length >= 2) {
         setCertificates(certificates.slice(0, -1));
-        // }
         removeCertificateDetail(certificates.pop().id);
     };
 

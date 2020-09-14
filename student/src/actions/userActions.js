@@ -51,7 +51,7 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('certifications', certificationPic);
         formData.append('profilePic', profilePic);
 
-        // console.log(Object.values(certifications));
+        console.log(Object.values(degree));
 
         const config = {
             method: 'POST',
@@ -271,6 +271,7 @@ const addCertificateDetails = (data) => {
 };
 
 const addCertificatePicture = (data) => {
+    console.log(data);
     return {
         type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
         payload: data,

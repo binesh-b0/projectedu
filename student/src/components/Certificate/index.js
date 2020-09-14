@@ -29,6 +29,7 @@ const Certificate = ({
     );
 
     const [details, setDetails] = useState({});
+    const [certificates, setCertificates] = useState([]);
 
     useEffect(() => {
         if (certificateDetails.id) {
@@ -73,66 +74,59 @@ const Certificate = ({
                 <p>Enter Certificate Details</p>
             </AccordionSummary>
             <AccordionDetails>
-                <div className={styles.container}>
-                    <form className={styles.textContainer}>
-                        <TextField
-                            className={styleObj.textField}
-                            label='Certificate Name'
-                            variant='outlined'
-                            InputLabelProps={{ shrink: true }}
-                            value={details ? details.certificationName : ''}
-                            onChange={(event) =>
-                                addDataToStore({
-                                    certificationName: event.target.value,
-                                })
-                            }
-                        />
-                        <TextField
-                            className={styleObj.textField}
-                            label='Course Completed Date'
-                            type='date'
-                            defaultValue='2000-01-01'
-                            InputLabelProps={{ shrink: true }}
-                            value={details ? details.completionDate : ''}
-                            onChange={(event) =>
-                                addDataToStore({
-                                    completionDate: event.target.value,
-                                })
-                            }
-                            variant='outlined'
-                        />
-                        <TextField
-                            className={styleObj.textField}
-                            label='Validity'
-                            type='date'
-                            defaultValue='2000-01-01'
-                            InputLabelProps={{ shrink: true }}
-                            value={details ? details.validityDate : ''}
-                            onChange={(event) =>
-                                addDataToStore({
-                                    validityData: event.target.value,
-                                })
-                            }
-                            variant='outlined'
-                        />
-                        <TextField
-                            className={styleObj.textField}
-                            label='Issuing Authority'
-                            value={details ? details.institute : ''}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={(event) =>
-                                addDataToStore({
-                                    institute: event.target.value,
-                                })
-                            }
-                            variant='outlined'
-                        />
-                    </form>
-                    <img
-                        className={styles.img}
-                        src={picture}
-                        onClick={() => inputFile.current.click()}
-                        alt='upload certificate'
+                {/* <div className={styles.container}> */}
+                <form className={styles.textContainer}>
+                    <TextField
+                        className={styleObj.textField}
+                        label='Certificate Name'
+                        variant='outlined'
+                        InputLabelProps={{ shrink: true }}
+                        value={details ? details.certificationName : ''}
+                        onChange={(event) =>
+                            addDataToStore({
+                                certificationName: event.target.value,
+                            })
+                        }
+                    />
+                    <TextField
+                        className={styleObj.textField}
+                        label='Course Completed Date'
+                        type='date'
+                        defaultValue='2000-01-01'
+                        InputLabelProps={{ shrink: true }}
+                        value={details ? details.completionDate : ''}
+                        onChange={(event) =>
+                            addDataToStore({
+                                completionDate: event.target.value,
+                            })
+                        }
+                        variant='outlined'
+                    />
+                    <TextField
+                        className={styleObj.textField}
+                        label='Validity'
+                        type='date'
+                        defaultValue='2000-01-01'
+                        InputLabelProps={{ shrink: true }}
+                        value={details ? details.validityDate : ''}
+                        onChange={(event) =>
+                            addDataToStore({
+                                validityData: event.target.value,
+                            })
+                        }
+                        variant='outlined'
+                    />
+                    <TextField
+                        className={styleObj.textField}
+                        label='Issuing Authority'
+                        value={details ? details.institute : ''}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={(event) =>
+                            addDataToStore({
+                                institute: event.target.value,
+                            })
+                        }
+                        variant='outlined'
                     />
                     <input
                         type='file'
@@ -140,9 +134,16 @@ const Certificate = ({
                         accept='image/*'
                         ref={inputFile}
                         onChange={selectImage}
-                        style={{ display: 'none' }}
+                        style={{ marginTop: 16 }}
                     />
-                </div>
+                </form>
+                {/* <img
+                        className={styles.img}
+                        src={picture}
+                        onClick={() => inputFile.current.click()}
+                        alt='upload certificate'
+                    /> */}
+                {/* </div> */}
             </AccordionDetails>
         </Accordion>
     );
