@@ -49,38 +49,65 @@ const ThirdRoute = ({
         location1: false,
     });
     const validate = () => {
-        console.log('error blah is ', error, schoolInfo.schoolName10.length);
-        schoolInfo.schoolName10.length < 1
-            ? setError((prevState) => ({ ...prevState, sn: true }))
-            : setError((prevState) => ({ ...prevState, sn: false }));
-        schoolInfo.cgpa10.length < 1
-            ? setError((prevState) => ({ ...prevState, cg: true }))
-            : setError((prevState) => ({ ...prevState, cg: false }));
-        schoolInfo.board10.length < 1
-            ? setError((prevState) => ({ ...prevState, board: true }))
-            : setError((prevState) => ({ ...prevState, board: false }));
-        schoolInfo.location10.length < 1
-            ? setError((prevState) => ({ ...prevState, location: true }))
-            : setError((prevState) => ({ ...prevState, location: false }));
-        schoolInfo.schoolName12.length < 1
-            ? setError((prevState) => ({ ...prevState, sn1: true }))
-            : setError((prevState) => ({ ...prevState, sn1: false }));
-        schoolInfo.cgpa12.length < 1
-            ? setError((prevState) => ({ ...prevState, cg1: true }))
-            : setError((prevState) => ({ ...prevState, cg1: false }));
-        schoolInfo.board12.length < 1
-            ? setError((prevState) => ({ ...prevState, board1: true }))
-            : setError((prevState) => ({ ...prevState, board1: false }));
-        schoolInfo.location12.length < 1
-            ? setError((prevState) => ({ ...prevState, location1: true }))
-            : setError((prevState) => ({ ...prevState, location1: false }));
-        for (const [key, value] of Object.entries(error)) {
-            console.log(value);
-            if (!value) return false;
+        console.log(error);
+
+        if (schoolInfo.schoolName10.length < 1) {
+            console.log('School 10');
+            setError((prevState) => ({ ...prevState, sn: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, sn: false }));
         }
-        // Object.entries(error).map((val) => {
-        //     if (!val) return val;
-        // });
+        if (schoolInfo.cgpa10.length < 1) {
+            console.log('cgpa 10');
+            setError((prevState) => ({ ...prevState, cg: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, cg: false }));
+        }
+        if (schoolInfo.board10.length < 1) {
+            console.log('board 10');
+            setError((prevState) => ({ ...prevState, board: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, board: false }));
+        }
+        if (schoolInfo.location10.length < 1) {
+            console.log('location 10');
+            setError((prevState) => ({ ...prevState, location: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, location: false }));
+        }
+        if (schoolInfo.schoolName12.length < 1) {
+            console.log('school 12');
+            setError((prevState) => ({ ...prevState, sn1: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, sn1: false }));
+        }
+        if (schoolInfo.cgpa12.length < 1) {
+            console.log('cgpa 12');
+            setError((prevState) => ({ ...prevState, cg1: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, cg1: false }));
+        }
+        if (schoolInfo.board12.length < 1) {
+            console.log('board 12');
+            setError((prevState) => ({ ...prevState, board1: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, board1: false }));
+        }
+        if (schoolInfo.location12.length < 1) {
+            console.log('location 12');
+            setError((prevState) => ({ ...prevState, location1: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, location1: false }));
+        }
+        console.log(error);
         return true;
     };
 
@@ -175,7 +202,7 @@ const ThirdRoute = ({
                             variant='outlined'
                             type='number'
                             error={error.cg}
-                            helperText={!error.cg ? 'Required' : ''}
+                            helperText={error.cg ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     cgpa10: event.target.value,
@@ -186,7 +213,7 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             error={error.board}
-                            helperText={!error.board ? 'Required' : ''}
+                            helperText={error.board ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
                             onChange={(event) => {
@@ -200,7 +227,7 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='Location'
                             error={error.location}
-                            helperText={!error.location ? 'Required' : ''}
+                            helperText={error.location ? 'Required' : ''}
                             variant='outlined'
                             onChange={(event) => {
                                 onChangeSchoolData({
@@ -226,7 +253,7 @@ const ThirdRoute = ({
                             label='School Name'
                             variant='outlined'
                             error={error.sn1}
-                            helperText={!error.sn1 ? 'Required' : ''}
+                            helperText={error.sn1 ? 'Required' : ''}
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     schoolName12: event.target.value,
@@ -272,7 +299,7 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label={markType2 === 'C' ? 'CGPA' : 'Percentage'}
                             error={error.cg1}
-                            helperText={!error.cg1 ? 'Required' : ''}
+                            helperText={error.cg1 ? 'Required' : ''}
                             variant='outlined'
                             type='number'
                             onChange={(event) => {
@@ -285,7 +312,7 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             error={error.board1}
-                            helperText={!error.board1 ? 'Required' : ''}
+                            helperText={error.board1 ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
                             onChange={(event) => {
@@ -298,7 +325,7 @@ const ThirdRoute = ({
                         <TextField
                             className={classes.textField}
                             error={error.location1}
-                            helperText={!error.location1 ? 'Required' : ''}
+                            helperText={error.location1 ? 'Required' : ''}
                             label='Location'
                             variant='outlined'
                             onChange={(event) => {
