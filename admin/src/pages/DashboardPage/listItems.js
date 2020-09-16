@@ -3,63 +3,68 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 
-export const mainListItems = (
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import SchoolIcon from '@material-ui/icons/School';
+
+import {Link} from 'react-router-dom';
+
+export const userListItems = (
   <div>
    <ListSubheader inset>User access</ListSubheader>
-    <ListItem button>
+
+    <ListItem button to='/app/users' component={'/app/users' && Link}>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Users" />
     </ListItem>
-    <ListItem button>
+   
+    <ListItem button  component={'/app/interviews' && Link} to='/app/interviews'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="Interviews" />
     </ListItem>
-    <ListItem button>
+   
+    {/* <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
+    </ListItem> */}
+   
+  </div>
+);
+
+export const enrolmentsList = (
+  <div>
+    <ListSubheader inset>Enrollments</ListSubheader>
+    <ListItem button component={'/app/students' && Link} to='/app/students'>
       <ListItemIcon>
-        <LayersIcon />
+        <SchoolIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Students" />
+    </ListItem>
+    <ListItem button  component={'/app/ad' && Link} to='/app/ad'>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Ad manager" />
     </ListItem>
   </div>
 );
 
-export const secondaryListItems = (
+export const examsList = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
+    <ListSubheader inset>Exams list</ListSubheader>
+    <ListItem button component={'/app/exams' && Link} to='/app/exams'>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="Exams" />
     </ListItem>
   </div>
 );

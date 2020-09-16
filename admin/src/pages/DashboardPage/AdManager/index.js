@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function index() {
+export default function AdManager() {
     return (
         <div>
-            users
+            ad
         </div>
     )
 }

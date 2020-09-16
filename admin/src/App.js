@@ -13,7 +13,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/app" />} />
-        <PrivateRoute authed={true} exact path="/app" component={Dashboard} />
+         
+        <PrivateRoute authed={true} path="/app" component={Dashboard} />
         <Route path="/login" component={Signin} />
         <Route path="/reset/:token" component={Reset} />
         <Route component={NotFound} />

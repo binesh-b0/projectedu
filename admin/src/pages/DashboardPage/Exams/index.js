@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function index() {
+export default function Exams() {
     return (
         <div>
-            
+            exams
         </div>
     )
 }

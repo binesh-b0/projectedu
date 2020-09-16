@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
@@ -18,18 +17,21 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import { enrolmentsList, examsList,userListItems } from "./listItems";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import { withRouter } from "react-router-dom";
+import SettingsIcon from '@material-ui/icons/Settings';
+import { withRouter,Link as RLLink } from "react-router-dom";
+import HeaderProfileMenu from '../../components/widgets/HeaderProfileMenu'
 import Users from "./Users";
 import Exams from "./Exams";
 import Home from "./Home"
 import Routing from './Routing'
-import { Router } from "@material-ui/icons";
+import useStyles from "./styles";
+
 
 function Copyright() {
   return (
@@ -43,91 +45,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    border: 0,
-
-    backgroundColor: "white",
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: "none",
-  },
-  title: {
-    flexGrow: 1,
-    color: "grey",
-  },
-  drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9),
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  fixedHeight: {
-    height: 240,
-  },
-}));
 
  function Dashboard() {
   const classes = useStyles();
@@ -175,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <HeaderProfileMenu/>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -190,21 +108,30 @@ const useStyles = makeStyles((theme) => ({
           </IconButton>
         </div>
         <Divider />
-        <ListItem button>
+        <ListItem button  component={'/app/dashboard' && RLLink} to='/app/dashboard'>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Overview" />
         </ListItem>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{enrolmentsList}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>{userListItems}</List>
+        <Divider />
+        <List>{examsList}</List>
+        <Divider />
+        <ListItem button  component={'/app/settings' && RLLink} to='/app/settings'>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Settings"/>
+        </ListItem>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            <Router/>
+            <Routing/>
           <Box pt={4}>
             <Copyright />
           </Box>
