@@ -6,7 +6,7 @@ import Image from "react-bootstrap/Image";
 import Button from "@material-ui/core/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { resendEmail } from "../../actions/userActions";
-import { getUserInfo,setUserInfo } from "../../services/authService";
+import { getUserInfo } from "../../services/authService";
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -26,10 +26,10 @@ export default function VerificationPage(props) {
    const [done, setDone] = useState(false);
    const [error,setError] = useState();
 
-  const resendClicked = (email) => {
+  const resendClicked = () => {
     console.log("veripag", userInfo);
     try {
-      if (email) dispatch(resendEmail(email, setError,setDone));
+      if (userInfo) dispatch(resendEmail(userInfo.email, setError,setDone));
       else props.history.replace("/signup");
     } catch (err) {
       console.log("errr", err);
@@ -52,10 +52,8 @@ export default function VerificationPage(props) {
   },[loading] )
 
   useEffect(() => {
-    console.log(Cookie.get("regRe"),userInfo.email)
-    if (!userInfo.email && !!Cookie.get("regRe")) props.history.replace("/signup");
-    Cookie.set("regRe", false);
-    setUserInfo(null);
+    Cookie.set("regRE", false);
+    if (!userInfo.email) props.history.replace("/signup");
   });
       //snackbar close
       const handleClose = (event, reason) => {
@@ -105,7 +103,6 @@ export default function VerificationPage(props) {
           >
             Resend
           </Button>
-          <Button onClick={()=>props.history.replace("/signup")}>Signup</Button>
         </div>
       </div>
     </div>
