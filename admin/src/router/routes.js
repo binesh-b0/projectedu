@@ -17,9 +17,9 @@ export default () => [
         component: Signin,
     },
     // {
-    //     path: '/signup',
+    //     path: '/create_user',
     //     exact: true,
-    //     component: Signup,
+    //     component: create_user,
     // },
     // {
     //     path: '/verify',
@@ -40,9 +40,9 @@ export default () => [
     //     exact: true,
     //     component: Reset,
     // },
-    {
-        path: '*',
-        component: NotFound,
-        ignoreGlobal: true,
-    },
+    // {
+    //     path: '*',
+    //     component: NotFound,
+    //     ignoreGlobal: true,
+    // },
 ];

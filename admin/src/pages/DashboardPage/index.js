@@ -24,8 +24,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import { Switch, Route, Redirect } from "react-router-dom";
 import Users from "./Users";
 import Exams from "./Exams";
+import Home from "./Home"
 
 function Copyright() {
   return (
@@ -200,6 +202,19 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+
+        <Switch>
+        <Route exact path="/" >
+        <Redirect to path="/home"/>
+        </Route>
+        <Route path="/home" component={Home} />
+        <Route path="/user" component={Users} />
+        <Redirect
+          to={{
+            state: { error: true },
+          }}
+        />
+      </Switch>
           <Box pt={4}>
             <Copyright />
           </Box>
