@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     Accordion,
     AccordionSummary,
@@ -12,6 +12,8 @@ import { changeProfileSchoolInfo } from '../../../actions/userActions';
 import Button from '../../../components/CTAButton';
 import Degree from '../../../components/Degree';
 
+import * as yup from 'yup';
+
 const ThirdRoute = ({
     schoolInfo,
     onChangeSchoolData,
@@ -21,6 +23,17 @@ const ThirdRoute = ({
     const [expanded, setExpanded] = useState(false);
     const [degrees, setDegrees] = useState([{ id: 'panel3' }]);
 
+    const [error,setError] = useState({sn:false,cg:false})
+    const validate=()=>{
+        console.log("error",error,schoolInfo.schoolName10);
+        (schoolInfo.schoolName10)? setError(prevState=>({...prevState,sn:true})):setError(prevState=>({...prevState,sn:true}))
+        Object.entries(error).map(val=>{
+            if(!val) return val;
+        })
+        return true;
+    }
+
+   
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
         console.log(expanded);
@@ -55,8 +68,12 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='School Name'
                             variant='outlined'
+                            required
+                            autoFocus
+                            error={!error.sn}
                             value={schoolInfo.schoolName10}
                             onChange={(event) => {
+                                validate()
                                 onChangeSchoolData({
                                     schoolName10: event.target.value,
                                 });
@@ -78,6 +95,7 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='Board'
                             variant='outlined'
+                            required
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     board10: event.target.value,
@@ -179,7 +197,7 @@ const ThirdRoute = ({
             </div>
             <div className={styles.btnDiv}>
                 <Button heading='Previous' onPress={handlePrev} />
-                <Button heading='Continue' onPress={handleNext} />
+                <Button heading='Continue' onPress={()=>{if(validate())handleNext();}} />
             </div>
         </div>
     );

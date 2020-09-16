@@ -12,6 +12,8 @@ import {
   changeProfileRegInfo,
   changeProfilePicture,
 } from "../../../actions/userActions";
+import ImagePopup from '../../../components/dialogs/ImagePopup'
+
 
 import Button from "@material-ui/core/Button";
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -90,6 +92,7 @@ const FirstRoute = ({
   });
   return (
     <div className={styles.container}>
+    <ImagePopup small={picture} large={picture} />
       <form className={styles.formStyle} onSubmit={formik.handleSubmit}>
       <FormControl component="fieldset" error={!!formik.errors.gender}>
         <img
