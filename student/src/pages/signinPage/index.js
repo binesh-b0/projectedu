@@ -20,14 +20,16 @@ function Alert(props) {
 }
 function SigninPage(props) {
     const userSignin = useSelector((state) => state.userSignin);
-    const { loading, error, status } = userSignin;
+    const { loading } = userSignin;
     const dispatch = useDispatch();
     const [snk, setSnk] = useState({});
     const [open, setOpen] = React.useState(false);
+    const [error,setError] = useState("")
 
     const onSubmit = ({ email, pass }) => {
         console.log('hi', email, pass);
-        dispatch(signin(email, pass));
+        setError("")
+        dispatch(signin(email, pass,props.history,setError));
     };
 
     const goToSignup = () => {
@@ -39,29 +41,19 @@ function SigninPage(props) {
         if (Cookie.get('tk')) props.history.replace('/');
     });
     useEffect(() => {
-        console.log('stattt', status, loading);
-        if (status === 200 && !loading) {
-            if (Cookie.get('signRe') === true) props.history.replace('/');
-        }
+        console.log('stattt', loading,error);
         if (error) {
-            if (status === 'XXXXX') {
-                //already signed up
-                // props.history.push("/signin");
-            } else if (status === 'xxx') {
-                // props.history.push("/verify");  //pending verification
-            } else {
-                setSnk({ sev: 'error', msg: error.error });
+                setSnk({ sev: 'error', msg: error });
                 setOpen(true);
-            }
         }
-        if (loading) {
+        if (loading&&!error) {
             setSnk({ sev: 'info', msg: 'Submitting' });
             setOpen(true);
         }
         return () => {
             //
         };
-    }, [loading, error, status, props.history]);
+    }, [loading, error]);
 
     const resetPasswordOnSubmit = (email) =>{
         console.log("res",email)

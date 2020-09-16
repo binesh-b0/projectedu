@@ -26,12 +26,11 @@ function userSigninReducer(state = {}, action) {
         case USER_SIGNIN_REQUEST:
             return { loading: true, status: 0 };
         case USER_SIGNIN_SUCCESS:
-            return { loading: false, userInfo: action.payload, status: 200 };
+            return { loading: false,};
         case USER_SIGNIN_FAIL:
             return {
                 loading: false,
-                error: action.payload,
-                status: action.status,
+
             };
         case USER_PASSWORD_RESET_REQUEST:
             return { ploading: true, pstatus: 0 };
@@ -69,18 +68,15 @@ function userRegisterReducer(state = {}, action) {
     switch (action.type) {
         case USER_REGISTER_REQUEST:
         case USER_VERFIY_RESEND:
-            return { loading: true, userInfo: action.payload, status: 0 };
+            return { loading: true };
         case USER_REGISTER_SUCCESS:
             return {
                 loading: false,
                 userInfo: action.payload,
-                status: action.status,
             };
         case USER_REGISTER_FAIL:
             return {
                 loading: false,
-                error: action.payload,
-                status: action.status,
             };
         default:
             return state;

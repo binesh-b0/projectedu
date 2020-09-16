@@ -18,7 +18,7 @@ const eyeSlash = <FontAwesomeIcon color="white" icon={faEyeSlash} />;
 
 const SigninForm = ({ onSubmit,resetPasswordOnSubmit }) => {
   const userSignin = useSelector((state) => state.userSignin);
-  const { loading, status, error } = userSignin;
+  const { loading } = userSignin;
 
   const [passwordShown, setPasswordShown] = useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);

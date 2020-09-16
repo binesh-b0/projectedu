@@ -22,7 +22,8 @@ function Alert(props) {
 
 function SignupPage(props) {
     const userRegister = useSelector((state) => state.userRegister);
-    const { loading, error, status } = userRegister;
+    const { loading } = userRegister;
+    const [error,setError] =useState();
 
     const dispatch = useDispatch();
     //for snack
@@ -32,25 +33,20 @@ function SignupPage(props) {
     //form onsubmit
     const onSubmit = ({ email, pass2 }) => {
         console.log('hi', email, pass2);
-        dispatch(register(email, pass2));
+        dispatch(register(email, pass2,props.history,setError));
     };
+
 
     //if submit status is changed
     useEffect(() => {
         console.log('useEff', userRegister);
-        if (status === 200 && !loading) {
-            if (Cookie.get('regRe')) props.history.push('/verify');
+        if (!error && !loading) {
+            // if (Cookie.get('regRe')) props.history.push('/verify');
         }
         if (error) {
-            if (status === 'XXXXX') {
-                //already signed up
-                // props.history.push("/signin");
-            } else if (status === 'xxx') {
-                // props.history.push("/verify");  //pending verification
-            } else {
-                setSnk({ sev: 'error', msg: error.error });
+  
+                setSnk({ sev: 'error', msg: error });
                 setOpen(true);
-            }
         }
         if (loading) {
             setSnk({ sev: 'info', msg: 'Submitting' });
@@ -59,7 +55,7 @@ function SignupPage(props) {
         return () => {
             //
         };
-    }, [loading, error, status, userRegister, props.history]);
+    }, [loading, error]);
 
     //snackbar close
     const handleClose = (event, reason) => {

@@ -185,7 +185,7 @@ const SignupForm = ({ onSubmit }) => {
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formPasswordConf">
-          <Form.Label className={styles.label222}>Password</Form.Label>
+          <Form.Label className={styles.label222}>Confirm Password</Form.Label>
             <Form.Control
               className={`${styles.form_input} mx-auto w-100`}
               name="pass2"
