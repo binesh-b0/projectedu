@@ -24,10 +24,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import { Switch, Route, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Users from "./Users";
 import Exams from "./Exams";
 import Home from "./Home"
+import Routing from './Routing'
+import { Router } from "@material-ui/icons";
 
 function Copyright() {
   return (
@@ -127,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+ function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -202,19 +204,7 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-
-        <Switch>
-        <Route exact path="/" >
-        <Redirect to path="/home"/>
-        </Route>
-        <Route path="/home" component={Home} />
-        <Route path="/user" component={Users} />
-        <Redirect
-          to={{
-            state: { error: true },
-          }}
-        />
-      </Switch>
+            <Router/>
           <Box pt={4}>
             <Copyright />
           </Box>
@@ -223,3 +213,4 @@ export default function Dashboard() {
     </div>
   );
 }
+export default withRouter(Dashboard)

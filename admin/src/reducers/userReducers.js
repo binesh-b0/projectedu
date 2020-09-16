@@ -26,21 +26,19 @@ function userSigninReducer(state = {}, action) {
         case USER_SIGNIN_REQUEST:
             return { loading: true, status: 0 };
         case USER_SIGNIN_SUCCESS:
-            return { loading: false, userInfo: action.payload, status: 200 };
+            return { loading: false, };
         case USER_SIGNIN_FAIL:
             return {
                 loading: false,
-                error: action.payload,
-                status: action.status,
             };
         case USER_PASSWORD_RESET_REQUEST:
-            return { ploading: true, pstatus: 0 };
+            return { ploading: true,};
         case USER_PASSWORD_RESET_SUCCESS:
-            return { ploading: false, pstatus: 200 };
+            return { ploading: false, };
         case USER_PASSWORD_RESET_FAIL:
-            return { ploading: false, pstatus: 400 };
+            return { ploading: false, };
         case USER_PASSWORD_RESET_COMPLETE:
-            return { ploading: true, pstatus: 0 };
+            return { ploading: true, };
         case USER_LOGOUT:
             return {};
         default:

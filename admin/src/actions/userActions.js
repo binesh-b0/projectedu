@@ -24,10 +24,10 @@ import {
 import { setCredentials, removeCredentials } from '../services/authService';
 
 
-const signin = (email, password,history,setError) => async (dispatch) => {
-    dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+const signin = (username, password,history,setError) => async (dispatch) => {
+    dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } });
     try {
-        const { data } = await api.post('/login/email', { email, password });
+        const { data } = await api.post('/admin/login', { username, password });
         console.log(data);
         Cookie.set('signRe', true);
         setCredentials(data.response);
@@ -52,7 +52,7 @@ const signin = (email, password,history,setError) => async (dispatch) => {
                 status: 404,
             });
             setError("Connection timeout")
-    }
+    }}
 };
 
 const register = (email, password) => async (dispatch) => {
@@ -97,7 +97,7 @@ const register = (email, password) => async (dispatch) => {
     }
 };
 
-const resetPassword = (email) => async (dispatch) => {
+const resetPassword = (email,setError) => async (dispatch) => {
     console.log('reset password', email);
     dispatch({ type: USER_PASSWORD_RESET_REQUEST });
     try {
@@ -111,12 +111,12 @@ const resetPassword = (email) => async (dispatch) => {
             }
         );
         dispatch({ type: USER_PASSWORD_RESET_SUCCESS }); //TODO
+        setError(null)
     } catch (err) {
         dispatch({
             type: USER_PASSWORD_RESET_FAIL,
-            payload: 'Email not found',
-            pstatus: 511,
         }); //TODO
+        setError("Password reset failed")
     }
 };
 const passwordResetComplete = () => (dispatch) => {
@@ -130,8 +130,6 @@ const logout = () => (dispatch) => {
 export {
     signin,
     register,
-    logout,
-    update,
     resetPassword,
     passwordResetComplete,
 };

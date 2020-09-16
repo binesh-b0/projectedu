@@ -1,9 +1,9 @@
 // import { STORAGE_KEYS } from '../../constants';
 import Cookie from 'js-cookie';
 
-const getIsLoggedIn = () => {
+const isLoggedIn = () => {
     console.log("tk",Cookie.get("tk"));
-    return true;
+    return localStorage.getItem("tk")? true:false;
 };
 
-export default getIsLoggedIn;
+export default isLoggedIn;

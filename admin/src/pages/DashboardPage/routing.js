@@ -1,12 +1,19 @@
 import React from "react";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
-export default function routing() {
+import Users from "./Users";
+import Exams from "./Exams";
+import Home from "./Home";
+
+function Routing() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/user" component={User} />
+        <Route path='/app'>
+          <Redirect to="/app/dashboard"/>
+        </Route>
+        <Route path="/app/dashboard" component={Home} />
+        <Route path="/app/user" component={Users} />
         <Redirect
           to={{
             state: { error: true },
@@ -16,3 +23,5 @@ export default function routing() {
     </div>
   );
 }
+
+export default withRouter(Routing)
