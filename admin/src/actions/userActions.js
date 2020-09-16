@@ -24,30 +24,34 @@ import {
 import { setCredentials, removeCredentials } from '../services/authService';
 
 
-const signin = (email, password) => async (dispatch) => {
+const signin = (email, password,history,setError) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
     try {
         const { data } = await api.post('/login/email', { email, password });
         console.log(data);
         Cookie.set('signRe', true);
         setCredentials(data.response);
-        dispatch({ type: USER_SIGNIN_SUCCESS, payload: data, status: 200 });
+        dispatch({ type: USER_SIGNIN_SUCCESS, payload: data});
+        setError(null)
+        history.replace('/')
     } catch (error) {
         Cookie.set('signRe', false);
         const res = { ...error };
         console.log('sign req error ', res);
-        if (res.response)
+        if (res.response){
             dispatch({
                 type: USER_SIGNIN_FAIL,
-                payload: res.response.data,
-                status: res.response.status,
+
             });
-        else
+            setError("invalid request")
+        }
+        else{
             dispatch({
                 type: USER_REGISTER_FAIL,
                 payload: 'Not found',
                 status: 404,
             });
+            setError("Connection timeout")
     }
 };
 
@@ -93,28 +97,6 @@ const register = (email, password) => async (dispatch) => {
     }
 };
 
-const resendEmail = (email) => async (dispatch) => {
-    console.log('resend verification', email);
-    dispatch({ type: USER_VERFIY_RESEND, payload: { email } });
-    try {
-        const data = await api.post(
-            '/resendVerification',
-            { email },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        dispatch({ type: USER_REGISTER_SUCCESS, payload: { email } }); //TODO
-    } catch (err) {
-        dispatch({
-            type: USER_REGISTER_FAIL,
-            payload: err.message,
-            status: 511,
-        }); //TODO
-    }
-};
 const resetPassword = (email) => async (dispatch) => {
     console.log('reset password', email);
     dispatch({ type: USER_PASSWORD_RESET_REQUEST });
@@ -145,74 +127,11 @@ const logout = () => (dispatch) => {
     removeCredentials();
 };
 
-const changeProfileRegInfo = (data) => {
-    return {
-        type: ADD_PROFILE_REG_DATA,
-        payload: data,
-    };
-};
-
-const changeProfileRegAddressInfo = (typ, data) => {
-    console.log(typ);
-    return {
-        type:
-            typ === 'perm'
-                ? ADD_PROFILE_REG_ADDRESS_DATA
-                : ADD_PROFILE_REG_RES_ADDRESS_DATA,
-        payload: data,
-    };
-};
-
-const changeProfileSchoolInfo = (data) => {
-    return {
-        type: ADD_PROFILE_REG_SCHOOL_DATA,
-        payload: data,
-    };
-};
-
-const changeProfilePicture = (data) => {
-    console.log('Called');
-    return {
-        type: 'ADD_PROFILE_PICTURE',
-        payload: data,
-    };
-};
-
-const addDegreeDetails = (data) => {
-    return {
-        type: 'ADD_PROFILE_REG_COLLEGE_DATA',
-        payload: data,
-    };
-};
-
-const addCertificateDetails = (data) => {
-    return {
-        type: 'ADD_PROFILE_REG_CERTIFICATE_DATA',
-        payload: data,
-    };
-};
-
-const addCertificatePicture = (data) => {
-    return {
-        type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
-        payload: data,
-    };
-};
-
 export {
     signin,
     register,
     logout,
     update,
-    resendEmail,
-    changeProfileRegInfo,
-    changeProfileRegAddressInfo,
-    changeProfileSchoolInfo,
-    submitUserData,
-    changeProfilePicture,
-    addDegreeDetails,
-    addCertificateDetails,
-    addCertificatePicture,
     resetPassword,
     passwordResetComplete,
 };
