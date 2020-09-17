@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { string } from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { passwordResetComplete } from "../../../actions/userActions";
-import Alert from "@material-ui/lab/Alert";
+import SimpleAlert from '../../alerts/SimpleAlert';
 
 export default function PasswordResetDialog({
   handleClickOpen,
@@ -18,13 +18,15 @@ export default function PasswordResetDialog({
   resetPasswordOnSubmit,
 }) {
   const userSignin = useSelector((state) => state.userSignin);
-  const { ploading, pstatus, perror } = userSignin;
+  const { ploading  } = userSignin;
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(false);
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState();
   const dispatch = useDispatch();
 
   const onClickOk = () => {
-    resetPasswordOnSubmit(email);
+    resetPasswordOnSubmit(email,setDone,setError);
     // handleClose()
   };
   const onClickClose = () => {
@@ -39,20 +41,18 @@ export default function PasswordResetDialog({
   };
 
   const renderAlert = () => {
-      if (pstatus === 200)
-        return <Alert severity="success">Reset link sent successfully</Alert>;
-      else if (pstatus>0) return <Alert severity="error">Error</Alert>;
+    if(!!error &&!ploading)
+      return <SimpleAlert severity="error" msg={error} />
   };
   const renderMsg = () => {
-    if (pstatus === 200)
+    if (done)
       return "A password reset link has been sent to your email address";
-    else if (pstatus === 404) return "Email not found";
-    else if (pstatus === 511) return "network error";
+    else if (!!error &&! ploading) return "network error";
     else return "We will send a password reset link to your email address.";
   };
   const renderButtons = () => {
-    console.log(ploading, pstatus);
-    if (pstatus === 200)
+    console.log(ploading);
+    if (done)
       return (
         <DialogActions>
           <Button
@@ -105,7 +105,7 @@ export default function PasswordResetDialog({
             label="Email Address"
             type="name"
             fullWidth
-            disabled={pstatus === 200}
+            disabled={done}
             error={!valid && email.length > 3}
             value={email}
             onChange={handleChange}

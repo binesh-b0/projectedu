@@ -21,11 +21,13 @@ import { enrolmentsList, examsList,userListItems } from "./listItems";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import { useSelector, useDispatch } from "react-redux";
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { withRouter,Link as RLLink } from "react-router-dom";
+import { withRouter,Link as RLLink,useLocation  } from "react-router-dom";
 import HeaderProfileMenu from '../../components/widgets/HeaderProfileMenu'
+import {logout} from '../../actions/userActions';
 import Users from "./Users";
 import Exams from "./Exams";
 import Home from "./Home"
@@ -46,7 +48,9 @@ function Copyright() {
   );
 }
 
- function Dashboard() {
+ function Dashboard(props) {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -57,13 +61,18 @@ function Copyright() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const logoutClicked = ()=>{
+    dispatch(logout(props.history));
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="absolute"
         elevation={0}
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, open && classes.appBarShift )}
+        // style={{backgroundColor:"#1976d2"}}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -92,7 +101,7 @@ function Copyright() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <HeaderProfileMenu/>
+          <HeaderProfileMenu logoutClicked={logoutClicked}/>
         </Toolbar>
       </AppBar>
       <Drawer

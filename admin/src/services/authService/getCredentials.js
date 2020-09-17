@@ -1,6 +1,9 @@
+import Cookies from 'js-cookie'
 
 const getCredentials = () => {
-    return localStorage.getItem("tk")
+     const tk = Cookies.get("tk")
+    // return localStorage.getItem("tk")
+    return tk;
 };
 
 export default getCredentials;

@@ -18,6 +18,9 @@ import * as Yup from "yup";
 import { signin,resetPassword } from "../../actions/userActions";
 import SimpleAlert from "../../components/alerts/SimpleAlert";
 import PasswordResetDialog from '../../components/dialogs/PasswordResetDialog';
+import AdornedButton from '../../components/buttons/AdornedButton';
+import Cookies from 'js-cookie'
+
 
 
 function Copyright() {
@@ -62,6 +65,10 @@ export default function SignIn(props) {
   const dispatch = useDispatch();
   const [error, setError] = useState();
   const [alert, setAlert] = useState(false);
+  
+  // useEffect(() => {
+  //   Cookies.remove("tk")
+  // }, )
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -72,8 +79,8 @@ export default function SignIn(props) {
   const handleClose = () => {
     setOpenDialog(false);
   };
-  const resetPasswordOnSubmit=(email)=>{
-    dispatch(resetPassword(email,setError));
+  const resetPasswordOnSubmit=(email,setDone,setError)=>{
+    dispatch(resetPassword(email,setDone,setError));
   }
   
   useEffect(() => {
@@ -133,10 +140,10 @@ export default function SignIn(props) {
             label="Username"
             name="username"
             autoComplete="email"
-            error={!!formik.errors.username}
+            error={!!formik.errors.username && formik.touched.username}
             helperText={
-              formik.touched.username && formik.errors.username
-                ? formik.errors.username
+              formik.touched.username && !!formik.errors.username
+                ? !!formik.errors.username
                 : ""
             }
             autoFocus
@@ -152,9 +159,9 @@ export default function SignIn(props) {
             disabled={loading}
             label="Password"
             type="password"
-            error={formik.touched && formik.errors.password}
+            error={formik.touched.password && !!formik.errors.password}
             helperText={
-              formik.touched.password && formik.errors.password
+              formik.touched.password && !!formik.errors.password
                 ? formik.errors.password
                 : ""
             }
@@ -167,17 +174,19 @@ export default function SignIn(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          <Button
+          <AdornedButton
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             disabled={loading}
-
+            color={loading?'secondary':'primary'}
+            // disabled={loading}
+            loading={loading}
             className={classes.submit}
           >
             Sign In
-          </Button>
+          </AdornedButton>
           <Grid container>
             <Grid item xs>
               <Button style={{textTransform:"none"}} onClick={()=>setOpenDialog(true)} >

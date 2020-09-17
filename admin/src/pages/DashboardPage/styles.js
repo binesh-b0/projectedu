@@ -68,9 +68,10 @@ export default makeStyles((theme) => ({
       flexGrow: 1,
       height: "100vh",
       overflow: "auto",
+      padding:0
     },
     container: {
-      paddingTop: theme.spacing(4),
+      padding:0,
       paddingBottom: theme.spacing(4),
     },
     paper: {

@@ -13,7 +13,7 @@ import {
 
   import {  Typography } from "../../Wrappers/Wrappers";
 
-export default function HeaderProfileMenu() {
+export default function HeaderProfileMenu({logoutClicked}) {
     var classes = useStyles();
     var [profileMenu, setProfileMenu] = useState(null);
 
@@ -78,7 +78,7 @@ export default function HeaderProfileMenu() {
             <Typography
               className={classes.profileMenuLink}
               color="primary"
-            //   onClick={() => signOut(userDispatch, props.history)}
+              onClick={logoutClicked}
             >
               Sign Out
             </Typography>

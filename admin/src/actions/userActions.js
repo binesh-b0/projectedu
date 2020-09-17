@@ -22,23 +22,29 @@ import {
     USER_UPDATE_FAIL,
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
+import clearStorage from '../services/clearStorage';
+const timeout = 1000;
 
 
 const signin = (username, password,history,setError) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } });
     try {
-        const { data } = await api.post('/admin/login', { username, password });
-        console.log(data);
+        const { data } = await api.post('/admin/login', { username, password },{timeout});
+        console.log(data,"data");
         Cookie.set('signRe', true);
         setCredentials(data.response);
         dispatch({ type: USER_SIGNIN_SUCCESS, payload: data});
         setError(null)
-        history.replace('/')
+        try {
+            history.replace('/')
+        } catch (error) {
+            console.log("his",error);
+        }
     } catch (error) {
-        Cookie.set('signRe', false);
         const res = { ...error };
         console.log('sign req error ', res);
         if (res.response){
+            Cookie.set('signRe', false);
             dispatch({
                 type: USER_SIGNIN_FAIL,
 
@@ -47,9 +53,7 @@ const signin = (username, password,history,setError) => async (dispatch) => {
         }
         else{
             dispatch({
-                type: USER_REGISTER_FAIL,
-                payload: 'Not found',
-                status: 404,
+                type: USER_SIGNIN_FAIL,
             });
             setError("Connection timeout")
     }}
@@ -97,7 +101,7 @@ const register = (email, password) => async (dispatch) => {
     }
 };
 
-const resetPassword = (email,setError) => async (dispatch) => {
+const resetPassword = (email,setDone,setError) => async (dispatch) => {
     console.log('reset password', email);
     dispatch({ type: USER_PASSWORD_RESET_REQUEST });
     try {
@@ -111,6 +115,7 @@ const resetPassword = (email,setError) => async (dispatch) => {
             }
         );
         dispatch({ type: USER_PASSWORD_RESET_SUCCESS }); //TODO
+        setDone(true)
         setError(null)
     } catch (err) {
         dispatch({
@@ -122,9 +127,11 @@ const resetPassword = (email,setError) => async (dispatch) => {
 const passwordResetComplete = () => (dispatch) => {
     dispatch({ type: USER_PASSWORD_RESET_COMPLETE });
 };
-const logout = () => (dispatch) => {
+const logout = (history) => (dispatch) => {
     dispatch({ type: USER_LOGOUT });
     removeCredentials();
+    clearStorage()
+    history.replace("/login")
 };
 
 export {
@@ -132,4 +139,5 @@ export {
     register,
     resetPassword,
     passwordResetComplete,
+    logout
 };
