@@ -29,11 +29,13 @@ const FirstRoute = ({
     changeProfileRegInfo,
     handleNext,
     handlePrev,
+    profilePic,
     changeProfilePicture,
 }) => {
     const { fullName, gender, dob, guardianName } = userProfile;
 
     const inputFile = useRef(null);
+    const [imageStatus, setImageStatus] = useState(true);
 
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
@@ -86,7 +88,6 @@ const FirstRoute = ({
             relationToGuardian: Yup.string().required('Required'),
         }),
         onSubmit: (values) => {
-            console.log(values, 'asda');
             changeProfileRegInfo({
                 fullName: values.fullName,
                 gender: values.gender,
@@ -109,7 +110,13 @@ const FirstRoute = ({
                         className={styles.img}
                         src={picture}
                         alt='Upload'
+                        name=''
                     />
+                    {!imageStatus ? (
+                        <p className={styles.errorText}>
+                            Please add a profile image
+                        </p>
+                    ) : null}
                     <input
                         type='file'
                         ref={inputFile}
@@ -147,7 +154,6 @@ const FirstRoute = ({
                     component='fieldset'
                     error={!!formik.errors.gender && formik.touched.gender}
                 >
-                    <FormLabel component='legend'>Gender</FormLabel>
                     <RadioGroup
                         name='gender'
                         row

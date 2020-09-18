@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField, makeStyles } from '@material-ui/core';
 import styles from './style.module.css';
 import { connect } from 'react-redux';
@@ -129,6 +129,8 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
             handleNext();
         },
     });
+
+    useEffect(() => {}, [formik.values.checked]);
 
     return (
         <div className={styles.container}>
@@ -282,7 +284,11 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 variant='outlined'
                                 name='radd1'
                                 //   value={residence.addressLine1}
-                                value={formik.values.radd1}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.padd1
+                                        : formik.values.radd1
+                                }
                                 disabled={formik.values.checked}
                                 error={
                                     formik.touched.radd1 &&
@@ -303,7 +309,11 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 name='radd2'
                                 //   value={residence.addressLine2}
                                 disabled={formik.values.checked}
-                                value={formik.values.radd2}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.padd2
+                                        : formik.values.radd2
+                                }
                                 error={
                                     !formik.values.checked &&
                                     formik.touched.radd2 &&
@@ -323,9 +333,13 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 label='City/Town'
                                 variant='outlined'
                                 //   value={residence.town}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.pcity
+                                        : formik.values.rcity
+                                }
                                 disabled={formik.values.checked}
                                 name='rcity'
-                                value={formik.values.rcity}
                                 error={
                                     !formik.values.checked &&
                                     formik.touched.rcity &&
@@ -346,7 +360,11 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 variant='outlined'
                                 //   value={residence.state}
                                 name='rstate'
-                                value={formik.values.rstate}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.pstate
+                                        : formik.values.rstate
+                                }
                                 disabled={formik.values.checked}
                                 error={
                                     !formik.values.checked &&
@@ -369,7 +387,11 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 type='number'
                                 name='rzip'
                                 InputLabelProps={{ shrink: true }}
-                                value={formik.values.rzip}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.pzip
+                                        : formik.values.rzip
+                                }
                                 disabled={formik.values.checked}
                                 error={
                                     !formik.values.checked &&
@@ -394,7 +416,11 @@ const SecondRoute = ({ addressInfo, onChangeData, handleNext, handlePrev }) => {
                                 name='rtel'
                                 InputLabelProps={{ shrink: true }}
                                 disabled={formik.values.checked}
-                                value={formik.values.rtel}
+                                value={
+                                    formik.values.checked
+                                        ? formik.values.ptel
+                                        : formik.values.rtel
+                                }
                                 error={
                                     !formik.values.checked &&
                                     formik.touched.rtel &&

@@ -18,7 +18,7 @@ function Alert(props) {
 const Registration = ({ submitData, userProfile }) => {
     const [snk, setSnk] = useState('');
     const [open, setOpen] = useState(false);
-    const [activeStep, setActiveStep] = useState(2);
+    const [activeStep, setActiveStep] = useState(1);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
@@ -64,17 +64,6 @@ const Registration = ({ submitData, userProfile }) => {
         if (activeStep >= 0) {
             setActiveStep(activeStep + 1);
         }
-        // if (activeStep >= 2) {
-        //     setNextButtonText('Submit');
-        // }
-        // if (activeStep === 3) {
-        //     console.log('Finished');
-        //     const error = checkIfDataIsNull();
-        //     if (error) {
-        //         setOpen(true);
-        //         setSnk(error + ' is not complete');
-        //     } else submitData();
-        // }
     };
 
     const checkIfDataIsNull = () => {

@@ -23,6 +23,10 @@
     display: none;
 }
 
+.errorText {
+    color: red;
+}
+
 .btn {
     align-self: flex-end;
     margin-top: 16px !important;
@@ -33,6 +37,4 @@
     text-transform: none !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
-
-
 }
