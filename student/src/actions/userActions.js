@@ -48,11 +48,13 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('academics', JSON.stringify(academics));
         formData.append('degree', JSON.stringify(degree));
         formData.append('certifications', JSON.stringify(certifications));
-        formData.append('certificates', certificationPic);
         formData.append('profilePic', profilePic);
+        certificationPic.forEach((certification) => {
+            formData.append('certificates[]', certification);
+        });
 
-        console.log('the degree is ', degree);
-        console.log('the degree is ', Object.values(degree));
+        console.log('the degree is ', certificationPic);
+        console.log('the degree is ', formData.get('certificates'));
 
         const config = {
             method: 'POST',
