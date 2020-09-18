@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     TextField,
     Radio,
@@ -35,7 +35,6 @@ const FirstRoute = ({
     const { fullName, gender, dob, guardianName } = userProfile;
 
     const inputFile = useRef(null);
-    const [imageStatus, setImageStatus] = useState(true);
 
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
@@ -72,7 +71,7 @@ const FirstRoute = ({
             fullName: '',
             guardianName: '',
             gender: '',
-            profleP: null,
+            profileP: null,
             relationToGuardian: '',
         },
         validationSchema: Yup.object({
@@ -84,7 +83,7 @@ const FirstRoute = ({
                 .required('Required'),
             gender: Yup.string().required('Select a gender'),
             dob: Yup.date().required('Enter date of birth'),
-            profileP: Yup.mixed().required('Upload image'),
+            profileP: Yup.mixed().required('Upload a profile picture'),
             relationToGuardian: Yup.string().required('Required'),
         }),
         onSubmit: (values) => {
@@ -98,6 +97,7 @@ const FirstRoute = ({
             handleNext();
         },
     });
+
     return (
         <div className={styles.container}>
             <form className={styles.formStyle} onSubmit={formik.handleSubmit}>
@@ -112,11 +112,7 @@ const FirstRoute = ({
                         alt='Upload'
                         name=''
                     />
-                    {!imageStatus ? (
-                        <p className={styles.errorText}>
-                            Please add a profile image
-                        </p>
-                    ) : null}
+
                     <input
                         type='file'
                         ref={inputFile}
@@ -131,7 +127,7 @@ const FirstRoute = ({
                         }}
                     />
                     <FormHelperText style={{ marginTop: '-2px' }}>
-                        {formik.errors.profleP}
+                        {formik.errors.profileP}
                     </FormHelperText>
                 </FormControl>
 
