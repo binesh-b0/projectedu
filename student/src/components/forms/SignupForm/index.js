@@ -91,7 +91,7 @@ const SignupForm = ({ onSubmit }) => {
             ),
         pass2: yup
             .string()
-            .required('This feild is required')
+            .required('This field is required')
             .oneOf([yup.ref('pass'), null], 'Password mismatch'),
         terms: yup.bool().required('Incomplete form'),
     });

@@ -8,6 +8,7 @@ import Second from './secondRoute';
 import Snackbar from '@material-ui/core/Snackbar';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
+import AddUser from '../../components/AddUser';
 import MuiAlert from '@material-ui/lab/Alert';
 import { submitUserData } from '../../actions/userActions';
 
