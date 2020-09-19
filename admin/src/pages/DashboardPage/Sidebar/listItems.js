@@ -11,9 +11,12 @@ import SchoolIcon from "@material-ui/icons/School";
 
 import { Link } from "react-router-dom";
 
-export const userListItems = (roles,classes) => (
+export const userListItems = (roles,classes,open) => (
   <div>
+      {open && (
     <ListSubheader inset>User access</ListSubheader>
+        )}
+
     {roles.ALL_USERS && (
       <ListItem button to="/app/users" component={"/app/users" && Link}>
         <ListItemIcon>
@@ -44,9 +47,11 @@ export const userListItems = (roles,classes) => (
   </div>
 );
 
-export const enrolmentsList = (roles,classes) => (
+export const enrolmentsList = (roles,classes,open) => (
   <div>
-    <ListSubheader inset>Enrollments</ListSubheader>
+    {open && (
+      <ListSubheader inset>Enrollments</ListSubheader>
+    )}
     {roles.ALL_STUDENTS && (
       <ListItem button component={"/app/students" && Link} to="/app/students">
         <ListItemIcon>
@@ -66,9 +71,12 @@ export const enrolmentsList = (roles,classes) => (
   </div>
 );
 
-export const examsList = (roles,classes) => (
+export const examsList = (roles,classes,open) => (
   <div>
+  {open && (
     <ListSubheader inset>Exams list</ListSubheader>
+    )}
+
     {roles.ALL_EXAMS && (
       <ListItem button component={"/app/exams" && Link} to="/app/exams">
         <ListItemIcon>

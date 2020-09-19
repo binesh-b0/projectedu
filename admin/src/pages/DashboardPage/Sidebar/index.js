@@ -55,19 +55,19 @@ export default function Sidebar({handleDrawerClose,open,roles,handleDrawerOpen})
        {
          roles.ENROLLMENTS &&(<div>
          <Divider />
-        <List>{enrolmentsList(roles.ENROLLMENTS,classes)}</List>
+        <List>{enrolmentsList(roles.ENROLLMENTS,classes,open)}</List>
          </div>
          )}
        {
         roles.USER_ACCESS &&(<div>
          <Divider />
-        <List>{userListItems(roles.USER_ACCESS,classes)}</List>
+        <List>{userListItems(roles.USER_ACCESS,classes,open)}</List>
          </div>
          )}
        {
          roles.EXAMS_LISTING &&(<div>
          <Divider />
-        <List>{examsList(roles.EXAMS_LISTING,classes)}</List>
+        <List>{examsList(roles.EXAMS_LISTING,classes,open)}</List>
          </div>
          )}
         <ListItem button  component={'/app/settings' && RLLink} to='/app/settings'>

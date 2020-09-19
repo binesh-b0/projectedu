@@ -13,14 +13,6 @@ export default makeStyles((theme) => ({
       display: "none",
     },
   },
-  appBar: {
-    width: "100vw",
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
   toolbar: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
@@ -30,25 +22,6 @@ export default makeStyles((theme) => ({
   },
   grow: {
     flexGrow: 1,
-  },
-  search: {
-    position: "relative",
-    borderRadius: 25,
-    paddingLeft: theme.spacing(2.5),
-    width: 36,
-    backgroundColor: fade(theme.palette.common.black, 0),
-    transition: theme.transitions.create(["background-color", "width"]),
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor: fade(theme.palette.common.black, 0.08),
-    },
-  },
-  searchFocused: {
-    backgroundColor: fade(theme.palette.common.black, 0.08),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: 250,
-    },
   },
   headerMenu: {
     marginTop: theme.spacing(7),
@@ -80,6 +53,7 @@ export default makeStyles((theme) => ({
   },
   profileMenu: {
     minWidth: 265,
+    boxShadow:"0px 3px 11px 0px #959FFF, 0 3px 3px -2px #0000001A, 0 1px 8px 0 #9A9A9A1A"
   },
   profileMenuUser: {
     display: "flex",
@@ -99,32 +73,5 @@ export default makeStyles((theme) => ({
     "&:hover": {
       cursor: "pointer",
     },
-  },
-  messageNotification: {
-    height: "auto",
-    display: "flex",
-    alignItems: "center",
-    "&:hover, &:focus": {
-      backgroundColor: theme.palette.background.light,
-    },
-  },
-  messageNotificationSide: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginRight: theme.spacing(2),
-  },
-  messageNotificationBodySide: {
-    alignItems: "flex-start",
-    marginRight: 0,
-  },
-  sendMessageButton: {
-    margin: theme.spacing(4),
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    textTransform: "none",
-  },
-  sendButtonIcon: {
-    marginLeft: theme.spacing(2),
-  },
+  }
 }));

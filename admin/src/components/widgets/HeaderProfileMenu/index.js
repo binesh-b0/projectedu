@@ -44,7 +44,6 @@ export default function HeaderProfileMenu({logoutClicked}) {
               className={classes.profileMenuLink}
               component="a"
               color="primary"
-              href="https://flatlogic.com"
             >
               Flalogic.com
             </Typography>
@@ -57,26 +56,26 @@ export default function HeaderProfileMenu({logoutClicked}) {
           >
             <AccountIcon className={classes.profileMenuIcon} /> Profile
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             className={classNames(
               classes.profileMenuItem,
               classes.headerMenuItem,
             )}
           >
             <AccountIcon className={classes.profileMenuIcon} /> Tasks
-          </MenuItem>
-          <MenuItem
+          </MenuItem> */}
+          {/* <MenuItem
             className={classNames(
               classes.profileMenuItem,
               classes.headerMenuItem,
             )}
           >
             <AccountIcon className={classes.profileMenuIcon} /> Messages
-          </MenuItem>
+          </MenuItem> */}
           <div className={classes.profileMenuUser}>
             <Typography
               className={classes.profileMenuLink}
-              color="primary"
+              color="secondary"
               onClick={logoutClicked}
             >
               Sign Out
