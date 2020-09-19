@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 export const userListItems = (roles,classes) => (
   <div>
     <ListSubheader inset>User access</ListSubheader>
-    {true && (
+    {roles.ALL_USERS && (
       <ListItem button to="/app/users" component={"/app/users" && Link}>
         <ListItemIcon>
           <ShoppingCartIcon className={classes.menuButton}/>
@@ -22,7 +22,7 @@ export const userListItems = (roles,classes) => (
         <ListItemText primary="Users" className={classes.menuButton}/>
       </ListItem>
     )}
-    {true && (
+    {roles.INTERVIEWS && (
       <ListItem
         button
         component={"/app/interviews" && Link}
@@ -47,7 +47,7 @@ export const userListItems = (roles,classes) => (
 export const enrolmentsList = (roles,classes) => (
   <div>
     <ListSubheader inset>Enrollments</ListSubheader>
-    {true && (
+    {roles.ALL_STUDENTS && (
       <ListItem button component={"/app/students" && Link} to="/app/students">
         <ListItemIcon>
           <SchoolIcon className={classes.menuButton}/>
@@ -55,7 +55,7 @@ export const enrolmentsList = (roles,classes) => (
         <ListItemText primary="Students" className={classes.menuButton}/>
       </ListItem>
     )}
-    {true && (
+    {roles.ADVERTISEMENTS && (
       <ListItem button component={"/app/ad" && Link} to="/app/ad">
         <ListItemIcon>
           <AssignmentIcon className={classes.menuButton}/>
@@ -69,7 +69,7 @@ export const enrolmentsList = (roles,classes) => (
 export const examsList = (roles,classes) => (
   <div>
     <ListSubheader inset>Exams list</ListSubheader>
-    {true && (
+    {roles.ALL_EXAMS && (
       <ListItem button component={"/app/exams" && Link} to="/app/exams">
         <ListItemIcon>
           <AssignmentIcon className={classes.menuButton}/>
