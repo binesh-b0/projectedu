@@ -23,6 +23,7 @@ const AddUser = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
+            name: '',
             organization: '',
             password: '',
             confirmpassword: '',
@@ -44,6 +45,7 @@ const AddUser = () => {
             email: Yup.string()
                 .required('Enter valid email')
                 .email('Enter valid email'),
+            name: Yup.string().required('This field is required'),
             organization: Yup.string().required('This field is required'),
         }),
         onSubmit: (values) => {
@@ -70,7 +72,22 @@ const AddUser = () => {
                     value={formik.values.email}
                 />
                 <TextField
-                    label='Name/Organization name'
+                    label='Username'
+                    variant='outlined'
+                    name='organization'
+                    autoFocus
+                    className={styleClasses.textField}
+                    error={!!formik.errors.name && formik.touched.name}
+                    helperText={
+                        !!formik.errors.name && formik.touched.name
+                            ? formik.errors.name
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                />
+                <TextField
+                    label='Organization name'
                     variant='outlined'
                     name='organization'
                     autoFocus
