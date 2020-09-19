@@ -84,8 +84,8 @@ export default function SignIn(props) {
     dispatch(resetPassword(email,setDone,setError));
   }
   useEffect(() => {
-    console.log("redirect",redirect)
-    if(Cookies.get("signRe")===true)  {
+    console.log("redirect",redirect,Cookies.get("signRe")=="true",Cookies.get("signRe"))
+    if(Cookies.get("signRe")=="true")  {
       props.history.replace('/app/dashboard')}
   }, [redirect])
   
