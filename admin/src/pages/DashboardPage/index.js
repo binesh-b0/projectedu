@@ -1,39 +1,25 @@
-import React from "react";
-import clsx from "clsx";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
+import React,{useState,useEffect} from "react";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
+import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { enrolmentsList, examsList,userListItems } from "./listItems";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import { useSelector, useDispatch } from "react-redux";
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { withRouter,Link as RLLink,useLocation  } from "react-router-dom";
-import HeaderProfileMenu from '../../components/widgets/HeaderProfileMenu'
-import {logout} from '../../actions/userActions';
-import Users from "./Users";
-import Exams from "./Exams";
-import Home from "./Home"
-import Routing from './Routing'
+import clsx from "clsx";
+import { useDispatch,useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { logout } from "../../actions/userActions";
+import HeaderProfileMenu from "../../components/widgets/HeaderProfileMenu";
+import Routing from "./Routing";
+import Sidebar from "./Sidebar";
 import useStyles from "./styles";
-
+import { getRoles } from "../../actions/userActions";
+import Cookies from 'js-cookie'
 
 function Copyright() {
   return (
@@ -48,36 +34,50 @@ function Copyright() {
   );
 }
 
- function Dashboard(props) {
+function Dashboard(props) {
   const dispatch = useDispatch();
-
+  const userRole = useSelector((state) => state.userRole);
+  const { roles } = userRole;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [showProgress,setShowProgress] = useState(true);
+  const [status, setStatus] = useState(false)
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const logoutClicked = ()=>{
+  //redirect back to login page if request is unauthorised
+  useEffect(() => {
+    if(status===401)
+      dispatch(logout(props.history))
+  }, [status])
+
+  const logoutClicked = () => {
     dispatch(logout(props.history));
-  }
-
+  };
+// TODO
+  useEffect(() => {
+        Cookies.set("signRe",false)
+      dispatch(getRoles(setShowProgress,setStatus))
+  },[])
+if(showProgress)  return "loading"
+else
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="absolute"
         elevation={0}
-        className={clsx(classes.appBar, open && classes.appBarShift )}
+        className={clsx(classes.appBar, open && classes.appBarShift)}
         // style={{backgroundColor:"#1976d2"}}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="black"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(
@@ -90,57 +90,24 @@ function Copyright() {
           <Typography
             component="h1"
             variant="h6"
-            color="primary"
             noWrap
             className={classes.title}
           >
-            Dashboard
+            HSST Admin
           </Typography>
-          <IconButton color="primary">
+          <IconButton style={{color:"white"}}>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <HeaderProfileMenu logoutClicked={logoutClicked}/>
+          <HeaderProfileMenu logoutClicked={logoutClicked} />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <ListItem button  component={'/app/dashboard' && RLLink} to='/app/dashboard'>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Overview" />
-        </ListItem>
-        <Divider />
-        <List>{enrolmentsList}</List>
-        <Divider />
-        <List>{userListItems}</List>
-        <Divider />
-        <List>{examsList}</List>
-        <Divider />
-        <ListItem button  component={'/app/settings' && RLLink} to='/app/settings'>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Settings"/>
-        </ListItem>
-      </Drawer>
+      <Sidebar handleDrawerClose={handleDrawerClose} handleDrawerOpen={handleDrawerOpen} open={open} roles={roles}/>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            <Routing/>
+          <Routing />
           <Box pt={4}>
             <Copyright />
           </Box>
@@ -149,4 +116,4 @@ function Copyright() {
     </div>
   );
 }
-export default withRouter(Dashboard)
+export default withRouter(Dashboard);

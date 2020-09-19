@@ -64,6 +64,7 @@ export default function SignIn(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [error, setError] = useState();
+  const [redirect, setRedirect] = useState(false)
   const [alert, setAlert] = useState(false);
   
   // useEffect(() => {
@@ -82,6 +83,11 @@ export default function SignIn(props) {
   const resetPasswordOnSubmit=(email,setDone,setError)=>{
     dispatch(resetPassword(email,setDone,setError));
   }
+  useEffect(() => {
+    console.log("redirect",redirect)
+    if(Cookies.get("signRe")===true)  {
+      props.history.replace('/app/dashboard')}
+  }, [redirect])
   
   useEffect(() => {
     if (error) {
@@ -99,7 +105,8 @@ export default function SignIn(props) {
       password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      dispatch(signin(values.username, values.password,props.history,setError));
+      setError(null)
+      dispatch(signin(values.username, values.password,setRedirect,setError));
     },
   });
 

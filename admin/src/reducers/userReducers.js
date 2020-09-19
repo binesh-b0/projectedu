@@ -19,6 +19,9 @@ import {
     USER_PASSWORD_RESET_SUCCESS,
     USER_PASSWORD_RESET_COMPLETE,
     USER_PASSWORD_RESET_FAIL,
+    USER_ROLES_REQUEST,
+    USER_ROLES_SUCCESS,
+    USER_ROLES_FAIL,
 } from '../constants/userConstants';
 
 function userSigninReducer(state = {}, action) {
@@ -41,6 +44,20 @@ function userSigninReducer(state = {}, action) {
             return { ploading: true, };
         case USER_LOGOUT:
             return {};
+        default:
+            return state;
+    }
+}
+function userRolesReducer(state = {}, action) {
+    switch (action.type) {
+        case USER_ROLES_REQUEST:
+            return { loading: true, status: 0 };
+        case USER_ROLES_SUCCESS:
+            return { loading: false,roles:action.payload };
+        case USER_ROLES_FAIL:
+            return {
+                loading: false,status:action.status
+            };
         default:
             return state;
     }
@@ -74,4 +91,5 @@ export {
     userRegisterReducer,
     userUpdateReducer,
     userProfileReducer,
+    userRolesReducer,
 };

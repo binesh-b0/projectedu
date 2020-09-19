@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import HomeFeatureCard from '../../../components/cards/HomeFeatureCard'
 
 const useStyles = makeStyles({
   root: {
@@ -11,34 +9,41 @@ const useStyles = makeStyles({
     flexWrap:"wrap",
     flexDirection:"row",
     padding:"24px",
-    justifyContent:"space-between"
-  },
-  card:{
-    borderRadius:10,
-    padding:10,
-    minHeight:"200px",
-    minWidth:"350px",
-    backgroundColor:"blue",
-  },
-  cardHeading:{
-    color:"white",
-
+    alignItems:"center",
   }
   });
   
-export default function Features({history}) {
+export default function Features({history,role}) {
     const classes = useStyles();
-
+    const features = [{
+      url:"https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083387__340.jpg",
+      title:"Student Enrolment",
+      link:'/app/students'
+    },
+    {
+      url:"https://images.unsplash.com/photo-1524718730196-9b4aca2b5b8c",
+      title:"Adverisement Board",
+      link:'/app/ad'
+    },
+    {
+      url:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+      title:"Manage Users",
+      link:'/app/users'
+    },
+    {
+      url:"https://images.unsplash.com/photo-1547567667-1aa64e6f58dc",
+      title:" Exams",
+      link:'/app/exams'
+    },
+  ]
     return (
         <div className={classes.root}>
-             <Card className={classes.card} variant="outlined" onClick={()=>{history.push('/app/users')}}>
-             <CardActionArea>
+        {
+          features.map((item)=>{
+          return <HomeFeatureCard key={item.title} img={item.url} title={item.title} link={item.link} history={history}/>
 
-             <Typography className={classes.cardHeading} variant="h5" component="h2">
-               Manage Users
-             </Typography>
-             </CardActionArea>
-             </Card>
+          })
+        }
         </div>
     )
 }

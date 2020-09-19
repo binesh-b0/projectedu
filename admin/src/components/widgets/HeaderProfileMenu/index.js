@@ -21,12 +21,11 @@ export default function HeaderProfileMenu({logoutClicked}) {
     <div>
           <IconButton
           aria-haspopup="true"
-          color="primary"
           className={classes.headerMenuButton}
           aria-controls="profile-menu"
           onClick={e => setProfileMenu(e.currentTarget)}
         >
-          <AccountIcon style={{color:"grey"}} classes={{ root: classes.headerIcon }} />
+          <AccountIcon style={{color:"white"}} classes={{ root: classes.headerIcon }} />
         </IconButton>
            <Menu
           id="profile-menu"

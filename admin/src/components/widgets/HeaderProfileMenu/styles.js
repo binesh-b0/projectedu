@@ -66,6 +66,7 @@ export default makeStyles((theme) => ({
   headerMenuButton: {
     marginLeft: theme.spacing(2),
     padding: theme.spacing(0.5),
+    color:"white",
   },
   headerMenuButtonCollapse: {
     marginRight: theme.spacing(2),

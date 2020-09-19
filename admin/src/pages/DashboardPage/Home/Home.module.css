@@ -2,18 +2,22 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    scrollbar-width:1px !important;
+
 }
 .stats{
     padding: 24px;
+    background-color:#536DFE;
 }
 .welcome{
-    color:grey;
+    color:white;
     font-size: 1rem;
     font-weight: 600;
 }
 .paper{
     flex-direction: column;
-    padding:32px;
+    padding:16px;
+    min-width: 250px;
     border-radius: 10px !important;
     text-align: center;
 }
@@ -24,6 +28,6 @@
 }
 .paperContent{
     color:#1976d2;
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-weight: 800;
+    font-size: 1.5rem;
 }

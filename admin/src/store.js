@@ -7,6 +7,7 @@ import {
     userRegisterReducer,
     userUpdateReducer,
     userProfileReducer,
+    userRolesReducer,
 } from './reducers/userReducers';
 
 import {sidebarReducer} from './reducers/layoutReducers'
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userProfile: userProfileReducer,
     userUpdate: userUpdateReducer,
+    userRole:userRolesReducer,
     sidebar:sidebarReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

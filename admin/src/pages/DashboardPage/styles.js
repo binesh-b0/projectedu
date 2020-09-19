@@ -4,6 +4,7 @@ const drawerWidth = 240;
 export default makeStyles((theme) => ({
     root: {
       display: "flex",
+      scrollbarWidth:1,
     },
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
@@ -16,10 +17,10 @@ export default makeStyles((theme) => ({
       ...theme.mixins.toolbar,
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
+      zIndex: theme.zIndex.drawer - 1,
       border: 0,
   
-      backgroundColor: "white",
+      backgroundColor: theme.palette.primary,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -35,13 +36,14 @@ export default makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: 36,
+      color:"white"
     },
     menuButtonHidden: {
       display: "none",
     },
     title: {
       flexGrow: 1,
-      color: "grey",
+      color: "white",
     },
     drawerPaper: {
       position: "relative",

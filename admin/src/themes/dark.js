@@ -115,12 +115,6 @@ export default {
     MuiTableRow: {
       root: {
         height: 56,
-        '&.Mui-selected': {
-          backgroundColor: "#adbaff"
-        },
-        '&.Mui-selected:hover': {
-          backgroundColor: "#adbaff"
-        }
       },
     },
     MuiTableCell: {
