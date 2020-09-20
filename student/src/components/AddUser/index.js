@@ -10,11 +10,19 @@ import {
     makeStyles,
     Select,
 } from '@material-ui/core';
+import AddUserTextField from '../AddUserTextField';
 
 const AddUser = () => {
     const useStyle = makeStyles({
         textField: {
             marginTop: 16,
+        },
+        button: {
+            backgroundColor: '#ed6c1f',
+            color: 'white',
+            textTransform: 'capitalize',
+            fontSize: 16,
+            borderRadius: 10,
         },
     });
 
@@ -56,10 +64,77 @@ const AddUser = () => {
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={formik.handleSubmit}>
-                <TextField
-                    label='Email'
-                    variant='outlined'
+                <AddUserTextField
+                    error={!!formik.errors.email && formik.touched.email}
+                    helperText={
+                        !!formik.errors.email && formik.touched.email
+                            ? formik.errors.email
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
                     name='email'
+                    label='Email'
+                />
+                <AddUserTextField
+                    error={!!formik.errors.name && formik.touched.name}
+                    helperText={
+                        !!formik.errors.name && formik.touched.name
+                            ? formik.errors.name
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                    name='name'
+                    label='Name'
+                />
+                <AddUserTextField
+                    error={
+                        !!formik.errors.organization &&
+                        formik.touched.organization
+                    }
+                    helperText={
+                        !!formik.errors.organization &&
+                        formik.touched.organization
+                            ? formik.errors.organization
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.organization}
+                    name='organization'
+                    label='Organization Name'
+                />
+                <AddUserTextField
+                    error={!!formik.errors.password && formik.touched.password}
+                    helperText={
+                        !!formik.errors.password && formik.touched.password
+                            ? formik.errors.password
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    name='password'
+                    label='Password'
+                />
+                <AddUserTextField
+                    error={
+                        !!formik.errors.confirmpassword &&
+                        formik.touched.confirmpassword
+                    }
+                    helperText={
+                        !!formik.errors.confirmpassword &&
+                        formik.touched.confirmpassword
+                            ? formik.errors.confirmpassword
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmpassword}
+                    name='confirmpassword'
+                    label='Confirm Password'
+                />
+                {/* <TextField
+                    name='email'
+                    variant='outlined'
                     className={styleClasses.textField}
                     autoFocus
                     error={!!formik.errors.email && formik.touched.email}
@@ -70,8 +145,8 @@ const AddUser = () => {
                     }
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                />
-                <TextField
+                /> */}
+                {/* <TextField
                     label='Username'
                     variant='outlined'
                     name='organization'
@@ -138,27 +213,31 @@ const AddUser = () => {
                     }
                     onChange={formik.handleChange}
                     value={formik.values.confirmpassword}
-                />
-                <InputLabel className={styleClasses.textField} id='role'>
-                    Role
-                </InputLabel>
-                <Select
-                    labelId='demo-simple-select-label'
-                    id='role'
-                    value={formik.values.role}
-                >
-                    <MenuItem value={'admin'}>Admin</MenuItem>
-                    <MenuItem value={'hr-admin'}>HR Admin</MenuItem>
-                </Select>
-                <Button
-                    className={styleClasses.textField}
-                    variant='contained'
-                    color='primary'
-                    disableElevation
-                    type='submit'
-                >
-                    Create User
-                </Button>
+                /> */}
+                <div className={styles.buttonRoleHeadingContainer}>
+                    <p className={styles.heading} id='role'>
+                        Role
+                    </p>
+                    <div className={styles.buttonRoleContainer}>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='role'
+                            variant='outlined'
+                            value={formik.values.role}
+                        >
+                            <MenuItem value={'admin'}>Admin</MenuItem>
+                            <MenuItem value={'hr-admin'}>HR Admin</MenuItem>
+                        </Select>
+                        <Button
+                            className={styleClasses.button}
+                            variant='contained'
+                            disableElevation
+                            type='submit'
+                        >
+                            Create User
+                        </Button>
+                    </div>
+                </div>
             </form>
         </div>
     );

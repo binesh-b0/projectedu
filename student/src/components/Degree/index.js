@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import {
     Accordion,
     AccordionSummary,
+    FormControlLabel,
     AccordionDetails,
     TextField,
+    Radio,
+    RadioGroup,
     makeStyles,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -20,6 +23,7 @@ const Degree = ({
     degreeDetails,
 }) => {
     const [details, setDetails] = useState({});
+    const [markType, setMarkType] = useState('C');
 
     useEffect(() => {
         if (degreeDetails.id) {
@@ -70,9 +74,25 @@ const Degree = ({
                         }
                         value={details ? details.degree : ''}
                     />
+                    <RadioGroup
+                        value={markType}
+                        row
+                        className={classes.textField}
+                        onChange={(event) => setMarkType(event.target.value)}
+                    >
+                        <FormControlLabel
+                            value='C'
+                            label='CGPA'
+                            control={<Radio />}
+                        />
+                        <FormControlLabel
+                            value='P'
+                            label='Percentage'
+                            control={<Radio />}
+                        />
+                    </RadioGroup>
                     <TextField
                         InputLabelProps={{ shrink: true }}
-                        className={classes.textField}
                         label='CGPA/Percentage'
                         variant='outlined'
                         type='number'
