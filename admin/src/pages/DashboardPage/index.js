@@ -19,7 +19,7 @@ import Routing from "./Routing";
 import Sidebar from "./Sidebar";
 import useStyles from "./styles";
 import { getRoles } from "../../actions/userActions";
-import Cookies from 'js-cookie'
+import clearStorage from "../../services/clearStorage";
 
 function Copyright() {
   return (
@@ -57,11 +57,11 @@ function Dashboard(props) {
   }, [status])
 
   const logoutClicked = () => {
+    clearStorage()
     dispatch(logout(props.history));
   };
 // TODO
   useEffect(() => {
-        Cookies.set("signRe",false)
       dispatch(getRoles(setShowProgress,setStatus))
   },[])
 if(showProgress)  return "loading"

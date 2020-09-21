@@ -12,10 +12,12 @@ import {
   import useStyles from "./styles";
 
   import {  Typography } from "../../Wrappers/Wrappers";
+import { getUserInfo } from "../../../services/userService/userInfo";
 
 export default function HeaderProfileMenu({logoutClicked}) {
     var classes = useStyles();
     var [profileMenu, setProfileMenu] = useState(null);
+    const user = getUserInfo()
 
   return (
     <div>
@@ -38,14 +40,14 @@ export default function HeaderProfileMenu({logoutClicked}) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              {user.name}
             </Typography>
             <Typography
               className={classes.profileMenuLink}
               component="a"
               color="primary"
             >
-              Flalogic.com
+             {user.email}
             </Typography>
           </div>
           <MenuItem

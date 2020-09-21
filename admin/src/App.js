@@ -15,10 +15,10 @@ function App() {
         <Route exact path="/" render={() => <Redirect to="/app" />} />
          
         <PrivateRoute authed={isAuthenticated} path="/app" component={Dashboard} />
-        {/* <Route path="/login" 
-        render={(props)=> isAuthenticated===false?
-         <Signin/> :
-          <Redirect to={{pathname: '/login', state: {from: props.location}}} />} /> */}
+        <Route path="/login" 
+        render={(props)=> isLoggedIn()===false?
+         <Signin /> :
+          <Redirect to='/app/dashboard'/>} />
           <Route path='/login' component={Signin} />
         <Route path="/reset/:token" component={Reset} />
         <Route component={NotFound} />

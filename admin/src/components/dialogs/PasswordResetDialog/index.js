@@ -51,7 +51,6 @@ export default function PasswordResetDialog({
     else return "We will send a password reset link to your email address.";
   };
   const renderButtons = () => {
-    console.log(ploading);
     if (done)
       return (
         <DialogActions>

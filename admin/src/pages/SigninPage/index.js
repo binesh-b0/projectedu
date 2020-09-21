@@ -15,13 +15,12 @@ import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { signin,resetPassword } from "../../actions/userActions";
+import { signin, resetPassword } from "../../actions/userActions";
 import SimpleAlert from "../../components/alerts/SimpleAlert";
-import PasswordResetDialog from '../../components/dialogs/PasswordResetDialog';
-import AdornedButton from '../../components/buttons/AdornedButton';
-import Cookies from 'js-cookie'
-
-
+import PasswordResetDialog from "../../components/dialogs/PasswordResetDialog";
+import AdornedButton from "../../components/buttons/AdornedButton";
+import Cookies from "js-cookie";
+import { Redirect,useHistory,withRouter } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -56,17 +55,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function SignIn(props) {
+function SignIn(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { loading } = userSignin;
   const classes = useStyles();
   const dispatch = useDispatch();
   const [error, setError] = useState();
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState();
   const [alert, setAlert] = useState(false);
-  
+  const history = useHistory()
+
   // useEffect(() => {
   //   Cookies.remove("tk")
   // }, )
@@ -80,15 +78,24 @@ export default function SignIn(props) {
   const handleClose = () => {
     setOpenDialog(false);
   };
-  const resetPasswordOnSubmit=(email,setDone,setError)=>{
-    dispatch(resetPassword(email,setDone,setError));
+  const resetPasswordOnSubmit = (email, setDone, setError) => {
+    dispatch(resetPassword(email, setDone, setError));
+  };
+  const gotoDashboard=async ()=>{
+    console.log("asd");
+    Cookies.remove("signRe")
+    console.log("asd3");
+    await setRedirect("false");
+    history.replace("/app/dashboard");
   }
-  useEffect(() => {
-    console.log("redirect",redirect,Cookies.get("signRe")=="true",Cookies.get("signRe"))
-    if(Cookies.get("signRe")=="true")  {
-      props.history.replace('/app/dashboard')}
-  }, [redirect])
-  
+
+  // useEffect(() => {
+  //   console.log("redirect",redirect,Cookies.get("signRe")=="true",Cookies.get("signRe"))
+  //   if(Cookies.get("signRe")=="true")  {
+  //     gotoDashboard()
+  //   }
+  // }, [redirect])
+
   useEffect(() => {
     if (error) {
       setAlert(true);
@@ -105,107 +112,118 @@ export default function SignIn(props) {
       password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      setError(null)
-      dispatch(signin(values.username, values.password,setRedirect,setError));
+      setError(null);
+      dispatch(signin(values.username, values.password, setRedirect, setError));
     },
   });
 
   const showAlert = () => {
     if (alert) return <SimpleAlert severity="error" msg={error} />;
   };
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <PasswordResetDialog
-        resetPasswordOnSubmit={resetPasswordOnSubmit}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleClose}
-        open={openDialog}
-      />
-
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        {showAlert()}
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={formik.handleSubmit}
-        >
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            disabled={loading}
-            label="Username"
-            name="username"
-            autoComplete="email"
-            error={!!formik.errors.username && formik.touched.username}
-            helperText={
-              formik.touched.username && !!formik.errors.username
-                ? !!formik.errors.username
-                : ""
-            }
-            autoFocus
-            onChange={formik.handleChange}
-            value={formik.values.username}
+  if (redirect === "app") {
+    console.log("redirecting");
+    gotoDashboard()
+    // return  <Redirect to="/" />
+  } else
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        {openDialog && (
+          <PasswordResetDialog
+            resetPasswordOnSubmit={resetPasswordOnSubmit}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
+            open={openDialog}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            disabled={loading}
-            label="Password"
-            type="password"
-            error={formik.touched.password && !!formik.errors.password}
-            helperText={
-              formik.touched.password && !!formik.errors.password
-                ? formik.errors.password
-                : ""
-            }
-            onChange={formik.handleChange}
-            id="password"
-            value={formik.values.password}
-            autoComplete="current-password"
-          />
-          {/* <FormControlLabel
+        )}
+
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          {showAlert()}
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={formik.handleSubmit}
+          >
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              disabled={loading}
+              label="Username"
+              name="username"
+              autoComplete="email"
+              error={!!formik.errors.username && formik.touched.username}
+              helperText={
+                formik.touched.username && !!formik.errors.username
+                  ? !!formik.errors.username
+                  : ""
+              }
+              autoFocus
+              onChange={formik.handleChange}
+              value={formik.values.username}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              disabled={loading}
+              label="Password"
+              type="password"
+              error={formik.touched.password && !!formik.errors.password}
+              helperText={
+                formik.touched.password && !!formik.errors.password
+                  ? formik.errors.password
+                  : ""
+              }
+              onChange={formik.handleChange}
+              id="password"
+              value={formik.values.password}
+              autoComplete="current-password"
+            />
+            {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          <AdornedButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={loading}
-            color={loading?'secondary':'primary'}
-            // disabled={loading}
-            loading={loading}
-            className={classes.submit}
-          >
-            Sign In
-          </AdornedButton>
-          <Grid container>
-            <Grid item xs>
-              <Button style={{textTransform:"none"}} onClick={()=>setOpenDialog(true)} >
-                Forgot password?
-              </Button>
+            <AdornedButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              color={loading ? "secondary" : "primary"}
+              // disabled={loading}
+              loading={loading}
+              className={classes.submit}
+            >
+              Sign In
+            </AdornedButton>
+            <Grid container>
+              <Grid item xs>
+                <Button
+                  style={{ textTransform: "none" }}
+                  onClick={() => setOpenDialog(true)}
+                >
+                  Forgot password?
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    );
 }
+
+export default withRouter(SignIn)

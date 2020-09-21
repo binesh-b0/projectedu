@@ -53,8 +53,8 @@ const signin = (username, password, setRedirect, setError) => async (
     Cookie.set("signRe", true);
     setCredentials(data.response);
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    setRedirect(true);
     setError(null);
+    setRedirect("app");
   } catch (error) {
     const res = { ...error };
     setError("error");
