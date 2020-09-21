@@ -1,5 +1,7 @@
 import axios from 'axios';
+export const BASE_URL = 'http://be8804ac1c08.ngrok.io';
 
 export default axios.create({
-    baseURL: 'http://localhost:8080/rest/v1'
+    baseURL: BASE_URL+'/rest/v1'
 });
+
