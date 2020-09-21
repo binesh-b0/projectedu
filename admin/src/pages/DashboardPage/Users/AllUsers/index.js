@@ -6,8 +6,8 @@ const useStyles = makeStyles((theme) => ({
   btn: {},
   btnContainer: {
     display: "flex",
-    justifyContent: "end",
-    aliginContent: "flex-end",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
   },
 }));
 export default function AllUsers(props) {

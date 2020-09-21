@@ -9,6 +9,8 @@ const useStyles = makeStyles({
     display:"flex",
     flexWrap:"wrap",
     flexDirection:"row",
+    flexGrow: 1,
+    justifyContent:'space-evenly',
     padding:"24px",
     alignItems:"center",
   }

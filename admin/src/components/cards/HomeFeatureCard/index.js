@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     position: 'relative',
     borderRadius:25,
-    height: 200,
+    height:250,
     // [theme.breakpoints.down('sm')]: {
     //   width: '100% !important', // Overrides inline-style
     //   height: 100,
@@ -89,7 +89,7 @@ export default function HomeFeatureCard({img,link,title,history}) {
           onClick={()=>history.push(link)}
           focusVisibleClassName={classes.focusVisible}
           style={{
-            width: 300,
+            width: 400,
           }}
         >
           <span
