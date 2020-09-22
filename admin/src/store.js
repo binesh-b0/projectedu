@@ -8,9 +8,10 @@ import {
     userUpdateReducer,
     userProfileReducer,
     userRolesReducer,
+    allUsersReducer,
 } from './reducers/userReducers';
 
-import {sidebarReducer} from './reducers/layoutReducers'
+import { sidebarReducer } from './reducers/layoutReducers';
 
 const userInfo = Cookie.getJSON('userInfo') || null;
 
@@ -20,8 +21,9 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userProfile: userProfileReducer,
     userUpdate: userUpdateReducer,
-    userRole:userRolesReducer,
-    sidebar:sidebarReducer,
+    userRole: userRolesReducer,
+    sidebar: sidebarReducer,
+    allUsers: allUsersReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

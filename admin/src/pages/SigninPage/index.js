@@ -53,6 +53,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root:{
+    backgroundImage:"url(/assets/images/tab_bg.png)",
+    backgroundColor:"#1a73e8",
+    height:"100"
+  }
 }));
 
 function SignIn(props) {
@@ -86,7 +91,8 @@ function SignIn(props) {
     Cookies.remove("signRe")
     console.log("asd3");
     await setRedirect("false");
-    history.replace("/app/dashboard");
+    console.log(history)
+    props.history.replace("/app/dashboard");
   }
 
   // useEffect(() => {
@@ -122,10 +128,12 @@ function SignIn(props) {
   };
   if (redirect === "app") {
     console.log("redirecting");
+    setRedirect(null)
     gotoDashboard()
     // return  <Redirect to="/" />
   } else
     return (
+      <div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         {openDialog && (
@@ -223,6 +231,7 @@ function SignIn(props) {
           <Copyright />
         </Box>
       </Container>
+      </div>
     );
 }
 

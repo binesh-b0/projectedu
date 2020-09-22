@@ -5,6 +5,7 @@ const secondary = "#FF5C93";
 const warning = "#FFC260";
 const success = "#3CD4A0";
 const info = "#9013FE";
+const nav = "#061F35";
 
 const lightenRate = 7.5;
 const darkenRate = 15;
@@ -19,6 +20,7 @@ export default {
       dark: tinycolor(primary)
         .darken(darkenRate)
         .toHexString(),
+        nav:nav,
     },
     secondary: {
       main: secondary,

@@ -20,13 +20,13 @@ export default makeStyles((theme) => ({
       position: "relative",
       whiteSpace: "nowrap",
       width: drawerWidth,
-      background: "#004e92",
-      background: "-webkit-linear-gradient(to bottom, #000428, #004e92)",
-      background: "linear-gradient(to bottom, #000428, #004e92)",
+      background: theme.palette.primary.nav,
+      // background: "-webkit-linear-gradient(to bottom, #000428, #004e92)",
+      // background: "linear-gradient(to bottom, #000428, #004e92)",
       
-      // backgroundImage:"url(https://images.unsplash.com/photo-1573944815850-7e2ba0bbcb04)",
-      // backgroundRepeat:"no-repeat",
-      // backgroundSize:"cover",
+      backgroundImage:"url(/assets/images/nav_bg_img.png)",
+      backgroundRepeat:"no-repeat",
+      backgroundSize:"cover",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -43,4 +43,10 @@ export default makeStyles((theme) => ({
         width: theme.spacing(9),
       },
     },
+    listHeading:{
+      fontSize:"1rem",
+      paddingLeft:18,
+      color:"white",
+      fontWeight:700
+    }
   }));

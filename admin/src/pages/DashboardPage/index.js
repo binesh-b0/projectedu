@@ -78,30 +78,35 @@ function Dashboard(props) {
                     // style={{backgroundColor:"#1976d2"}}
                 >
                     <Toolbar className={classes.toolbar}>
-                        <IconButton
-                            edge='start'
-                            aria-label='open drawer'
-                            onClick={handleDrawerOpen}
-                            className={clsx(
-                                classes.menuButton,
-                                open && classes.menuButtonHidden
-                            )}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        {/* <IconButton
+            edge="start"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton> */}
                         <Typography
                             component='h1'
                             variant='h6'
                             noWrap
                             className={classes.title}
+                            style={
+                                open
+                                    ? { marginLeft: '20px' }
+                                    : { marginLeft: '70px' }
+                            }
                         >
                             HSST Admin
                         </Typography>
-                        <IconButton style={{ color: 'white' }}>
-                            <Badge badgeContent={4} color='secondary'>
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        {/* <IconButton style={{color:"white"}}>
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton> */}
                         <HeaderProfileMenu logoutClicked={logoutClicked} />
                     </Toolbar>
                 </AppBar>
