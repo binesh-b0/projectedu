@@ -20,7 +20,8 @@ export default makeStyles((theme) => ({
       zIndex: theme.zIndex.drawer - 1,
       border: 0,
   
-      backgroundColor: theme.palette.primary,
+      backgroundColor: '#1a73e8',
+      // backgroundColor: theme.palette.primary,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,

@@ -76,7 +76,7 @@ else
         // style={{backgroundColor:"#1976d2"}}
       >
         <Toolbar className={classes.toolbar}>
-          <IconButton
+          {/* <IconButton
             edge="start"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -86,20 +86,21 @@ else
             )}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             component="h1"
             variant="h6"
             noWrap
             className={classes.title}
+            style={open? {marginLeft:"20px"}:{marginLeft:"70px"}}
           >
             HSST Admin
           </Typography>
-          <IconButton style={{color:"white"}}>
+          {/* <IconButton style={{color:"white"}}>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
           <HeaderProfileMenu logoutClicked={logoutClicked} />
         </Toolbar>
       </AppBar>

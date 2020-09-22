@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import AddUserTextField from '../AddUserTextField';
 
-const AddUser = () => {
+const AddUser = (onSubmit) => {
     const useStyle = makeStyles({
         textField: {
             marginTop: 16,
@@ -35,7 +35,7 @@ const AddUser = () => {
             organization: '',
             password: '',
             confirmpassword: '',
-            role: 'admin',
+            role: 'SUPER_USER',
         },
 
         validationSchema: Yup.object({
@@ -224,9 +224,11 @@ const AddUser = () => {
                             id='role'
                             variant='outlined'
                             value={formik.values.role}
+                            onChange={formik.handleChange}
+
                         >
-                            <MenuItem value={'admin'}>Admin</MenuItem>
-                            <MenuItem value={'hr-admin'}>HR Admin</MenuItem>
+                            <MenuItem value={'SUPER_USER'}>Admin</MenuItem>
+                            <MenuItem value={'HR_USER'}>HR Admin</MenuItem>
                         </Select>
                         <Button
                             className={styleClasses.button}

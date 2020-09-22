@@ -26,6 +26,7 @@ import {
 } from "../constants/userConstants";
 import { setCredentials, removeCredentials } from "../services/authService";
 import clearStorage from "../services/clearStorage";
+import { setUserInfo } from "../services/userService";
 const timeout = 1000;
 const headers = {
   headers: {
@@ -39,6 +40,7 @@ const signin = (username, password, setRedirect, setError) => async (
 ) => {
   console.log(username, password);
   removeCredentials();
+  clearStorage()
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } });
   try {
     const { data, headers } = await api.post(
@@ -51,7 +53,8 @@ const signin = (username, password, setRedirect, setError) => async (
     );
     console.log(data, "data", headers.adminCookie);
     Cookie.set("signRe", true);
-    setCredentials(data.response);
+    setCredentials(data.response.token);
+    setUserInfo(data.response.user.Email,data.response.user.Username,data.response.user.Role)
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     setError(null);
     setRedirect("app");
@@ -78,7 +81,7 @@ const getRoles = (setShowProgress, setStatus) => async (dispatch) => {
   dispatch({ type: USER_ROLES_REQUEST, payload: {} });
   try {
     const { data } = await api.post(
-      "/getFeatures",
+      "/admin/getFeatures",
       {},
       {
         headers: {
