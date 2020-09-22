@@ -25,6 +25,8 @@ import {
 import MYButton from '../../../components/CTAButton';
 import Degree from '../../../components/Degree';
 
+import * as yup from 'yup';
+
 const ThirdRoute = ({
     schoolInfo,
     onChangeSchoolData,
@@ -119,6 +121,15 @@ const ThirdRoute = ({
         }
     }, []);
 
+    // const validate=()=>{
+    //     console.log("error",error,schoolInfo.schoolName10);
+    //     (schoolInfo.schoolName10)? setError(prevState=>({...prevState,sn:true})):setError(prevState=>({...prevState,sn:true}))
+    //     Object.entries(error).map(val=>{
+    //         if(!val) return val;
+    //     })
+    //     return true;
+    // }
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
@@ -153,10 +164,14 @@ const ThirdRoute = ({
                             className={classes.textField}
                             label='School Name'
                             variant='outlined'
+                            required
+                            autoFocus
+                            error={!error.sn}
                             value={schoolInfo.schoolName10}
                             helperText={!error.sn ? 'Required' : ''}
                             error={error.sn}
                             onChange={(event) => {
+                                validate();
                                 onChangeSchoolData({
                                     schoolName10: event.target.value,
                                 });
@@ -216,6 +231,7 @@ const ThirdRoute = ({
                             helperText={error.board ? 'Required' : ''}
                             label='Board'
                             variant='outlined'
+                            required
                             onChange={(event) => {
                                 onChangeSchoolData({
                                     board10: event.target.value,
