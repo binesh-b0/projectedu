@@ -37,7 +37,7 @@ export default function Features({history}) {
       url:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
       title:"Manage Users",
       link:'/app/users',
-      show:roles.USER_ACCES?!!roles.USER_ACCESS.ALL_USERS:false
+      show:roles.USER_ACCESS?!!roles.USER_ACCESS.ALL_USERS:false
     },
     {
       url:"https://images.unsplash.com/photo-1547567667-1aa64e6f58dc",
