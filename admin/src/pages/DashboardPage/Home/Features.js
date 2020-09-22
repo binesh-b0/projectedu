@@ -25,25 +25,25 @@ export default function Features({history}) {
       url:"https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083387__340.jpg",
       title:"Student Enrolment",
       link:'/app/students',
-      show:!!roles.ENROLLMENTS.ALL_STUDENTS 
+      show:roles.ENROLLMENTS? (!!roles.ENROLLMENTS.ALL_STUDENTS):false
     },
     {
       url:"https://images.unsplash.com/photo-1524718730196-9b4aca2b5b8c",
       title:"Adverisement Board",
       link:'/app/ad',
-      show:!!roles.ENROLLMENTS.ADVERTISEMENTS 
+      show:roles.ENROLLMENTS?(!!roles.ENROLLMENTS.ADVERTISEMENTS):false
     },
     {
       url:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
       title:"Manage Users",
       link:'/app/users',
-      show:!!roles.USER_ACCESS.ALL_USERS 
+      show:roles.USER_ACCES?!!roles.USER_ACCESS.ALL_USERS:false
     },
     {
       url:"https://images.unsplash.com/photo-1547567667-1aa64e6f58dc",
       title:" Exams",
       link:'/app/exams',
-      show:!!roles.EXAMS_LISTING.ALL_EXAMS 
+      show:roles.EXAMS_LISTING? !!roles.EXAMS_LISTING.ALL_EXAMS :false
 
     },
   ]
