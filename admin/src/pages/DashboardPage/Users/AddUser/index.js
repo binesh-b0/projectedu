@@ -7,11 +7,11 @@ export default function AddUser() {
 
 
     const createUser=async (values)=>{
-        const {email,name,password,role} = values
-        console.log("values",values)
+        const {email,name,password,role,organization} = values
+        console.log("values dd",values)
         try {
             const data = await api.post("/admin/createAdminUser",
-            {email,username:name,password,role},
+            {email,username:name,name:organization,password,role},
             {
                 headers: {
                   "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export default function AddUser() {
 
     return (
         <div>
-            <AddUserComponent onSubmit={createUser} />
+            <AddUserComponent onSubmitClicked={createUser} />
         </div>
     )
 }

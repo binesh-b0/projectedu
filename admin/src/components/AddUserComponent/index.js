@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import AddUserTextField from '../AddUserTextField';
 
-const AddUser = (onSubmit) => {
+const AddUserComponent = ({onSubmitClicked}) => {
     const useStyle = makeStyles({
         textField: {
             marginTop: 16,
@@ -57,7 +57,8 @@ const AddUser = (onSubmit) => {
             organization: Yup.string().required('This field is required'),
         }),
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
+            onSubmitClicked(values)
         },
     });
 
@@ -245,4 +246,4 @@ const AddUser = (onSubmit) => {
     );
 };
 
-export default AddUser;
+export default AddUserComponent;
