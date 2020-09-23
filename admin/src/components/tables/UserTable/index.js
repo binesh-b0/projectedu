@@ -44,13 +44,19 @@ const UserTable = (props) => {
         // selection: true,
         filtering: true,
         actionsColumnIndex: -1,
+        rowStyle: (rowData) => ({
+            backgroundColor: rowData.Status === 'inactive' ? '#d3d3d3' : '#FFF',
+        }),
     };
 
-    const disableUser = async (userId) => {
+    const disableUser = async (userId, status) => {
         try {
             const res = await api.post(
                 'admin/updateAdminUser',
-                { userId, operation: 'DISABLE' },
+                {
+                    userId,
+                    operation: status === 'active' ? 'DISABLE' : 'ENABLE',
+                },
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -59,6 +65,7 @@ const UserTable = (props) => {
                 },
                 { timeout: 1000 }
             );
+            props.getAllUser();
             return true;
         } catch (error) {
             console.log(error, 'DU');
@@ -80,7 +87,7 @@ const UserTable = (props) => {
         {
             icon: () => <PersonAddDisabled />,
             tooltip: 'Disable',
-            onClick: (evt, data) => disableUser(data.id),
+            onClick: (evt, data) => disableUser(data.id, data.Status),
         },
     ];
 
@@ -143,6 +150,7 @@ const UserTable = (props) => {
                     },
                     { timeout: 1000 }
                 );
+                props.getAllUser();
             } catch (error) {
                 console.log(error, 'UU');
                 return false;
@@ -150,7 +158,6 @@ const UserTable = (props) => {
             return true;
         },
         onRowDelete: async (oldData) => {
-            // console.log(userId);
             try {
                 const { id } = oldData;
                 const res = await api.post(
@@ -164,6 +171,7 @@ const UserTable = (props) => {
                     },
                     { timeout: 1000 }
                 );
+                props.getAllUser();
             } catch (error) {
                 console.log(error, 'LU');
                 return false;

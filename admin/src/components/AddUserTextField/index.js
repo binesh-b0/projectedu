@@ -8,6 +8,7 @@ const AddUserTextField = ({
     value,
     onChange,
     name,
+    type = 'text',
     label,
 }) => {
     const useStyle = makeStyles({
@@ -27,6 +28,7 @@ const AddUserTextField = ({
                 name={name}
                 variant='outlined'
                 autoFocus
+                type={type}
                 error={error}
                 helperText={helperText}
                 onChange={onChange}

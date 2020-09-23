@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import AddUserTextField from '../AddUserTextField';
 
-const AddUserComponent = (onSubmit) => {
+const AddUserComponent = ({ onSubmitClicked, loading }) => {
     const [role, setRole] = useState('SUPER_USER');
 
     const useStyle = makeStyles({
@@ -59,7 +59,8 @@ const AddUserComponent = (onSubmit) => {
             organization: Yup.string().required('This field is required'),
         }),
         onSubmit: (values) => {
-            console.log({ ...values, role });
+            console.log(loading);
+            onSubmitClicked(values);
         },
     });
 
@@ -75,6 +76,7 @@ const AddUserComponent = (onSubmit) => {
                     }
                     onChange={formik.handleChange}
                     value={formik.values.email}
+                    disabled={loading}
                     name='email'
                     label='Email'
                 />
@@ -85,12 +87,14 @@ const AddUserComponent = (onSubmit) => {
                             ? formik.errors.name
                             : ''
                     }
+                    disabled={loading}
                     onChange={formik.handleChange}
                     value={formik.values.name}
                     name='name'
                     label='Name'
                 />
                 <AddUserTextField
+                    disabled={loading}
                     error={
                         !!formik.errors.organization &&
                         formik.touched.organization
@@ -114,11 +118,14 @@ const AddUserComponent = (onSubmit) => {
                             : ''
                     }
                     onChange={formik.handleChange}
+                    disabled={!loading}
                     value={formik.values.password}
                     name='password'
+                    type='password'
                     label='Password'
                 />
                 <AddUserTextField
+                    disabled={loading}
                     error={
                         !!formik.errors.confirmpassword &&
                         formik.touched.confirmpassword
@@ -132,6 +139,7 @@ const AddUserComponent = (onSubmit) => {
                     onChange={formik.handleChange}
                     value={formik.values.confirmpassword}
                     name='confirmpassword'
+                    type='password'
                     label='Confirm Password'
                 />
                 <div className={styles.buttonRoleHeadingContainer}>
@@ -153,6 +161,7 @@ const AddUserComponent = (onSubmit) => {
                             className={styleClasses.button}
                             variant='contained'
                             disableElevation
+                            // disabled={loading}
                             type='submit'
                         >
                             Create User
