@@ -20,13 +20,15 @@ import {
     ViewColumn,
     ChevronRight,
     Remove,
+    PhoneDisabled,
+    PersonAddDisabled,
 } from '@material-ui/icons';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 
 const UserTable = (props) => {
     useEffect(() => {
         props.getAllUser();
-    }, []);
+    }, [props]);
 
     const tableColumns = [
         { title: 'Email', field: 'Email' },
@@ -36,14 +38,25 @@ const UserTable = (props) => {
 
     const tableOptions = {
         search: true,
-        selection: true,
+        // selection: true,
         filtering: true,
+        actionsColumnIndex: -1,
     };
 
     const actionOptions = [
         {
             tooltip: 'Remove All Selected Users',
             icon: () => <Delete />,
+            onClick: (evt, data) => console.log(data),
+        },
+        {
+            icon: () => <Edit />,
+            tooltip: 'Edit',
+            onClick: (evt, data) => console.log(data),
+        },
+        {
+            icon: () => <PersonAddDisabled />,
+            tooltip: 'Disable',
             onClick: (evt, data) => console.log(data),
         },
     ];
