@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
     Accordion,
     AccordionSummary,
+    FormControlLabel,
     AccordionDetails,
     TextField,
+    Radio,
+    RadioGroup,
     makeStyles,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -19,6 +23,7 @@ const Degree = ({
     degreeDetails,
 }) => {
     const [details, setDetails] = useState({});
+    const [markType, setMarkType] = useState('C');
 
     useEffect(() => {
         if (degreeDetails.id) {
@@ -26,13 +31,17 @@ const Degree = ({
         }
     }, [degreeDetails.id]);
 
+    useEffect(() => {
+        // console.log('The degree value is ', degreeDetails, id);
+        setDetails({ ...degreeDetails[id] });
+    }, []);
+
     const useStyles = makeStyles({
         textField: { marginTop: 16 },
     });
     const classes = useStyles();
 
     const addDataToStore = (data) => {
-        console.log('The data in blah is ', data);
         addDegreeDetails({ id: id, ...data });
     };
 
@@ -44,6 +53,7 @@ const Degree = ({
             <AccordionDetails>
                 <form className={styles.form}>
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='College Name'
                         variant='outlined'
@@ -55,6 +65,7 @@ const Degree = ({
                         value={details ? details.collegeName : ''}
                     />
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='Degree'
                         variant='outlined'
@@ -63,8 +74,25 @@ const Degree = ({
                         }
                         value={details ? details.degree : ''}
                     />
-                    <TextField
+                    <RadioGroup
+                        value={markType}
+                        row
                         className={classes.textField}
+                        onChange={(event) => setMarkType(event.target.value)}
+                    >
+                        <FormControlLabel
+                            value='C'
+                            label='CGPA'
+                            control={<Radio />}
+                        />
+                        <FormControlLabel
+                            value='P'
+                            label='Percentage'
+                            control={<Radio />}
+                        />
+                    </RadioGroup>
+                    <TextField
+                        InputLabelProps={{ shrink: true }}
                         label='CGPA/Percentage'
                         variant='outlined'
                         type='number'
@@ -74,6 +102,7 @@ const Degree = ({
                         value={details ? details.cgpa : ''}
                     />
                     <TextField
+                        InputLabelProps={{ shrink: true }}
                         className={classes.textField}
                         label='Location'
                         variant='outlined'

@@ -1,5 +1,8 @@
 .container {
     margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     margin-right: 32px;
     margin-left: 32px;
 }
@@ -7,6 +10,7 @@
 .form {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .btn {

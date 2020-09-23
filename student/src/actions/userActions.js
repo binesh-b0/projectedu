@@ -46,19 +46,23 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('userInfo', JSON.stringify(userInfo));
         formData.append('addressInfo', JSON.stringify(addressInfo));
         formData.append('academics', JSON.stringify(academics));
-        formData.append('degree', Object.values(degree));
-        formData.append('certifications', Object.values(certifications));
-        formData.append('certifications', certificationPic);
+        formData.append('degree', JSON.stringify(degree));
+        formData.append('certifications', JSON.stringify(certifications));
         formData.append('profilePic', profilePic);
+        certificationPic.forEach((certification) => {
+            formData.append('certificates[]', certification);
+        });
 
-        // console.log(Object.values(certifications));
+        console.log('the degree is ', certificationPic);
+        console.log('the degree is ', formData.get('certificates'));
 
         const config = {
             method: 'POST',
             url,
             data: formData,
             headers: {
-                Authorization: `Bearer ${getCredentials()}`,
+                Authorization:
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQzLCJpYXQiOjE2MDAwOTM1ODV9.mfzf5eDpx-bas0jYmhhjSlnic-gm3r2M_xdZupXEZtY', //`Bearer ${getCredentials()}`,
                 'Content-Type': 'multipart/form-data',
                 Accept: 'application/json',
             },
@@ -242,6 +246,7 @@ const changeProfileRegAddressInfo = (typ, data) => {
 };
 
 const changeProfileSchoolInfo = (data) => {
+    console.log(data);
     return {
         type: ADD_PROFILE_REG_SCHOOL_DATA,
         payload: data,
@@ -271,8 +276,23 @@ const addCertificateDetails = (data) => {
 };
 
 const addCertificatePicture = (data) => {
+    console.log(data);
     return {
         type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
+        payload: data,
+    };
+};
+
+const removeCertificateDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const removeDegreeDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_COLLEGE_DATA',
         payload: data,
     };
 };
@@ -293,4 +313,6 @@ export {
     addCertificatePicture,
     resetPassword,
     passwordResetComplete,
+    removeDegreeDetail,
+    removeCertificateDetail,
 };

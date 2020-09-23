@@ -8,6 +8,7 @@ import Second from './secondRoute';
 import Snackbar from '@material-ui/core/Snackbar';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
+import AddUser from '../../components/AddUser';
 import MuiAlert from '@material-ui/lab/Alert';
 import { submitUserData } from '../../actions/userActions';
 
@@ -64,17 +65,6 @@ const Registration = ({ submitData, userProfile }) => {
         if (activeStep >= 0) {
             setActiveStep(activeStep + 1);
         }
-        // if (activeStep >= 2) {
-        //     setNextButtonText('Submit');
-        // }
-        // if (activeStep === 3) {
-        //     console.log('Finished');
-        //     const error = checkIfDataIsNull();
-        //     if (error) {
-        //         setOpen(true);
-        //         setSnk(error + ' is not complete');
-        //     } else submitData();
-        // }
     };
 
     const checkIfDataIsNull = () => {
@@ -181,11 +171,12 @@ const Registration = ({ submitData, userProfile }) => {
                         })}
                     </Stepper>
                     {activeStep === 0 ? (
-                        <First
-                            handleNext={() => handleNext()}
-                            handlePrev={() => handlePrev()}
-                        />
-                    ) : activeStep === 1 ? (
+                        <AddUser />
+                    ) : // <First
+                    //     handleNext={() => handleNext()}
+                    //     handlePrev={() => handlePrev()}
+                    // />
+                    activeStep === 1 ? (
                         <Second
                             handleNext={() => handleNext()}
                             handlePrev={() => handlePrev()}

@@ -29,19 +29,19 @@ function userSigninReducer(state = {}, action) {
         case USER_SIGNIN_REQUEST:
             return { loading: true, status: 0 };
         case USER_SIGNIN_SUCCESS:
-            return { loading: false, };
+            return { loading: false };
         case USER_SIGNIN_FAIL:
             return {
                 loading: false,
             };
         case USER_PASSWORD_RESET_REQUEST:
-            return { ploading: true,};
+            return { ploading: true };
         case USER_PASSWORD_RESET_SUCCESS:
-            return { ploading: false, };
+            return { ploading: false };
         case USER_PASSWORD_RESET_FAIL:
-            return { ploading: false, };
+            return { ploading: false };
         case USER_PASSWORD_RESET_COMPLETE:
-            return { ploading: true, };
+            return { ploading: true };
         case USER_LOGOUT:
             return {};
         default:
@@ -53,10 +53,11 @@ function userRolesReducer(state = {}, action) {
         case USER_ROLES_REQUEST:
             return { loading: true, status: 0 };
         case USER_ROLES_SUCCESS:
-            return { loading: false,roles:action.payload };
+            return { loading: false, roles: action.payload };
         case USER_ROLES_FAIL:
             return {
-                loading: false,status:action.status
+                loading: false,
+                status: action.status,
             };
         default:
             return state;
@@ -84,7 +85,16 @@ function userProfileReducer(state = {}, action) {
     }
 }
 
+const allUsersInitialState = {};
 
+function allUsersReducer(state = [], action) {
+    switch (action.type) {
+        case 'ADD_ALL_USERS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 export {
     userSigninReducer,
@@ -92,4 +102,5 @@ export {
     userUpdateReducer,
     userProfileReducer,
     userRolesReducer,
+    allUsersReducer,
 };

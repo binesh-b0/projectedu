@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styles from './AddUser.module.css';
@@ -12,13 +12,7 @@ import {
 } from '@material-ui/core';
 import AddUserTextField from '../AddUserTextField';
 
-<<<<<<< HEAD
-const AddUserComponent = ({onSubmitClicked}) => {
-=======
-const AddUser = (onSubmit) => {
-    const [role, setRole] = useState('SUPER_USER');
-
->>>>>>> develop_eld
+const AddUser = () => {
     const useStyle = makeStyles({
         textField: {
             marginTop: 16,
@@ -41,7 +35,7 @@ const AddUser = (onSubmit) => {
             organization: '',
             password: '',
             confirmpassword: '',
-            role: 'SUPER_USER',
+            role: 'admin',
         },
 
         validationSchema: Yup.object({
@@ -63,7 +57,7 @@ const AddUser = (onSubmit) => {
             organization: Yup.string().required('This field is required'),
         }),
         onSubmit: (values) => {
-            console.log({ ...values, role });
+            console.log(values);
         },
     });
 
@@ -138,8 +132,90 @@ const AddUser = (onSubmit) => {
                     name='confirmpassword'
                     label='Confirm Password'
                 />
+                {/* <TextField
+                    name='email'
+                    variant='outlined'
+                    className={styleClasses.textField}
+                    autoFocus
+                    error={!!formik.errors.email && formik.touched.email}
+                    helperText={
+                        !!formik.errors.email && formik.touched.email
+                            ? formik.errors.email
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                /> */}
+                {/* <TextField
+                    label='Username'
+                    variant='outlined'
+                    name='organization'
+                    autoFocus
+                    className={styleClasses.textField}
+                    error={!!formik.errors.name && formik.touched.name}
+                    helperText={
+                        !!formik.errors.name && formik.touched.name
+                            ? formik.errors.name
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                />
+                <TextField
+                    label='Organization name'
+                    variant='outlined'
+                    name='organization'
+                    autoFocus
+                    className={styleClasses.textField}
+                    error={
+                        !!formik.errors.organization &&
+                        formik.touched.organization
+                    }
+                    helperText={
+                        !!formik.errors.organization &&
+                        formik.touched.organization
+                            ? formik.errors.organization
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.organization}
+                />
+                <TextField
+                    label='Password'
+                    variant='outlined'
+                    name='password'
+                    className={styleClasses.textField}
+                    autoFocus
+                    error={!!formik.errors.password && formik.touched.password}
+                    helperText={
+                        !!formik.errors.password && formik.touched.password
+                            ? formik.errors.password
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                />
+                <TextField
+                    label='Confirm Password'
+                    className={styleClasses.textField}
+                    variant='outlined'
+                    name='confirmpassword'
+                    autoFocus
+                    error={
+                        !!formik.errors.confirmpassword &&
+                        formik.touched.confirmpassword
+                    }
+                    helperText={
+                        !!formik.errors.confirmpassword &&
+                        formik.touched.confirmpassword
+                            ? formik.errors.confirmpassword
+                            : ''
+                    }
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmpassword}
+                /> */}
                 <div className={styles.buttonRoleHeadingContainer}>
-                    <p className={styles.heading} id='demo-simple-select-label'>
+                    <p className={styles.heading} id='role'>
                         Role
                     </p>
                     <div className={styles.buttonRoleContainer}>
@@ -147,11 +223,10 @@ const AddUser = (onSubmit) => {
                             labelId='demo-simple-select-label'
                             id='role'
                             variant='outlined'
-                            value={role}
-                            onChange={(event) => setRole(event.target.value)}
+                            value={formik.values.role}
                         >
-                            <MenuItem value='SUPER_USER'>Admin</MenuItem>
-                            <MenuItem value='HR_USER'>HR Admin</MenuItem>
+                            <MenuItem value={'admin'}>Admin</MenuItem>
+                            <MenuItem value={'hr-admin'}>HR Admin</MenuItem>
                         </Select>
                         <Button
                             className={styleClasses.button}
@@ -168,4 +243,4 @@ const AddUser = (onSubmit) => {
     );
 };
 
-export default AddUserComponent;
+export default AddUser;
