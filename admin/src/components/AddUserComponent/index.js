@@ -12,13 +12,9 @@ import {
 } from '@material-ui/core';
 import AddUserTextField from '../AddUserTextField';
 
-<<<<<<< HEAD
-const AddUserComponent = ({onSubmitClicked}) => {
-=======
-const AddUser = (onSubmit) => {
+const AddUserComponent = (onSubmit) => {
     const [role, setRole] = useState('SUPER_USER');
 
->>>>>>> develop_eld
     const useStyle = makeStyles({
         textField: {
             marginTop: 16,
