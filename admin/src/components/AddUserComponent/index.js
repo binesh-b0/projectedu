@@ -60,7 +60,7 @@ const AddUserComponent = ({ onSubmitClicked, loading }) => {
         }),
         onSubmit: (values) => {
             console.log(loading);
-            onSubmitClicked(values);
+            onSubmitClicked({ ...values, role });
         },
     });
 
