@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect } from 'react';
 import MaterialTable from 'material-table';
+import api from '../../../api/api';
+import { getCredentials } from '../../../services/authService';
 import { connect } from 'react-redux';
 import { getAllUser } from '../../../actions/userActions';
 import style from './UserTable.module.css';
@@ -28,7 +31,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 const UserTable = (props) => {
     useEffect(() => {
         props.getAllUser();
-    }, [props]);
+    }, []);
 
     const tableColumns = [
         { title: 'Email', field: 'Email' },
@@ -43,21 +46,41 @@ const UserTable = (props) => {
         actionsColumnIndex: -1,
     };
 
+    const disableUser = async (userId) => {
+        try {
+            const res = await api.post(
+                'admin/updateAdminUser',
+                { userId, operation: 'DISABLE' },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${getCredentials()}`,
+                    },
+                },
+                { timeout: 1000 }
+            );
+            return true;
+        } catch (error) {
+            console.log(error, 'DU');
+            return false;
+        }
+    };
+
     const actionOptions = [
-        {
-            tooltip: 'Remove All Selected Users',
-            icon: () => <Delete />,
-            onClick: (evt, data) => console.log(data),
-        },
-        {
-            icon: () => <Edit />,
-            tooltip: 'Edit',
-            onClick: (evt, data) => console.log(data),
-        },
+        // {
+        //     tooltip: 'Remove All Selected Users',
+        //     icon: () => <Delete />,
+        //     onClick: (evt, data) => console.log(data),
+        // },
+        // {
+        //     icon: () => <Edit />,
+        //     tooltip: 'Edit',
+        //     onClick: (evt, data) => console.log(data),
+        // },
         {
             icon: () => <PersonAddDisabled />,
             tooltip: 'Disable',
-            onClick: (evt, data) => console.log(data),
+            onClick: (evt, data) => disableUser(data.id),
         },
     ];
 
@@ -97,12 +120,65 @@ const UserTable = (props) => {
         )),
     };
 
+    const editable = {
+        onRowUpdate: async (newData, oldData) => {
+            console.log(newData, oldData);
+            try {
+                const { id, Email, Username, Name, Role } = newData;
+                const res = await api.post(
+                    'admin/updateAdminUser',
+                    {
+                        userId: id,
+                        email: Email,
+                        username: Username,
+                        name: Name,
+                        role: Role,
+                        operation: 'UPDATE',
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${getCredentials()}`,
+                        },
+                    },
+                    { timeout: 1000 }
+                );
+            } catch (error) {
+                console.log(error, 'UU');
+                return false;
+            }
+            return true;
+        },
+        onRowDelete: async (oldData) => {
+            // console.log(userId);
+            try {
+                const { id } = oldData;
+                const res = await api.post(
+                    'admin/updateAdminUser',
+                    { userId: id, operation: 'DELETE' },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: ` Bearer ${getCredentials()}`,
+                        },
+                    },
+                    { timeout: 1000 }
+                );
+            } catch (error) {
+                console.log(error, 'LU');
+                return false;
+            }
+            return true;
+        },
+    };
+
     return (
         <div className={style.container}>
             <MaterialTable
                 options={tableOptions}
                 icons={tableIcons}
                 actions={actionOptions}
+                editable={editable}
                 title='Manage Users'
                 columns={tableColumns}
                 data={props.allUsers}
