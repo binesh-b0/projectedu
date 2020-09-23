@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { logout } from '../../actions/userActions';
 import HeaderProfileMenu from '../../components/widgets/HeaderProfileMenu';
-import Routing from './routing';
+import Routing from './Routing';
 import Sidebar from './Sidebar';
 import useStyles from './styles';
 import { getRoles } from '../../actions/userActions';
