@@ -15,13 +15,14 @@ import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { signin, resetPassword } from "../../actions/userActions";
+import { signin, resetPassword, logout } from "../../actions/userActions";
 import SimpleAlert from "../../components/alerts/SimpleAlert";
 import PasswordResetDialog from "../../components/dialogs/PasswordResetDialog";
 import AdornedButton from "../../components/buttons/AdornedButton";
 import Cookies from "js-cookie";
-import { Redirect,useHistory,withRouter } from "react-router-dom";
-
+import { Redirect, useHistory, withRouter } from "react-router-dom";
+import history from "../../history";
+import { isLoggedIn } from "../../services/authService";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -53,26 +54,26 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  root:{
-    backgroundImage:"url(/assets/images/tab_bg.png)",
-    backgroundColor:"#1a73e8",
-    height:"100"
-  }
+  root: {
+    backgroundImage: "url(/assets/images/tab_bg.png)",
+    backgroundColor: "#1a73e8",
+    height: "100",
+  },
 }));
 
 function SignIn(props) {
   const userSignin = useSelector((state) => state.userSignin);
-  const { loading } = userSignin;
+  const { loading, signed } = userSignin;
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [error, setError] = useState();
-  const [redirect, setRedirect] = useState();
+  const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
 
   // useEffect(() => {
+  //   dispatch(logout(history))
   //   Cookies.remove("tk")
-  // }, )
+  // }, [])
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -86,27 +87,23 @@ function SignIn(props) {
   const resetPasswordOnSubmit = (email, setDone, setError) => {
     dispatch(resetPassword(email, setDone, setError));
   };
-  const gotoDashboard=async ()=>{
-    console.log("asd");
-    Cookies.remove("signRe")
-    console.log("asd3");
-    await setRedirect("false");
-    console.log(history)
-    props.history.replace("/app/dashboard");
-  }
-
-  // useEffect(() => {
-  //   console.log("redirect",redirect,Cookies.get("signRe")=="true",Cookies.get("signRe"))
-  //   if(Cookies.get("signRe")=="true")  {
-  //     gotoDashboard()
-  //   }
-  // }, [redirect])
 
   useEffect(() => {
     if (error) {
       setAlert(true);
-    } else setAlert(false);
+    } 
   }, [loading]);
+  useEffect(() => {
+    console.log(error,loading,signed,isLoggedIn())
+   try {
+    if (signed===true&&isLoggedIn()) {
+      props.history.replace("/app/dashboard");
+    }
+   } catch (error) {
+     
+   }
+
+  }, [signed]);
 
   const formik = useFormik({
     initialValues: {
@@ -119,21 +116,18 @@ function SignIn(props) {
     }),
     onSubmit: (values) => {
       setError(null);
-      dispatch(signin(values.username, values.password, setRedirect, setError));
+      // console.log(isLoggedIn===false,isLoggedIn);
+      setAlert(false)
+      dispatch(signin(values.username, values.password, history, setError));
     },
   });
 
   const showAlert = () => {
     if (alert) return <SimpleAlert severity="error" msg={error} />;
   };
-  if (redirect === "app") {
-    console.log("redirecting");
-    setRedirect(null)
-    gotoDashboard()
-    // return  <Redirect to="/" />
-  } else
-    return (
-      <div>
+
+  return (
+    <div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         {openDialog && (
@@ -231,8 +225,8 @@ function SignIn(props) {
           <Copyright />
         </Box>
       </Container>
-      </div>
-    );
+    </div>
+  );
 }
 
-export default withRouter(SignIn)
+export default SignIn;

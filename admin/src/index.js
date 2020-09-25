@@ -8,15 +8,14 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "@material-ui/styles";
 import Themes from "./themes";
 
-import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
     <ThemeProvider theme={Themes.default}>
+    <Provider store={store}>
       <App />
-    </ThemeProvider>
     </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

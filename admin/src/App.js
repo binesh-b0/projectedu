@@ -14,7 +14,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/app" />} />
          
-        <PrivateRoute authed={isAuthenticated} path="/app" component={Dashboard} />
+        <PrivateRoute authed={isLoggedIn()} path="/app" component={Dashboard} />
         {/* <Route path="/login" 
         render={(props)=> isLoggedIn()===false?
          <Signin /> :
@@ -34,7 +34,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/login'}} />}
     />
   )
 }

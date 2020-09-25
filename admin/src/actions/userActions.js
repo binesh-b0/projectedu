@@ -35,15 +35,15 @@ const headers = {
     },
 };
 
-const signin = (username, password, setRedirect, setError) => async (
+const signin = (username, password, history, setError) => async (
     dispatch
 ) => {
     console.log(username, password);
     removeCredentials();
     clearStorage();
-    dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } });
+    dispatch({ type: USER_SIGNIN_REQUEST, });
     try {
-        const { data, headers } = await api.post(
+        const { data } = await api.post(
             '/admin/login',
             { username, password },
             {
@@ -51,23 +51,23 @@ const signin = (username, password, setRedirect, setError) => async (
             },
             { timeout }
         );
-        console.log(data, 'data', headers.adminCookie);
-        Cookie.set('signRe', true);
         setCredentials(data.response.token);
         setUserInfo(
             data.response.user.Email,
             data.response.user.Username,
             data.response.user.Role
         );
-        dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-        setError(null);
-        setRedirect('app');
+        // setError(null);
+        dispatch({ type: USER_SIGNIN_SUCCESS});
+        console.log("here");
+        // setRedirect('app');
+        // history.replace('/app/dashboard/')
     } catch (error) {
+        console.log(error);
         const res = { ...error };
         setError('error');
         console.log('sign req error ', res);
         if (res.response) {
-            Cookie.set('signRe', false);
             dispatch({
                 type: USER_SIGNIN_FAIL,
             });
@@ -125,6 +125,8 @@ const getRoles = (setShowProgress, setStatus) => async (dispatch) => {
         setShowProgress(false);
     } catch (error) {
         const res = { ...error };
+        clearStorage()
+        removeCredentials()
         console.log('roles error ', res);
         if (res.response) {
             dispatch({
