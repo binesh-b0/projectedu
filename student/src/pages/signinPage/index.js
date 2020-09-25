@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from '''dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin, logout,resetPassword } from '../../actions/userActions';
+import { signin, logout } from '../../actions/userActions';
 import SimpleFooter from '../../components/SimpleFooter';
 import SimpleHeader from '../../components/headers/SimpleHeader';
 import SigninForm from '../../components/forms/SigninForm';
@@ -63,12 +63,6 @@ function SigninPage(props) {
         };
     }, [loading, error, status, props.history]);
 
-    const resetPasswordOnSubmit = (email) =>{
-        console.log("res",email)
-        dispatch(resetPassword(email));
-
-    }
-
     //snackbar close
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -94,7 +88,7 @@ function SigninPage(props) {
     return (
         <div className={styles.signin_page_container_fluid}>
             <div>{showSnackbar()}</div>
-            <SimpleHeader goToSignup={goToSignup} loc='login' />
+            <SimpleHeader goToLogin={goToSignup} loc='login' />
 
             <div className={styles.signin_page_contents}>
                 <div className={`row ${styles.signin_page_card_container}`}>
@@ -123,7 +117,7 @@ function SigninPage(props) {
                             <p className={styles.signin_page_welcome_sub}>
                                 Signin to your account
                             </p>
-                            <SigninForm onSubmit={onSubmit} resetPasswordOnSubmit={resetPasswordOnSubmit}/>
+                            <SigninForm onSubmit={onSubmit} />
                             <div
                                 style={{ textAlign: 'center', margin: '16px' }}
                             >

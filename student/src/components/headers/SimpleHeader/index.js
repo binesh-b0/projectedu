@@ -14,11 +14,9 @@ export default function SimpleHeader({goToLogin,goToSignup,loc}) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-              <Button className={styles.header_button} 
-              onClick={()=>{if (loc!=="login")goToLogin()}}>Signin</Button>
+              <Button className={styles.header_button} onClick={loc==="signin"?goToLogin:goToSignup}>Signin</Button>
               <Divider orientation="vertical" flexItem />
-              <Button className={styles.header_button}
-               onClick={()=>{if(loc!=="signup")goToSignup()}}>Signup</Button>
+              <Button className={styles.header_button} onClick={loc==="login"?goToLogin:goToSignup}>Signup</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

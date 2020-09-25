@@ -1,4 +1,4 @@
-import { Home, NotFound, Signin, Signup, Verify, Register,Reset } from '../pages';
+import { Home, NotFound, Signin, Signup, Verify, Register } from '../pages';
 import { AUTH_ONLY } from './types';
 
 export default () => [
@@ -34,11 +34,6 @@ export default () => [
         //     meta: {
         //         [AUTH_ONLY]: true,
         //     },
-    },
-    {
-        path: '/reset/:token',
-        exact: true,
-        component: Reset,
     },
     {
         path: '*',

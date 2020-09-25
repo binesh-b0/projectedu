@@ -92,7 +92,7 @@ function SignupPage(props) {
     return (
         <div className={styles.signup_page_container_fluid}>
             <div>{showSnackbar()}</div>
-            <SimpleHeader goToLogin={goToLogin} loc='signup' />
+            <SimpleHeader goToLogin={goToLogin} loc='signin' />
             <div className={styles.signup_page_contents}>
                 <div className={`${styles.signup_page_card_container} row`}>
                     <div

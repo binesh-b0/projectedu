@@ -8,7 +8,6 @@ import Second from './secondRoute';
 import Snackbar from '@material-ui/core/Snackbar';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
-import AddUser from '../../components/AddUser';
 import MuiAlert from '@material-ui/lab/Alert';
 import { submitUserData } from '../../actions/userActions';
 
@@ -19,7 +18,7 @@ function Alert(props) {
 const Registration = ({ submitData, userProfile }) => {
     const [snk, setSnk] = useState('');
     const [open, setOpen] = useState(false);
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(3);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
@@ -171,12 +170,11 @@ const Registration = ({ submitData, userProfile }) => {
                         })}
                     </Stepper>
                     {activeStep === 0 ? (
-                        <AddUser />
-                    ) : // <First
-                    //     handleNext={() => handleNext()}
-                    //     handlePrev={() => handlePrev()}
-                    // />
-                    activeStep === 1 ? (
+                        <First
+                            handleNext={() => handleNext()}
+                            handlePrev={() => handlePrev()}
+                        />
+                    ) : activeStep === 1 ? (
                         <Second
                             handleNext={() => handleNext()}
                             handlePrev={() => handlePrev()}

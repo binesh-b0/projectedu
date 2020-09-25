@@ -8,17 +8,12 @@ import {
     USER_LOGOUT,
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
-    ADD_PROFILE_DATA,
-    USER_VERFIY_RESEND,
     ADD_PROFILE_REG_DATA,
+    USER_VERFIY_RESEND,
+    USER_UPDATE_FAIL,
     ADD_PROFILE_REG_ADDRESS_DATA,
     ADD_PROFILE_REG_RES_ADDRESS_DATA,
     ADD_PROFILE_REG_SCHOOL_DATA,
-    USER_UPDATE_FAIL,
-    USER_PASSWORD_RESET_REQUEST,
-    USER_PASSWORD_RESET_SUCCESS,
-    USER_PASSWORD_RESET_COMPLETE,
-    USER_PASSWORD_RESET_FAIL,
 } from '../constants/userConstants';
 
 function userSigninReducer(state = {}, action) {
@@ -33,14 +28,6 @@ function userSigninReducer(state = {}, action) {
                 error: action.payload,
                 status: action.status,
             };
-        case USER_PASSWORD_RESET_REQUEST:
-            return { ploading: true, pstatus: 0 };
-        case USER_PASSWORD_RESET_SUCCESS:
-            return { ploading: false, pstatus: 200 };
-        case USER_PASSWORD_RESET_FAIL:
-            return { ploading: false, pstatus: 400 };
-        case USER_PASSWORD_RESET_COMPLETE:
-            return { ploading: true, pstatus: 0 };
         case USER_LOGOUT:
             return {};
         default:
@@ -141,7 +128,6 @@ const initialState = {
         //     institute: '',
         // },
     },
-    certificationPic: [],
 };
 
 const userProfileReducer = (state = initialState, action) => {
@@ -185,13 +171,12 @@ const userProfileReducer = (state = initialState, action) => {
                 profilePic: action.payload,
             };
         case 'ADD_PROFILE_REG_CERTIFICATE_DATA':
-            console.log(action.payload);
             return {
                 ...state,
                 certifications: {
                     ...state.certifications,
                     [action.payload.id]: {
-                        ...state.certifications[action.payload.id],
+                        ...action.payload.id,
                         ...action.payload,
                     },
                 },
@@ -202,26 +187,10 @@ const userProfileReducer = (state = initialState, action) => {
                 degree: {
                     ...state.degree,
                     [action.payload.id]: {
-                        ...state.degree[action.payload.id],
+                        ...action.payload.id,
                         ...action.payload,
                     },
                 },
-            };
-
-        case 'REMOVE_REG_CERTIFICATE_DATA':
-            const tempCer = state.certifications;
-            delete tempCer[action.payload];
-            return { ...state, certifications: tempCer };
-
-        case 'REMOVE_REG_COLLEGE_DATA':
-            const tempData = state.degree;
-            delete tempData[action.payload];
-            return { ...state, degree: tempData };
-
-        case 'ADD_PROFILE_DEGREE_CERTIFICATE':
-            return {
-                ...state,
-                certificationPic: [...state.certificationPic, action.payload],
             };
         default:
             return state;
