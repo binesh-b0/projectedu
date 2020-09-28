@@ -1,13 +1,12 @@
 import Axios from 'axios';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import api from '../api/api';
 import { getCredentials } from '../services/authService';
-import { BASE_URL } from '../api/api';
 
 import {
     USER_SIGNIN_REQUEST,
     USER_SIGNIN_SUCCESS,
-    USER_SIGNIN_FAIL,
+    USER_SIGNIN_FAIL,   
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
     USER_VERFIY_RESEND,
@@ -58,10 +57,12 @@ const signin = (username, password, history, setError) => async (
             data.response.user.Role
         );
         // setError(null);
+        localStorage.removeItem("signRe")
+        localStorage.setItem("signRe", true);
         dispatch({ type: USER_SIGNIN_SUCCESS});
-        console.log("here");
         // setRedirect('app');
-        // history.replace('/app/dashboard/')
+        console.log(history);
+        history.replace('/app')
     } catch (error) {
         console.log(error);
         const res = { ...error };
@@ -125,8 +126,8 @@ const getRoles = (setShowProgress, setStatus) => async (dispatch) => {
         setShowProgress(false);
     } catch (error) {
         const res = { ...error };
-        clearStorage()
-        removeCredentials()
+        // clearStorage()
+        // removeCredentials()
         console.log('roles error ', res);
         if (res.response) {
             dispatch({
@@ -161,7 +162,7 @@ const register = (email, password) => async (dispatch) => {
         console.log('register req', data);
         console.log('st', data.status);
         if (data.status === 200) {
-            Cookie.set('regRe', true);
+            Cookies.set('regRe', true);
             dispatch({
                 type: USER_REGISTER_SUCCESS,
                 payload: { email },
@@ -171,7 +172,7 @@ const register = (email, password) => async (dispatch) => {
         // Cookie.set('userInfo', JSON.stringify(data));
     } catch (error) {
         const res = { ...error };
-        Cookie.set('regRe', false);
+        Cookies.set('regRe', false);
         console.log('reg req error ', res);
         if (res.response)
             dispatch({

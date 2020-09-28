@@ -20,9 +20,9 @@ import SimpleAlert from "../../components/alerts/SimpleAlert";
 import PasswordResetDialog from "../../components/dialogs/PasswordResetDialog";
 import AdornedButton from "../../components/buttons/AdornedButton";
 import Cookies from "js-cookie";
-import { Redirect, useHistory, withRouter } from "react-router-dom";
-import history from "../../history";
+import { Redirect,  withRouter } from "react-router-dom";
 import { isLoggedIn } from "../../services/authService";
+import { Paper } from "@material-ui/core";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -38,7 +38,6 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -55,20 +54,30 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   root: {
-    backgroundImage: "url(/assets/images/tab_bg.png)",
+    backgroundImage: "url(/assets/images/tab_bg.jpg)",
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center",
     backgroundColor: "#1a73e8",
-    height: "100",
+    backgroundBlendMode:"color-burn",
+    height:"100vh",
+    width:"100%",
+    overflow:"hidden"
   },
+  paperContainer:{
+    maxWidth:350,
+    maxHeight:450,
+    padding:36,
+  }
 }));
 
-function SignIn(props) {
+function SignIn({history}) {
   const userSignin = useSelector((state) => state.userSignin);
   const { loading, signed } = userSignin;
   const classes = useStyles();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
-  const history = useHistory();
 
   // useEffect(() => {
   //   dispatch(logout(history))
@@ -93,17 +102,19 @@ function SignIn(props) {
       setAlert(true);
     } 
   }, [loading]);
-  useEffect(() => {
-    console.log(error,loading,signed,isLoggedIn())
-   try {
-    if (signed===true&&isLoggedIn()) {
-      props.history.replace("/app/dashboard");
-    }
-   } catch (error) {
+  // useEffect(() => {
+  //   console.log(error,loading,signed,isLoggedIn(),localStorage.getItem("signRe"),localStorage.getItem("signRe")==="true")
+  //  try {
+  //   if (signed===true&&isLoggedIn()&&localStorage.getItem("signRe")==="true") {
+      
+  //     localStorage.removeItem("signRe")
+  //     history.replace("/app/dashboard");
+  //   }
+  //  } catch (error) {
      
-   }
+  //  }
 
-  }, [signed]);
+  // }, [signed]);
 
   const formik = useFormik({
     initialValues: {
@@ -127,17 +138,16 @@ function SignIn(props) {
   };
 
   return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        {openDialog && (
+    <div className={classes.root}>
+      <Paper className={classes.paperContainer} elevation={0}>
+        {/* {openDialog && (
           <PasswordResetDialog
             resetPasswordOnSubmit={resetPasswordOnSubmit}
             handleClickOpen={handleClickOpen}
             handleClose={handleClose}
             open={openDialog}
           />
-        )}
+        )} */}
 
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -154,6 +164,7 @@ function SignIn(props) {
           >
             <TextField
               variant="outlined"
+              size="small"
               margin="normal"
               required
               fullWidth
@@ -174,6 +185,7 @@ function SignIn(props) {
             />
             <TextField
               variant="outlined"
+              size="small"
               margin="normal"
               required
               fullWidth
@@ -221,10 +233,10 @@ function SignIn(props) {
             </Grid>
           </form>
         </div>
-        <Box mt={8}>
+        {/* <Box mt={8}>
           <Copyright />
-        </Box>
-      </Container>
+        </Box> */}
+      </Paper>
     </div>
   );
 }

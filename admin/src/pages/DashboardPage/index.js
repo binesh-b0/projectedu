@@ -20,6 +20,7 @@ import Sidebar from './Sidebar';
 import useStyles from './styles';
 import { getRoles } from '../../actions/userActions';
 import clearStorage from '../../services/clearStorage';
+import SimpleLoading from '../../components/loading/SimpleLoading';
 
 function Copyright() {
     return (
@@ -63,7 +64,7 @@ function Dashboard(props) {
     useEffect(() => {
         dispatch(getRoles(setShowProgress, setStatus));
     }, []);
-    if (showProgress) return 'loading';
+    if (showProgress) return <SimpleLoading/>;
     else
         return (
             <div className={classes.root}>

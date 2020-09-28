@@ -76,6 +76,7 @@ export default makeStyles((theme) => ({
     container: {
       padding:0,
       paddingBottom: theme.spacing(4),
+      backgroundColor:"white"
     },
     paper: {
       padding: theme.spacing(2),

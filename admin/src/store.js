@@ -12,6 +12,7 @@ import {
 } from './reducers/userReducers';
 
 import { sidebarReducer } from './reducers/layoutReducers';
+import {allExamsReducer} from './reducers/examReducers'
 
 const userInfo = Cookie.getJSON('userInfo') || null;
 
@@ -24,6 +25,7 @@ const reducer = combineReducers({
     userRole: userRolesReducer,
     sidebar: sidebarReducer,
     allUsers: allUsersReducer,
+    allExams:allExamsReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

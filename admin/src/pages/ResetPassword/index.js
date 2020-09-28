@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "./ResetPassword.module.css";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,11 +15,11 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
 import { useFormik } from "formik";
 import Alert from '@material-ui/lab/Alert';
+import AdornedButton from "../../components/buttons/AdornedButton";
 
 import * as yup from "yup";
 
 import {updatePassword} from '../../services/authService'
-import {Spinner} from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -171,23 +170,19 @@ useEffect(() => {
             label="Confirm pasword"
             name="pass2"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-           <Spinner
-              className={loading ? "my-auto" : "d-none"}
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />
-            {loading ? "" : "Reset"}
-          </Button>
+       <AdornedButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              color={loading ? "secondary" : "primary"}
+              // disabled={loading}
+              loading={loading}
+              className={classes.submit}
+            >
+              Reset
+            </AdornedButton>
         </form>
       </div>
       <Box mt={8}>

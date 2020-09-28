@@ -40,7 +40,7 @@ export default function HeaderProfileMenu({logoutClicked}) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              {user.name.charAt(0).toUpperCase()+user.name.slice(1)}
+              {user.name?user.name.charAt(0).toUpperCase()+user.name.slice(1):""}
             </Typography>
             <Typography
               className={classes.profileMenuLink}

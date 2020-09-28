@@ -1,0 +1,1 @@
+export const GET_ALL_EXAMS="GET_ALL_EXAMS";
