@@ -9,6 +9,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Third from './thirdRoute';
 import Fourth from './fourthRoute';
 import MuiAlert from '@material-ui/lab/Alert';
+import Header from '../../components/Header';
+import DashboarHome from '../../pages/Dashboard/Home';
+import UserProfile from '../../pages/Dashboard/UserProfile';
+import SidePanel from '../../components/SidePanel';
 import { submitUserData } from '../../actions/userActions';
 
 function Alert(props) {
@@ -152,14 +156,19 @@ const Registration = ({ submitData, userProfile }) => {
     return (
         <div className={styles.container}>
             {showSnackbar()}
-            <h2 className={styles.heading}>HSST Portal</h2>
+            <Header />
             <div className={styles.subContainer}>
-                <div className={styles.firstDiv}>
-                    <h4 className={styles.firstDivText}>
+                {/* <div className={styles.firstDiv}> */}
+                <SidePanel />
+                {/* <h4 className={styles.firstDivText}>
                         Complete your profile to access your dashboard
-                    </h4>
-                </div>
+                    </h4> */}
+                {/* </div> */}
                 <div className={styles.secondDiv}>
+                    <DashboarHome />
+                    {/* <UserProfile /> */}
+                </div>
+                {/* <div className={styles.secondDiv}>
                     <Stepper activeStep={activeStep}>
                         {steps.map((label, index) => {
                             return (
@@ -190,19 +199,7 @@ const Registration = ({ submitData, userProfile }) => {
                             handleSubmit={() => handleSubmit()}
                         />
                     )}
-                    {/* <div> */}
-                    {/* <div className={styles.buttonDiv}>
-                        {activeStep !== 0 ? (
-                            <Button heading='Previous' onPress={handlePrev} />
-                        ) : null}
-                        <Button
-                            heading={nextButtonText}
-                            onPress={handleNext}
-                            style={styles.btn}
-                        />
-                    </div> */}
-                    {/* </div> */}
-                </div>
+                                    </div> */}
             </div>
         </div>
     );
