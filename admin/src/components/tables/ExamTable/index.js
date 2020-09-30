@@ -153,6 +153,8 @@ const ExamTable = (props) => {
       return true;
     },
   };
+  const handleRowclick=(id)=>{
+    props.history.push('/app/exams/details/'+id)  }
 
   return (
     <div className={classes.root}>
@@ -163,6 +165,7 @@ const ExamTable = (props) => {
         title="Exams"
         columns={tableColumns}
         data={allExams}
+        onRowClick={(event,rowData)=>{console.log(rowData.id,"r");handleRowclick(rowData.id)}}
         actions={actionOptions}
       />
     </div>

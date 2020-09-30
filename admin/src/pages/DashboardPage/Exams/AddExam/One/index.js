@@ -1,11 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useFormik } from "formik";
 import MaterialTable from "material-table";
 import * as Yup from 'yup';
 import { makeStyles } from "@material-ui/core/styles";
 import { Button,TextField } from '@material-ui/core';
+import { useDispatch, useSelector } from "react-redux";
 
 import Grid from '@material-ui/core/Grid';
+import { getExamDetails } from "../../../../../actions/examActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,20 +23,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function One({handleNext}) {
-  const classes = useStyles();
+  const publishExam = useSelector((state) => state.publishExam);
+  const {  details } = publishExam;
+  const dispatch = useDispatch();
 
+  const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      title: "",
-      startd:null,
-      endd:null,
-      startt:null,
-      endt:null,
-      duration:20,
+       title: !!details?details.title:"",
+      startDate:!!details?details.startDate:null,
+      endDate:!!details?details.endDate:null,
+      startTime:!!details?details.startTime:null,
+      endTime:!!details?details.endTime:null,
+      duration:!!details?details.duration:40,
       
     },
+
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      console.log(publishExam);
+      dispatch(getExamDetails(values))
       handleNext()
     },
   });
@@ -72,51 +79,53 @@ export default function One({handleNext}) {
           margin="normal"
           label="Start date"
           required
-          name="startd"
+          name="startDate"
           type="date"
           format="MM/dd/yyyy"
-          value={formik.values.startd}
+          value={formik.values.startDate}
           onChange={(event) => {
                         console.log('event', event.target.value);
-                        formik.setFieldValue('startd', event.target.value);
+                        formik.setFieldValue('startDate', event.target.value);
                     }}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
           margin="normal"
           label="Start time"
-          name="startt"
+          name="startTime"
           type="time"
           required
-          value={formik.values.startt}
+          value={formik.values.startTime}
           onChange={(event) => {
                         console.log('event', event.target.value);
-                        formik.setFieldValue('startt', event.target.value);
+                        formik.setFieldValue('startTime', event.target.value);
                     }}
           InputLabelProps={{ shrink: true }}
         />
         <TextField
           margin="normal"
           label="End date"
-          name="endd"
+          name="endDate"
           type="date"
+          required
           format="MM/dd/yyyy"
-          value={formik.values.endd}
+          value={formik.values.endDate}
           onChange={(event) => {
                         console.log('event', event.target.value);
-                        formik.setFieldValue('startd', event.target.value);
+                        formik.setFieldValue('endDate', event.target.value);
                     }}
           InputLabelProps={{ shrink: true }}
         />
                 <TextField
           margin="normal"
           label="End time"
-          name="endt"
+          name="endTime"
           type="time"
-          value={formik.values.endt}
+          required
+          value={formik.values.endTime}
           onChange={(event) => {
                         console.log('event', event.target.value);
-                        formik.setFieldValue('endt', event.target.value);
+                        formik.setFieldValue('endTime', event.target.value);
                     }}
           InputLabelProps={{ shrink: true }}
         />

@@ -27,7 +27,7 @@ export default function ExamList(props) {
                     Create
                 </Button>
             </div>
-            <ExamTable />
+            <ExamTable history={props.history}/>
         </div>
     );
 }

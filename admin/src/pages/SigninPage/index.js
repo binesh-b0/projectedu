@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { Paper } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { useSelector, useDispatch } from "react-redux";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { signin, resetPassword, logout } from "../../actions/userActions";
+import { resetPassword, signin } from "../../actions/userActions";
 import SimpleAlert from "../../components/alerts/SimpleAlert";
-import PasswordResetDialog from "../../components/dialogs/PasswordResetDialog";
 import AdornedButton from "../../components/buttons/AdornedButton";
-import Cookies from "js-cookie";
-import { Redirect,  withRouter } from "react-router-dom";
-import { isLoggedIn } from "../../services/authService";
-import { Paper } from "@material-ui/core";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -79,11 +70,6 @@ function SignIn({history}) {
   const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(logout(history))
-  //   Cookies.remove("tk")
-  // }, [])
-
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleClickOpen = () => {
@@ -102,19 +88,6 @@ function SignIn({history}) {
       setAlert(true);
     } 
   }, [loading]);
-  // useEffect(() => {
-  //   console.log(error,loading,signed,isLoggedIn(),localStorage.getItem("signRe"),localStorage.getItem("signRe")==="true")
-  //  try {
-  //   if (signed===true&&isLoggedIn()&&localStorage.getItem("signRe")==="true") {
-      
-  //     localStorage.removeItem("signRe")
-  //     history.replace("/app/dashboard");
-  //   }
-  //  } catch (error) {
-     
-  //  }
-
-  // }, [signed]);
 
   const formik = useFormik({
     initialValues: {

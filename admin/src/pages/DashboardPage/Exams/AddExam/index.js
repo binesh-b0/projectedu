@@ -1,18 +1,22 @@
-import React from "react";
-import { useFormik } from "formik";
-import MaterialTable from "material-table";
-import * as Yup from "yup";
+import React, { useEffect } from "react";
+import {
+  Paper,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
+  Typography,
+  Button,
+  Backdrop,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
 import One from "./One";
-import Two from "./Two";
 import Three from "./Three";
-import Grid from "@material-ui/core/Grid";
+import Two from "./Two";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPublishExam,createExam } from "../../../../actions/examActions";
 
-import { KeyboardDatePicker } from "@material-ui/pickers";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 32,
@@ -24,12 +28,26 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16,
     marginBottom: 32,
   },
+  resetContainer:{
+    marginTop:16,
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
-export default function AddExam(props) {
+export default function AddExam() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(2);
+  const publishExam = useSelector((state) => state.publishExam);
+  const { loading } = publishExam;
+  const dispatch = useDispatch([]);
 
+  useEffect(() => {
+    dispatch(resetPublishExam());
+    return () => {};
+  }, []);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -38,8 +56,15 @@ export default function AddExam(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handlePublish = () => {
+    dispatch(createExam())
+  };
+
   return (
     <div className={classes.root}>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Stepper activeStep={activeStep} orientation="vertical">
         <Step key={1}>
           <StepLabel>Exam details</StepLabel>
@@ -48,17 +73,33 @@ export default function AddExam(props) {
           </StepContent>
         </Step>
         <Step>
-            <StepLabel>Instructions</StepLabel>
-            <StepContent>
-                <Two handleBack={handleBack} handleNext={handleNext} />
-            </StepContent>
+          <StepLabel>Instructions</StepLabel>
+          <StepContent>
+            <Two handleBack={handleBack} handleNext={handleNext} />
+          </StepContent>
         </Step>
         <Step>
-            <StepLabel>Questions</StepLabel>
-            <StepContent>
-                <Three handleBack={handleBack} handleNext={handleNext} />
-            </StepContent>
+          <StepLabel>Questions</StepLabel>
+          <StepContent>
+            <Three handleBack={handleBack} handleNext={handleNext} />
+          </StepContent>
         </Step>
+        {activeStep === 3 && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <Typography style={{marginBottom:"8px"}}>All steps completed - you&apos;re finished</Typography>
+            <Button onClick={handleBack} className={classes.button}>
+              previous
+            </Button>
+            <Button
+              onClick={handlePublish}
+              className={classes.button}
+              color="primary"
+              variant="contained"
+            >
+              Publish Exam
+            </Button>
+          </Paper>
+        )}
       </Stepper>
     </div>
   );

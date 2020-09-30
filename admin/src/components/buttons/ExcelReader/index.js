@@ -6,10 +6,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-      marginTop:16,
-    "& > *": {
-      margin: theme.spacing(1),
-    },
+
   },
   input: {
     display: "none",
