@@ -67,6 +67,16 @@ const UpcomingExamTable = () => {
             dateOfUpload: '4th August, 2020',
             examDate: '4th August, 2020',
         },
+        {
+            name: 'Tata Consultancy Services - Entrace Test',
+            dateOfUpload: '4th August, 2020',
+            examDate: '4th August, 2020',
+        },
+        {
+            name: 'Tata Consultancy Services - Entrace Test',
+            dateOfUpload: '4th August, 2020',
+            examDate: '4th August, 2020',
+        },
     ];
 
     const options = { search: false };
