@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddExam() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(0);
   const publishExam = useSelector((state) => state.publishExam);
-  const { loading } = publishExam;
-  const dispatch = useDispatch([]);
+  const { loading,details,instructions,questions } = publishExam;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(resetPublishExam());
@@ -57,7 +57,7 @@ export default function AddExam() {
   };
 
   const handlePublish = () => {
-    dispatch(createExam())
+    dispatch(createExam(details,instructions,questions))
   };
 
   return (

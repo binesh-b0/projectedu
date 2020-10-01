@@ -75,7 +75,6 @@ export default function QuestionDialog({
       type: question.type,
       mark: question.mark,
       neg: question.neg,
-      ans:question.ans
     },
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2))
@@ -205,7 +204,7 @@ export default function QuestionDialog({
               onChange={formik.handleChange}
               value={formik.values.option4}
             />
-          <TextField
+          {/* <TextField
               label="Option 5"
               name="option5"
               fullWidth
@@ -213,15 +212,15 @@ export default function QuestionDialog({
               style={{marginTop:"16px"}}
               onChange={formik.handleChange}
               value={formik.values.option5}
-            />
+            /> */}
           <TextField
               label="Answer"
-              name="ans"
+              name="answer"
               fullWidth
               variant="outlined"
               style={{marginTop:"16px"}}
               onChange={formik.handleChange}
-              value={formik.values.ans}
+              value={formik.values.answer}
             />
             </Grid>
           </div>

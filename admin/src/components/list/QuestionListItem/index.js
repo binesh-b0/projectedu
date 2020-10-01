@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 8,
   },
 }));
-export default function QuestionListItem({ item, onEdit, onDelete }) {
+export default function QuestionListItem({ item, onEdit, onDelete,edit }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -77,7 +77,7 @@ export default function QuestionListItem({ item, onEdit, onDelete }) {
     <div className={classes.root}>
       <div className={classes.header}>
         <Typography>{item.no + "." + item.question}</Typography>
-        <div className={classes.buttonContainer}>
+        {edit&&(<div className={classes.buttonContainer}>
           <IconButton
             area-label="edit"
             color="primary"
@@ -104,7 +104,7 @@ export default function QuestionListItem({ item, onEdit, onDelete }) {
           >
             <DeleteIcon />
           </IconButton>
-        </div>
+        </div>)}
       </div>
       <Grid justify="space-between" container>
         <span className={classes.span}>
@@ -192,7 +192,7 @@ export default function QuestionListItem({ item, onEdit, onDelete }) {
             </Paper>
           </Grid>
         )}
-        {item.option5 && (
+        {/* {item.option5 && (
           <Grid item xs>
             <Paper
               variant="outlined"
@@ -209,11 +209,11 @@ export default function QuestionListItem({ item, onEdit, onDelete }) {
               </Typography>
             </Paper>
           </Grid>
-        )}
+        )} */}
         <Grid item xs>
           <Paper className={classes.ansPaper} elevation={0}>
             <Typography className={classes.ansLabel}>ans</Typography>
-            <Typography variant="body1">{item.ans}</Typography>
+            <Typography variant="body1">{item.answer}</Typography>
           </Paper>
         </Grid>
       </Grid>

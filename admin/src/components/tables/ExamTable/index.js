@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef, useEffect,useState } from "react";
 import MaterialTable from "material-table";
 import api from "../../../api/api";
 import { getCredentials } from "../../../services/authService";
@@ -38,15 +38,37 @@ const ExamTable = (props) => {
   //   const allExams = useSelector((state) => state.allExams);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllExams());
-  }, []);
+  // useEffect(() => {
+    // dispatch(getAllExams());
+  // }, []);
 
   const tableColumns = [
     { title: "Id", field: "id", align: "left" },
-    { title: "Name", field: "name", align: "left" },
-    { title: "Level", field: "level", align: "left" },
+    { title: "Name", field: "Title", align: "left" },
+    { title: "Start date", field: "StartDate", align: "left" },
+    { title: "End date", field: "EndDate", align: "left" },
+    { title: "Status", field: "Status", align: "left" },
   ];
+  const [data, setData] = useState([])
+
+  // const getAllExams =()=>{
+  //   try {
+  //     const { data } = await api.post(
+  //         '/admin/getExams',
+  //         {
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 Authorization: `Bearer ${getCredentials()}`,
+  //             },
+  //         },
+  //         {timeout:1000}
+  //     );
+
+  // } catch (error) {
+  //     console.log(error);
+
+  // }
+  // }
 
   const allExams = [
     {
@@ -62,9 +84,9 @@ const ExamTable = (props) => {
   ];
   const tableOptions = {
     search: true,
-    selection: true,
+    // selection: true,
     filtering: true,
-    actionsColumnIndex: -1,
+    // actionsColumnIndex: -1,
   };
 
   const disableExam = async (userId, status) => {
@@ -164,9 +186,28 @@ const ExamTable = (props) => {
         // editable={editable}
         title="Exams"
         columns={tableColumns}
-        data={allExams}
+        // data={allExams}
+        data={query =>
+        new Promise((resolve, reject) => {
+          api.post(
+          '/admin/getExams',
+          {limit:10,offset:0},
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${getCredentials()}`,
+              },
+          },
+          {timeout:1000}
+      ).then((res)=>{
+        console.log("res",res)
+        resolve({data: res.data.response})
+        })
+      .catch((err)=>console.log(err))
+        })
+      }
         onRowClick={(event,rowData)=>{console.log(rowData.id,"r");handleRowclick(rowData.id)}}
-        actions={actionOptions}
+        // actions={actionOptions}
       />
     </div>
   );

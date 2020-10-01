@@ -1,29 +1,32 @@
 import {
   GET_ALL_EXAMS,
-    GET_EXAM_DETAIL,
-    GET_EXAM_INSTRUCTIONS,
-    GET_EXAM_QUESTIONS,
+  GET_EXAM_DETAIL,
+  GET_EXAM_FAIL,
+  GET_EXAM_INSTRUCTIONS,
+  GET_EXAM_QUESTIONS,
+  GET_EXAM_SUCCESS,
+  GET_EXAM_REQUEST,
   PUBLISH_EXAM_FAIL,
   PUBLISH_EXAM_REQUEST,
   PUBLISH_EXAM_SUCCESS,
 } from "../constants/examConstants";
 
-const details={
-    title:"",
-    startDate:"",
-    endDate:"",
-    startTime:"",
-    endTime:"",
-    duration:20,
-}
-const instructions=[
-    "Culpa exercitation veniam elit do eu anim officia pariatur dolore minim.",
-     "Adipisicing nulla culpa voluptate amet et dolore." ,
-    "Eiusmod proident reprehenderit quis consequat sit elit labore.",
-     "Culpa excepteur qui sit cupidatat." ,
-     "In excepteur officia laborum labore laborum exercitation.",
-    "Adipisicing eiusmod adipisicing eu eu fugiat ex commodo sunt laborum quis deserunt dolor nisi duis.",
-  ]
+const details = {
+  title: "",
+  startDate: "",
+  endDate: "",
+  startTime: "",
+  endTime: "",
+  duration: 20,
+};
+const instructions = [
+  "Culpa exercitation veniam elit do eu anim officia pariatur dolore minim.",
+  "Adipisicing nulla culpa voluptate amet et dolore.",
+  "Eiusmod proident reprehenderit quis consequat sit elit labore.",
+  "Culpa excepteur qui sit cupidatat.",
+  "In excepteur officia laborum labore laborum exercitation.",
+  "Adipisicing eiusmod adipisicing eu eu fugiat ex commodo sunt laborum quis deserunt dolor nisi duis.",
+];
 
 function allExamsReducer(state = [], action) {
   switch (action.type) {
@@ -33,25 +36,51 @@ function allExamsReducer(state = [], action) {
       return state;
   }
 }
-function publishExamReducer(state = {details:details,instructions:instructions,questions:[]}, action) {
+
+function examReducer(state = { loading:true,details:{},questions:[],instructions:[] }, action) {
+  switch (action.type) {
+    case GET_EXAM_REQUEST:
+      return { loading: true, details:{},questions:[],instructions:[] };
+    case GET_EXAM_SUCCESS:
+      return {
+        loading: false,
+        details: action.details,
+        questions: action.questions,
+        instructions: action.instructions,
+      };
+    case GET_EXAM_FAIL:
+      return { loading: false, details:{},questions:[],instructions:[] };
+    default:
+      return state;
+  }
+}
+function publishExamReducer(
+  state = { details: details, instructions: instructions, questions: [] },
+  action
+) {
   switch (action.type) {
     case PUBLISH_EXAM_REQUEST:
-      return {loading:true,questions:action.questions,instructions:action.instructions,details:action.details};
+      return {
+        loading: true,
+        questions: action.questions,
+        instructions: action.instructions,
+        details: action.details,
+      };
     case PUBLISH_EXAM_SUCCESS:
-      return {...state,loading:false,status:action.payload};
+      return { ...state, loading: false, status: action.payload };
     case PUBLISH_EXAM_FAIL:
-      return {...state,loading:false,status:action.payload};
+      return { ...state, loading: false, status: action.payload };
     case GET_EXAM_DETAIL:
-        return {...state,details:action.details}
+      return { ...state, details: action.details };
     case GET_EXAM_INSTRUCTIONS:
-        return {...state,instructions:action.instructions}
+      return { ...state, instructions: action.instructions };
     case GET_EXAM_QUESTIONS:
-        return {...state,questions:action.questions}   
+      return { ...state, questions: action.questions };
     case "RESET_PUBLISH_EXAM":
-        return {details:details,instructions:instructions,questions:[]}
+      return { details: details, instructions: instructions, questions: [] };
     default:
       return state;
   }
 }
 
-export { allExamsReducer,publishExamReducer };
+export { allExamsReducer, publishExamReducer, examReducer };

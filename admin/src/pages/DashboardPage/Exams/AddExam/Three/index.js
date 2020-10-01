@@ -122,6 +122,7 @@ export default function Three({ handleNext, handleBack }) {
             onEdit={onEdit}
             onDelete={onDelete}
             index={index}
+            edit={true}
           />
         ))}
       </Paper>
