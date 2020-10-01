@@ -6,8 +6,8 @@ const getAllExams = () => {
     return async (dispatch) => {
         try {
             const { data } = await api.post(
-                '/admin/getAdminUsers',
-                {},
+                '/admin/getExams',
+                {limit:10,offset:0},
                 {
                     headers: {
                         'Content-Type': 'application/json',

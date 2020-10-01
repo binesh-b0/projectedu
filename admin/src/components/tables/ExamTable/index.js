@@ -35,19 +35,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ExamTable = (props) => {
   const classes = useStyles();
-  //   const allExams = useSelector((state) => state.allExams);
+    const allExams = useSelector((state) => state.allExams);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-    // dispatch(getAllExams());
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllExams());
+  }, []);
 
   const tableColumns = [
     { title: "Id", field: "id", align: "left" },
     { title: "Name", field: "Title", align: "left" },
     { title: "Start date", field: "StartDate", align: "left" },
     { title: "End date", field: "EndDate", align: "left" },
-    { title: "Status", field: "Status", align: "left" },
+    { title: "Status", field: "Status", align: "left" ,lookup:{active:"active",inactive:'inactive'}},
   ];
   const [data, setData] = useState([])
 
@@ -70,18 +70,18 @@ const ExamTable = (props) => {
   // }
   // }
 
-  const allExams = [
-    {
-      id: 100,
-      name: "exam 1",
-      level: 1,
-    },
-    {
-      id: 200,
-      name: "exam 2",
-      level: 2,
-    },
-  ];
+  // const allExams = [
+  //   {
+  //     id: 100,
+  //     name: "exam 1",
+  //     level: 1,
+  //   },
+  //   {
+  //     id: 200,
+  //     name: "exam 2",
+  //     level: 2,
+  //   },
+  // ];
   const tableOptions = {
     search: true,
     // selection: true,
@@ -186,26 +186,26 @@ const ExamTable = (props) => {
         // editable={editable}
         title="Exams"
         columns={tableColumns}
-        // data={allExams}
-        data={query =>
-        new Promise((resolve, reject) => {
-          api.post(
-          '/admin/getExams',
-          {limit:10,offset:0},
-          {
-              headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${getCredentials()}`,
-              },
-          },
-          {timeout:1000}
-      ).then((res)=>{
-        console.log("res",res)
-        resolve({data: res.data.response})
-        })
-      .catch((err)=>console.log(err))
-        })
-      }
+        data={allExams}
+      //   data={query =>
+      //   new Promise((resolve, reject) => {
+      //     api.post(
+      //     '/admin/getExams',
+      //     {limit:10,offset:0},
+      //     {
+      //         headers: {
+      //             'Content-Type': 'application/json',
+      //             Authorization: `Bearer ${getCredentials()}`,
+      //         },
+      //     },
+      //     {timeout:1000}
+      // ).then((res)=>{
+      //   console.log("res",res)
+      //   resolve({data: res.data.response})
+      //   })
+      // .catch((err)=>console.log(err))
+      //   })
+      // }
         onRowClick={(event,rowData)=>{console.log(rowData.id,"r");handleRowclick(rowData.id)}}
         // actions={actionOptions}
       />
