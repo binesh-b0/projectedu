@@ -1,15 +1,27 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Divider } from '@material-ui/core';
 import styles from './styles.module.css';
 import DashboardMetrics from '../../../components/DashboardMetrics';
 import UpcomingExamTable from '../../../components/UpcomingExamsTable';
+import { connect } from 'react-redux';
+import { getUpcommingExams, getUserInfo } from '../../../actions/userActions';
 
-const DashboardHome = ({ name = 'Batman' }) => {
+const DashboardHome = ({ getExams, exams, profileInfo, getUserInfo }) => {
+    useEffect(() => {
+        getExams();
+        getUserInfo();
+    }, []);
+
+    if (Object.keys(profileInfo).length === 0) return null;
+
     return (
         <Container className={styles.container}>
             <Row>
-                <h1 className={styles.name}>Welcome,{name}</h1>
+                <h1 className={styles.name}>
+                    Welcome,{profileInfo.details.FullName}
+                </h1>
                 <Divider />
             </Row>
             <Row>
@@ -29,11 +41,29 @@ const DashboardHome = ({ name = 'Batman' }) => {
             <Row>
                 {/* <p className={styles.subHeadings}>Upcoming Exams</p> */}
                 <Col>
-                    <UpcomingExamTable />
+                    <UpcomingExamTable data={exams} />
                 </Col>
             </Row>
         </Container>
     );
 };
 
-export default DashboardHome;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getExams: (limit, offset) => dispatch(getUpcommingExams()),
+        getUserInfo: () => dispatch(getUserInfo()),
+    };
+};
+
+const mapStateToProps = (state) => {
+    console.log(state.userProfile);
+    return {
+        exams: state.userProfile.upcomingExams,
+        profileInfo: state.userProfile.profileInfo,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DashboardHome);

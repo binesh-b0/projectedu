@@ -2,7 +2,6 @@ import Axios from 'axios';
 import Cookie from 'js-cookie';
 import api from '../api/api';
 import { getCredentials } from '../services/authService';
-import { BASE_URL } from '../api/api';
 
 import {
     USER_SIGNIN_REQUEST,
@@ -27,6 +26,34 @@ import {
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
+const BASE_URL = 'http://2a7ba3d5d49c.ngrok.io';
+
+const getUserInfo = () => async (dispatch, getState) => {
+    try {
+        console.log('User info called');
+        const url = BASE_URL + '/rest/v1/getProfile';
+        const config = {
+            url,
+            method: 'GET',
+            headers: {
+                Authorization:
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQ4LCJpYXQiOjE2MDE1NTUxNTJ9.a77ii7J2K4DfprIK0OwxYaxoQVy4OQ6wNM_h4xnQy1E', //`Bearer ${getCredentials()}`,
+                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
+            },
+        };
+
+        const response = await Axios(config);
+        console.log('The response is ', response.data.response);
+        dispatch({
+            type: 'ADD_PROFILE_INFO',
+            payload: response.data.response,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const submitUserData = () => async (dispatch, getState) => {
     console.log(getState());
     try {
@@ -50,10 +77,10 @@ const submitUserData = () => async (dispatch, getState) => {
         formData.append('certifications', JSON.stringify(certifications));
         formData.append('profilePic', profilePic);
         certificationPic.forEach((certification) => {
-            formData.append('certificates[]', certification);
+            formData.append('certificates', certification);
         });
 
-        console.log('the degree is ', certificationPic);
+        console.log('the degree is ', certifications);
         console.log('the degree is ', formData.get('certificates'));
 
         const config = {
@@ -61,8 +88,7 @@ const submitUserData = () => async (dispatch, getState) => {
             url,
             data: formData,
             headers: {
-                Authorization:
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQzLCJpYXQiOjE2MDAwOTM1ODV9.mfzf5eDpx-bas0jYmhhjSlnic-gm3r2M_xdZupXEZtY', //`Bearer ${getCredentials()}`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQ4LCJpYXQiOjE2MDE1NTUxNTJ9.a77ii7J2K4DfprIK0OwxYaxoQVy4OQ6wNM_h4xnQy1E`, //${getCredentials()}`,
                 'Content-Type': 'multipart/form-data',
                 Accept: 'application/json',
             },
@@ -71,6 +97,7 @@ const submitUserData = () => async (dispatch, getState) => {
         console.log('the request ' + formData.get('userInfo'));
         console.log(config);
         const response = await Axios(config);
+
         console.log('The response is ' + JSON.stringify(response.data));
     } catch (error) {
         console.log(error);
@@ -269,6 +296,7 @@ const addDegreeDetails = (data) => {
 };
 
 const addCertificateDetails = (data) => {
+    console.log('Action ', data);
     return {
         type: 'ADD_PROFILE_REG_CERTIFICATE_DATA',
         payload: data,
@@ -276,7 +304,6 @@ const addCertificateDetails = (data) => {
 };
 
 const addCertificatePicture = (data) => {
-    console.log(data);
     return {
         type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
         payload: data,
@@ -297,6 +324,33 @@ const removeDegreeDetail = (data) => {
     };
 };
 
+const getUpcommingExams = (limit = 10, offset = 0) => async (
+    dispatch,
+    getState
+) => {
+    try {
+        console.log('Upcomming called');
+        const url = BASE_URL + '/rest/v1/getAvailableExams';
+        const config = {
+            url,
+            method: 'POST',
+            data: { offset, limit },
+            headers: {
+                Authorization:
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQ4LCJpYXQiOjE2MDE1NTUxNTJ9.a77ii7J2K4DfprIK0OwxYaxoQVy4OQ6wNM_h4xnQy1E', //`Bearer ${getCredentials()}`,
+                Accept: 'application/json',
+            },
+        };
+        const response = await Axios(config);
+        dispatch({
+            type: 'ADD_UPCOMING_EXAMS',
+            payload: response.data.response,
+        });
+    } catch (error) {
+        console.log(error.data);
+    }
+};
+
 export {
     signin,
     register,
@@ -315,4 +369,6 @@ export {
     passwordResetComplete,
     removeDegreeDetail,
     removeCertificateDetail,
+    getUserInfo,
+    getUpcommingExams,
 };

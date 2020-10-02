@@ -75,6 +75,7 @@ function userRegisterReducer(state = {}, action) {
 }
 
 const initialState = {
+    profileInfo: {},
     userInfo: {
         fullName: '',
         gender: 'M',
@@ -111,27 +112,16 @@ const initialState = {
         board12: '',
         location12: '',
     },
-    degree: {
-        // {
-        //     collegeName: '',
-        //     cgpa: '',
-        //     rollNo: '',
-        //     degree: '',
-        //     location: '',
-        // },
-    },
-    certifications: {
-        // {
-        //     certificationName: '',
-        //     completionDate: '2020-12-09',
-        //     validityDate: '2021-12-08',
-        //     institute: '',
-        // },
-    },
+    degree: {},
+    certifications: {},
+    certificationPic: [],
+    upcomingExams: [],
 };
 
 const userProfileReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'ADD_PROFILE_INFO':
+            return { ...state, profileInfo: action.payload };
         case ADD_PROFILE_REG_DATA:
             return {
                 ...state,
@@ -171,27 +161,37 @@ const userProfileReducer = (state = initialState, action) => {
                 profilePic: action.payload,
             };
         case 'ADD_PROFILE_REG_CERTIFICATE_DATA':
+            console.log('Reducer value is ', action.payload);
             return {
                 ...state,
                 certifications: {
                     ...state.certifications,
                     [action.payload.id]: {
-                        ...action.payload.id,
+                        ...state.certifications[action.payload.id],
                         ...action.payload,
                     },
                 },
             };
         case 'ADD_PROFILE_REG_COLLEGE_DATA':
+            // console.log([state.degree[action.payload.id]], state);
             return {
                 ...state,
                 degree: {
                     ...state.degree,
                     [action.payload.id]: {
-                        ...action.payload.id,
+                        ...state.degree[action.payload.id],
                         ...action.payload,
                     },
                 },
             };
+        case 'ADD_PROFILE_DEGREE_CERTIFICATE':
+            return {
+                ...state,
+                certificationPic: [...state.certificationPic, action.payload],
+            };
+        case 'ADD_UPCOMING_EXAMS':
+            // console.log(action.payload);
+            return { ...state, upcomingExams: action.payload };
         default:
             return state;
     }

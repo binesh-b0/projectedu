@@ -18,11 +18,12 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import styles from './styles.module.css';
 
-const UpcomingExamTable = () => {
+const UpcomingExamTable = ({ data }) => {
+    console.log('The data is ', data);
     const columns = [
-        { title: 'Name', field: 'name' },
-        { title: 'Date of Upload', field: 'dateOfUpload' },
-        { title: 'Date of Exam', field: 'examDate' },
+        { title: 'Name', field: 'Title' },
+        { title: 'Date of Upload', field: 'StartDate' },
+        { title: 'Date of Exam', field: 'StartTime' },
     ];
 
     const tableIcons = {
@@ -61,23 +62,23 @@ const UpcomingExamTable = () => {
         )),
     };
 
-    const data = [
-        {
-            name: 'Tata Consultancy Services - Entrace Test',
-            dateOfUpload: '4th August, 2020',
-            examDate: '4th August, 2020',
-        },
-        {
-            name: 'Tata Consultancy Services - Entrace Test',
-            dateOfUpload: '4th August, 2020',
-            examDate: '4th August, 2020',
-        },
-        {
-            name: 'Tata Consultancy Services - Entrace Test',
-            dateOfUpload: '4th August, 2020',
-            examDate: '4th August, 2020',
-        },
-    ];
+    // const data = [
+    //     {
+    //         name: 'Tata Consultancy Services - Entrace Test',
+    //         dateOfUpload: '4th August, 2020',
+    //         examDate: '4th August, 2020',
+    //     },
+    //     {
+    //         name: 'Tata Consultancy Services - Entrace Test',
+    //         dateOfUpload: '4th August, 2020',
+    //         examDate: '4th August, 2020',
+    //     },
+    //     {
+    //         name: 'Tata Consultancy Services - Entrace Test',
+    //         dateOfUpload: '4th August, 2020',
+    //         examDate: '4th August, 2020',
+    //     },
+    // ];
 
     const options = { search: false };
 

@@ -17,8 +17,8 @@ const Header = ({ name = 'Loading' }) => {
                 />{' '}
             </Navbar.Brand>
             <img
-                src={require('../../assets/images/logo.svg')}
-                className='d-inline-block align-top p-2 flex-grow-1'
+                src={require('../../assets/images/banner.jpg')}
+                className='center d-inline-block align-top p-2 flex-grow-1'
                 alt='logo'
             />
             <Navbar.Collapse className='justify-content-end justify-content-end d-flex'>

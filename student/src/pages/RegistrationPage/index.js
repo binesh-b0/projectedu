@@ -22,7 +22,7 @@ function Alert(props) {
 const Registration = ({ submitData, userProfile }) => {
     const [snk, setSnk] = useState('');
     const [open, setOpen] = useState(false);
-    const [activeStep, setActiveStep] = useState(3);
+    const [activeStep, setActiveStep] = useState(0);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
@@ -158,7 +158,6 @@ const Registration = ({ submitData, userProfile }) => {
             {showSnackbar()}
             <Header />
             <div className={styles.subContainer}>
-                {/* <div className={styles.firstDiv}> */}
                 <SidePanel />
                 {/* <h4 className={styles.firstDivText}>
                         Complete your profile to access your dashboard
@@ -199,7 +198,7 @@ const Registration = ({ submitData, userProfile }) => {
                             handleSubmit={() => handleSubmit()}
                         />
                     )}
-                                    </div> */}
+                </div> */}
             </div>
         </div>
     );

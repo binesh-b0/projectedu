@@ -1,10 +1,37 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import styles from './styles.module.css';
 import UserProfileTextField from '../../../components/UserProfileTextField';
 import Button from '../../../components/CTAButton';
+import { connect } from 'react-redux';
+import { getUserInfo } from '../../../actions/userActions';
 
-const UserProfile = () => {
+const UserProfile = ({ getUserInfo, profileInfo }) => {
+    useEffect(() => {
+        getUserInfo();
+    }, []);
+
+    const {
+        details,
+        degrees,
+        certifications,
+        address,
+        academics,
+    } = profileInfo;
+
+    const [picture, setPicture] = useState(
+        require('../../../assets/images/user.svg')
+    );
+
+    useEffect(() => {
+        if (Object.keys(profileInfo).length !== 0) {
+            setPicture(details.ProfilePic);
+        }
+    }, [profileInfo]);
+
+    if (Object.keys(profileInfo).length === 0) return null;
+
     return (
         <Container>
             <Row>
@@ -12,7 +39,7 @@ const UserProfile = () => {
                     <Row className={styles.userImageIdContainer}>
                         <Col>
                             <img
-                                src={require('../../../assets/images/user.svg')}
+                                src={picture}
                                 width='100'
                                 height='100'
                                 alt='User profile '
@@ -23,58 +50,97 @@ const UserProfile = () => {
                         </Col>
                     </Row>
                     <UserProfileTextField
-                        value='Shawn Mendis'
+                        value={details.FullName}
                         label='Full Name'
                     />
-                    <UserProfileTextField value='23-10-2020' label='DOB' />
-                    <UserProfileTextField value='Male' label='Gender' />
+                    <UserProfileTextField value={details.Dob} label='DOB' />
                     <UserProfileTextField
-                        value='Mendis Peter'
+                        value={details.Gender}
+                        label='Gender'
+                    />
+                    <UserProfileTextField
+                        value={details.GuardianName}
                         label='Gurdians Name'
                     />
                     <UserProfileTextField
-                        value='Father'
+                        value={details.RelationToGuardian}
                         label='Relationship With Guradian'
                     />
                     <UserProfileTextField
-                        value='No:25 Ocean Drive, Johanson'
+                        value={address[0].AddressLine1}
                         label='Address Line 1'
                     />
                     <UserProfileTextField
-                        value='Lincoln Layout'
+                        value={address[0].AddressLine2}
                         label='Address Line 2'
                     />
-                    <UserProfileTextField value='Bengaluru' label='City/Town' />
-                    <UserProfileTextField value='Karnataka' label='State' />
-                    <UserProfileTextField value='688801' label='Zip Code' />
                     <UserProfileTextField
-                        value='9895693382'
+                        value={address[0].City}
+                        label='City/Town'
+                    />
+                    <UserProfileTextField
+                        value={address[0].State}
+                        label='State'
+                    />
+                    <UserProfileTextField
+                        value={address[0].Zipcode}
+                        label='Zip Code'
+                    />
+                    <UserProfileTextField
+                        value={address[0].PhoneNo}
                         label='Phone Number'
                     />
                 </Col>
                 <div style={{ width: 32 }} />
                 <Col className={styles.card}>
                     <UserProfileTextField
-                        value='Vidyanikethan HSS'
+                        value={academics.SchoolName10}
                         label='10th School Name'
                     />
-                    <UserProfileTextField value='85%' label='CGPA/Percentage' />
-                    <UserProfileTextField value='State Board' label='Board' />
-                    <UserProfileTextField value='Bengaluru' label='Location' />
                     <UserProfileTextField
-                        value='Holy Trinity Public School'
+                        value={academics.Cgpa10}
+                        label='CGPA/Percentage'
+                    />
+                    <UserProfileTextField
+                        value={academics.Board10}
+                        label='Board'
+                    />
+                    <UserProfileTextField
+                        value={academics.Location10}
+                        label='Location'
+                    />
+                    <UserProfileTextField
+                        value={academics.SchoolName12}
                         label='12th School Name'
                     />
-                    <UserProfileTextField value='89%' label='CGPA/Percentage' />
-                    <UserProfileTextField value='CBSE' label='Board' />
-                    <UserProfileTextField value='Bengaluru' label='Location' />
                     <UserProfileTextField
-                        value='National Institute of Technology'
+                        value={academics.Cgpa12}
+                        label='CGPA/Percentage'
+                    />
+                    <UserProfileTextField
+                        value={academics.Board10}
+                        label='Board'
+                    />
+                    <UserProfileTextField
+                        value={academics.Location12}
+                        label='Location'
+                    />
+                    <UserProfileTextField
+                        value={degrees[0].CollegeName}
                         label='College Name'
                     />
-                    <UserProfileTextField value='8.9' label='CGPA/Percentage' />
-                    <UserProfileTextField value='Trichy' label='Board' />
-                    <UserProfileTextField value='07' label='Location' />
+                    <UserProfileTextField
+                        value={degrees[0].Cgpa}
+                        label='CGPA/Percentage'
+                    />
+                    <UserProfileTextField
+                        value={degrees[0].Degree}
+                        label='Degree'
+                    />
+                    <UserProfileTextField
+                        value={degrees[0].Location}
+                        label='Location'
+                    />
                     <UserProfileTextField
                         value='Hello'
                         label='Interview Attended'
@@ -96,4 +162,20 @@ const UserProfile = () => {
     );
 };
 
-export default UserProfile;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getUserInfo: () => dispatch(getUserInfo()),
+    };
+};
+
+const mapStateToProps = (state) => {
+    console.log('The state value is ', state.userProfile.profileInfo);
+    return {
+        profileInfo: state.userProfile.profileInfo,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserProfile);
