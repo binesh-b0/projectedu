@@ -6,4 +6,15 @@ resources:
   cpu: 1
   memory_gb: 0.5
   disk_size_gb: 10
+env_variables:
+  DB_DATABASE: hsstproddb
+  DB_USER: admin
+  DB_PASS: admin@1234
+  EMAIL_USER: lanciar2017@gmail.com
+  EMAIL_PASS: laughingbudha@sdk
+  SECRET_KEY: asldkjfasouefaewflsdkfhsiofhoefhldslfhsdo
+  GCS_BUCKET: edu-app-bucket
+  INSTANCE_CONNECTION_NAME: hsstwebapp:us-central1:hsstproddb
+beta_settings:
+  cloud_sql_instances: hsstwebapp:us-central1:hsstproddb
   
