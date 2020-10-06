@@ -60,9 +60,9 @@ function ActiveLastBreadcrumb(exam,location) {
       <Link className={classes.link} to="/app/exams">
         Exams
       </Link>
-      {exam && (
+      {location.pathname.substring(location.pathname.lastIndexOf('/') + 1)!='exams`' && (
         <Link className={classes.link} color="textPrimary" aria-current="page">
-          {exam}
+          {location.pathname.substring(location.pathname.lastIndexOf('/') + 1)}
         </Link>
       )}
       {location.pathname=='/app/exams/add' && (
