@@ -4,6 +4,7 @@ import MaterialTable from "material-table";
 import api from "../../../api/api";
 import { getCredentials } from "../../../services/authService";
 import { getAllExams } from "../../../actions/examActions";
+import { setSelectedStudents } from "../../../actions/studentActions";
 import {
   AddBox,
   ArrowDownward,
@@ -23,6 +24,7 @@ import {
   Remove,
   PhoneDisabled,
   PersonAddDisabled,
+  Refresh
 } from "@material-ui/icons";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 32,
   },
 }));
-const StudentTable = (props) => {
+const StudentTable = ({history,setSelected}) => {
   const tableRef = React.createRef();
 
   const classes = useStyles();
-  //   const allExams = useSelector((state) => state.allExams);
-  // const dispatch = useDispatch();
+    // const selectedStudents = useSelector((state) => state.selectedStudents);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   dispatch(getAllExams());
@@ -50,29 +52,28 @@ const StudentTable = (props) => {
         <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar}/>
     ),},
     { title: "Id", field: "id", align: "left" },
-    { title: "Name", field: "Title", align: "left" },
+    { title: "Name", field: "FullName", align: "left" },
     { title: "Email", field: "Email", align: "left" },
     { title: "HSST score", field: "score", align: "left" },
-    { title: "Category", field: "Category", align: "left" ,lookup:{active:"active",inactive:'inactive'}},
+    // { title: "Category", field: "Category", align: "left" ,lookup:{active:"active",inactive:'inactive'}},
   ];
   const [data, setData] = useState([])
-  
+  const [loading, setLoading] = useState(false)
 
   const tableOptions = {
     search: true,
     selection: true,
     filtering: true,
-    // actionsColumnIndex: -1,
   };
-
-
 
   const actionsOptions=[
     {
-      icon: 'refresh',
+      icon: ()=><Refresh />,
       tooltip: 'Refresh Data',
       isFreeAction: true,
-      onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+      exportButton: true,
+      // onClick: () => tableRef.current && tableRef.current.onQueryChange,
+      onClick:()=>remoteData(null)
     }
   ]
  
@@ -103,10 +104,8 @@ const StudentTable = (props) => {
     )),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
-  const remoteData =(query)=>{            // 1
-    console.log(query)
-    new Promise((resolve, reject) => {
-      // prepare your data and then call resolve like this:
+  const remoteData =async ()=>{
+    setLoading(true)            // 1
       api.post(
             '/admin/getStudents',
             {},
@@ -119,19 +118,26 @@ const StudentTable = (props) => {
             {timeout:1000}
         ).then((res)=>{
           console.log("res",res)
-          resolve({data: res.data.response})
+          setData(res.data.response)
+          setLoading(false)
           })
-        .catch((err)=>console.log(err))
+        .catch((err)=>{console.log(err);setLoading(false)})
        
-  })
+  
  }
+ useEffect(() => {
+   remoteData()
+   return () => {
+     
+   }
+ }, [])
  const searchHandler = (text)=>{            // 6
     // setSearchText(text);
     tableRef.current.onSearchChange(text);  // 7
  }
 
   const handleRowclick=(id)=>{
-    props.history.push('/app/students/details/'+id)  }
+    history.push('/app/students/details/'+id)  }
 
   return (
     <div className={classes.root}>
@@ -140,9 +146,10 @@ const StudentTable = (props) => {
         icons={tableIcons}
         title="Students"
         columns={tableColumns}
-        // data={remoteData}
+        data={data}
+        isLoading={loading}
         actions={actionsOptions}
-        onSelectionChange={(rows) => props.setSelected(rows.Email)}
+        onSelectionChange={(rows) => dispatch(setSelectedStudents(rows))}
         onRowClick={(event,rowData)=>{console.log(rowData.id,"r");handleRowclick(rowData.id)}}
       />
     </div>
