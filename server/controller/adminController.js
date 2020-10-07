@@ -270,11 +270,12 @@ exports.getStudents = async function (req, res) {
 exports.sendBulkEmail = async function (req, res){
     const { emails, subject, content } = req.body;
 
-    if(!email || !subject || !content ){
+    if(!emails || !subject || !content ){
         return res.status(400).send({error: 'Required Parameters are missing'});
     }
     try {
         const result = await mailer.sendBulkEmail(emails, subject, content);
+        console.log("EMAIL ", result);
         return res.status(200).send({response: result});
     } catch (error) {
         return res.status(500).send({ error: error });

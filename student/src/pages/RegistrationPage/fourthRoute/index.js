@@ -1,91 +1,80 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './style.module.css';
-import { TextField, makeStyles, Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { changeProfileSchoolInfo } from '../../../actions/userActions';
+import Certificate from '../../../components/Certificate';
+import MYButton from '../../../components/CTAButton';
+import Button from '@material-ui/core/Button';
+import { removeCertificateDetail } from '../../../actions/userActions';
 
-const FourthRoute = () => {
-    const [certificationName, setcertificationName] = useState('');
-    const [completionDate, setcompletionDate] = useState('');
-    const [validityDate, setvalidityDate] = useState('2020-12-10');
-    const [institute, setinstitute] = useState('');
-    const [picture, setPicture] = useState(
-        require('../../../assets/images/uploadimg.svg')
-    );
+const FourthRoute = ({
+    handlePrev,
+    handleSubmit,
+    certificateDetails,
+    removeCertificateDetail,
+}) => {
+    const [certificates, setCertificates] = useState([{ id: 1 }]);
+    const [expanded, setExpanded] = useState(false);
 
-    const inputFile = useRef(null);
+    useEffect(() => {
+        const ids = Object.keys(certificateDetails);
+        console.log(ids);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] == 1) continue;
+            else setCertificates([...certificates, { id: ids[i] }]);
+        }
+    }, []);
 
-    const useStyles = makeStyles({
-        textField: {
-            marginTop: 16,
-        },
-        imgStyle: {
-            backgroundColor: '#EFECE8',
-            color: '#2262c6',
-        },
-    });
-
-    const selectImage = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', (data) => {
-            setPicture(data.target.result);
-        });
-        reader.readAsDataURL(file);
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        console.log(expanded);
     };
 
-    const styleObj = useStyles();
+    const addMoreCertificates = () => {
+        const len = certificates.length + 1;
+        setCertificates([...certificates, { id: len }]);
+    };
+
+    const removeCertificate = () => {
+        setCertificates(certificates.slice(0, -1));
+        removeCertificateDetail(certificates.pop().id);
+    };
 
     return (
         <div className={styles.container}>
-            <form className={styles.textContainer}>
-                <TextField
-                    className={styleObj.textField}
-                    label='Certificate Name'
-                    variant='outlined'
-                    value={certificationName}
-                    onChange={(event) =>
-                        setcertificationName(event.target.value)
-                    }
+            {certificates.map((certificate) => {
+                return (
+                    <Certificate
+                        expanded={expanded}
+                        id={certificate.id}
+                        onChange={(id) => handleChange(id)}
+                    />
+                );
+            })}
+            <div className={styles.btnDiv}>
+                <MYButton
+                    heading='Add more certificates'
+                    style={styles.btn}
+                    onPress={() => addMoreCertificates()}
                 />
-                <TextField
-                    className={styleObj.textField}
-                    label='Course Completed Date'
-                    value={completionDate}
-                    onChange={(event) => setcompletionDate(event.target.value)}
-                    variant='outlined'
+                <MYButton
+                    heading='Remove last certificate'
+                    style={styles.btn}
+                    onPress={() => removeCertificate()}
                 />
-                <TextField
-                    className={styleObj.textField}
-                    label='Validity'
-                    type='date'
-                    value={validityDate}
-                    onChange={(event) => setvalidityDate(event.target.value)}
-                    variant='outlined'
-                />
-                <TextField
-                    className={styleObj.textField}
-                    label='Issuing Authority'
-                    value={institute}
-                    onChange={(event) => setinstitute(event.target.value)}
-                    variant='outlined'
-                />
-            </form>
-            <img
-                className={styles.img}
-                src={picture}
-                onClick={() => inputFile.current.click()}
-                // src={require('../../../assets/images/uploadimg.svg')}
-                alt='upload certificate'
-            />
-            <input
-                type='file'
-                id='file'
-                accept='image/*'
-                ref={inputFile}
-                onChange={selectImage}
-                style={{ display: 'none' }}
-            />
+            </div>
+            <div className={styles.btnDiv}>
+                <Button onClick={handlePrev}>Previous</Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    disableElevation
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </Button>
+            </div>
         </div>
     );
 };
@@ -95,11 +84,16 @@ const mapDispatchToProps = (disptch) => {
         onChange: (data) => {
             disptch();
         },
+        removeCertificateDetail: (data) =>
+            disptch(removeCertificateDetail(data)),
     };
 };
 
 const mapStateToProps = (state) => {
-    return {};
+    console.log(state.userProfile);
+    return {
+        certificateDetails: state.userProfile.certifications,
+    };
 };
 
 export default connect(

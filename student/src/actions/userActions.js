@@ -4,13 +4,26 @@ import api from '../api/api';
 import { getCredentials } from '../services/authService';
 import { BASE_URL } from '../api/api';
 
-import { USER_SIGNIN_REQUEST,USER_SIGNIN_SUCCESS,
-    USER_SIGNIN_FAIL,USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,
+import {
+    USER_SIGNIN_REQUEST,
+    USER_SIGNIN_SUCCESS,
+    USER_SIGNIN_FAIL,
+    USER_REGISTER_REQUEST,
+    USER_REGISTER_SUCCESS,
     ADD_PROFILE_REG_DATA,
     ADD_PROFILE_REG_ADDRESS_DATA,
     ADD_PROFILE_REG_RES_ADDRESS_DATA,
     ADD_PROFILE_REG_SCHOOL_DATA,
-    USER_VERFIY_RESEND,USER_REGISTER_FAIL,USER_PASSWORD_RESET_REQUEST,USER_PASSWORD_RESET_SUCCESS,USER_PASSWORD_RESET_FAIL,USER_PASSWORD_RESET_COMPLETE,USER_LOGOUT,USER_UPDATE_REQUEST,USER_UPDATE_SUCCESS,USER_UPDATE_FAIL,
+    USER_VERFIY_RESEND,
+    USER_REGISTER_FAIL,
+    USER_PASSWORD_RESET_REQUEST,
+    USER_PASSWORD_RESET_SUCCESS,
+    USER_PASSWORD_RESET_FAIL,
+    USER_PASSWORD_RESET_COMPLETE,
+    USER_LOGOUT,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
@@ -25,21 +38,38 @@ const submitUserData = () => async (dispatch, getState) => {
             academics,
             degree,
             certifications,
+            profilePic,
+            certificationPic,
         } = new getState().userProfile;
+        console.log('The data is ', certifications);
+        console.log('addressInfo is ', JSON.stringify(addressInfo));
         formData.append('userInfo', JSON.stringify(userInfo));
         formData.append('addressInfo', JSON.stringify(addressInfo));
         formData.append('academics', JSON.stringify(academics));
-        formData.append('degree', degree);
+        formData.append('degree', JSON.stringify(degree));
         formData.append('certifications', JSON.stringify(certifications));
-        console.log(userInfo);
+        formData.append('profilePic', profilePic);
+        certificationPic.forEach((certification) => {
+            formData.append('certificates[]', certification);
+        });
+
+        console.log('the degree is ', certificationPic);
+        console.log('the degree is ', formData.get('certificates'));
+
         const config = {
             method: 'POST',
             url,
             data: formData,
             headers: {
-                Authorization: `Bearer ${getCredentials()}`,
+                Authorization:
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQzLCJpYXQiOjE2MDAwOTM1ODV9.mfzf5eDpx-bas0jYmhhjSlnic-gm3r2M_xdZupXEZtY', //`Bearer ${getCredentials()}`,
+                'Content-Type': 'multipart/form-data',
+                Accept: 'application/json',
             },
         };
+
+        console.log('the request ' + formData.get('userInfo'));
+        console.log(config);
         const response = await Axios(config);
         console.log('The response is ' + JSON.stringify(response.data));
     } catch (error) {
@@ -171,7 +201,9 @@ const resetPassword = (email) => async (dispatch) => {
     console.log('reset password', email);
     dispatch({ type: USER_PASSWORD_RESET_REQUEST });
     try {
-        const data = await api.post('/forgotPassword',{ email },
+        const data = await api.post(
+            '/forgotPassword',
+            { email },
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -180,7 +212,11 @@ const resetPassword = (email) => async (dispatch) => {
         );
         dispatch({ type: USER_PASSWORD_RESET_SUCCESS }); //TODO
     } catch (err) {
-        dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: "Email not found",pstatus: 511,}); //TODO
+        dispatch({
+            type: USER_PASSWORD_RESET_FAIL,
+            payload: 'Email not found',
+            pstatus: 511,
+        }); //TODO
     }
 };
 const passwordResetComplete = () => (dispatch) => {
@@ -210,8 +246,53 @@ const changeProfileRegAddressInfo = (typ, data) => {
 };
 
 const changeProfileSchoolInfo = (data) => {
+    console.log(data);
     return {
         type: ADD_PROFILE_REG_SCHOOL_DATA,
+        payload: data,
+    };
+};
+
+const changeProfilePicture = (data) => {
+    console.log('Called');
+    return {
+        type: 'ADD_PROFILE_PICTURE',
+        payload: data,
+    };
+};
+
+const addDegreeDetails = (data) => {
+    return {
+        type: 'ADD_PROFILE_REG_COLLEGE_DATA',
+        payload: data,
+    };
+};
+
+const addCertificateDetails = (data) => {
+    return {
+        type: 'ADD_PROFILE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const addCertificatePicture = (data) => {
+    console.log(data);
+    return {
+        type: 'ADD_PROFILE_DEGREE_CERTIFICATE',
+        payload: data,
+    };
+};
+
+const removeCertificateDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_CERTIFICATE_DATA',
+        payload: data,
+    };
+};
+
+const removeDegreeDetail = (data) => {
+    return {
+        type: 'REMOVE_REG_COLLEGE_DATA',
         payload: data,
     };
 };
@@ -226,5 +307,12 @@ export {
     changeProfileRegAddressInfo,
     changeProfileSchoolInfo,
     submitUserData,
-    resetPassword,passwordResetComplete
+    changeProfilePicture,
+    addDegreeDetails,
+    addCertificateDetails,
+    addCertificatePicture,
+    resetPassword,
+    passwordResetComplete,
+    removeDegreeDetail,
+    removeCertificateDetail,
 };

@@ -1,8 +1,8 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 100% !important;
     margin-bottom: 32px;
+    flex: 1;
     margin-right: 32px;
     margin-left: 32px;
 }
@@ -17,8 +17,21 @@
     display: flex;
     flex: 1;
     margin-top: 16px;
-    height: 200px;
+    /* height: 200px; */
+    margin-left: 16px;
     border-radius: 10px;
     border: 2px solid #2262c6;
     cursor: pointer;
+}
+
+.btnDiv {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    background-color: white;
+    color: rgb(39, 101, 195);
+    border: 1px solid rgb(39, 101, 195);
 }
