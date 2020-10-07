@@ -1,21 +1,25 @@
-import React from 'react';
+import React,{useState} from 'react';
 import StudentTable from '../../../../components/tables/StudentTable';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import StudentListMenu from '../../../../components/menu/StudentListMenu'
 const useStyles = makeStyles((theme) => ({
     btn: {},
     btnContainer: {
         display: 'flex',
-        justifyContent: 'flex-end',
-        alignContent: 'flex-end',
+        justifyContent: 'space-between',
     },
 }));
 export default function ExamList(props) {
     const classes = useStyles();
-
+    const goToMail = ()=>{
+        props.history.push('/app/students/mail')
+    }
     return (
         <div>
             <div className={classes.btnContainer}>
+            <div></div>
+                <StudentListMenu goToMail={goToMail} />
                 <Button
                     className={classes.btn}
                     disableElevation
@@ -27,7 +31,7 @@ export default function ExamList(props) {
                     Create
                 </Button>
             </div>
-            <StudentTable history={props.history}/>
+            <StudentTable history={props.history} setSelected={props.setSelected}/>
         </div>
     );
 }
