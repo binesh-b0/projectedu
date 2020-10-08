@@ -22,7 +22,7 @@ function Alert(props) {
 const Registration = ({ submitData, userProfile }) => {
     const [snk, setSnk] = useState('');
     const [open, setOpen] = useState(false);
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(2);
     const [nextButtonText, setNextButtonText] = useState('Continue');
     const steps = [
         'Personal Information',
@@ -163,11 +163,11 @@ const Registration = ({ submitData, userProfile }) => {
                         Complete your profile to access your dashboard
                     </h4> */}
                 {/* </div> */}
+                {/* <div className={styles.secondDiv}> */}
+                {/* <DashboarHome /> */}
+                {/* <UserProfile /> */}
+                {/* </div> */}
                 <div className={styles.secondDiv}>
-                    <DashboarHome />
-                    {/* <UserProfile /> */}
-                </div>
-                {/* <div className={styles.secondDiv}>
                     <Stepper activeStep={activeStep}>
                         {steps.map((label, index) => {
                             return (
@@ -198,7 +198,7 @@ const Registration = ({ submitData, userProfile }) => {
                             handleSubmit={() => handleSubmit()}
                         />
                     )}
-                </div> */}
+                </div>
             </div>
         </div>
     );

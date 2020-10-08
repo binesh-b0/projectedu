@@ -72,6 +72,7 @@ const FirstRoute = ({
             guardianName: '',
             gender: '',
             profileP: null,
+            dob: '01/01/2000',
             relationToGuardian: '',
         },
         validationSchema: Yup.object({
@@ -194,7 +195,6 @@ const FirstRoute = ({
                     InputLabelProps={{ shrink: true }}
                     value={formik.values.dob}
                     onChange={(event) => {
-                        console.log('event', event.target.value);
                         formik.setFieldValue('dob', event.target.value);
                     }}
                 />

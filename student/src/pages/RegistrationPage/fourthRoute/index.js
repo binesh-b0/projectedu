@@ -43,6 +43,7 @@ const FourthRoute = ({
 
     return (
         <div className={styles.container}>
+            <p className={styles.notmandatorytext}>*Not mandatory</p>
             {certificates.map((certificate) => {
                 return (
                     <Certificate

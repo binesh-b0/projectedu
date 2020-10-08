@@ -60,9 +60,25 @@ const ThirdRoute = ({
         } else {
             setError((prevState) => ({ ...prevState, sn: false }));
         }
+        if (
+            markType === 'C' &&
+            (schoolInfo.cgpa10 > 10 || schoolInfo.cgpa10 < 1)
+        ) {
+            setError((prevState) => ({ ...prevState, cg: true }));
+            return false;
+        } else if (
+            markType === 'P' &&
+            (schoolInfo.cgpa10 > 100 || schoolInfo.cgpa10 < 1)
+        ) {
+            setError((prevState) => ({ ...prevState, cg: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, cg: false }));
+        }
         if (schoolInfo.cgpa10.length < 1) {
             console.log('cgpa 10');
             setError((prevState) => ({ ...prevState, cg: true }));
+
             return false;
         } else {
             setError((prevState) => ({ ...prevState, cg: false }));
@@ -90,6 +106,21 @@ const ThirdRoute = ({
         }
         if (schoolInfo.cgpa12.length < 1) {
             console.log('cgpa 12');
+            setError((prevState) => ({ ...prevState, cg1: true }));
+            return false;
+        } else {
+            setError((prevState) => ({ ...prevState, cg1: false }));
+        }
+        if (
+            markType2 === 'C' &&
+            (schoolInfo.cgpa12 > 10 || schoolInfo.cgpa12 < 1)
+        ) {
+            setError((prevState) => ({ ...prevState, cg1: true }));
+            return false;
+        } else if (
+            markType2 === 'P' &&
+            (schoolInfo.cgpa12 > 100 || schoolInfo.cgpa12 < 1)
+        ) {
             setError((prevState) => ({ ...prevState, cg1: true }));
             return false;
         } else {
@@ -177,12 +208,7 @@ const ThirdRoute = ({
                                 });
                             }}
                         />
-                        <FormControl
-                            component='fieldset'
-                            // error={
-                            //     !!formik.errors.gender && formik.touched.gender
-                            // }
-                        >
+                        <FormControl component='fieldset'>
                             <FormLabel component='legend'></FormLabel>
                             <RadioGroup
                                 name='gender'

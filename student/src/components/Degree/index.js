@@ -5,6 +5,12 @@ import {
     AccordionDetails,
     TextField,
     makeStyles,
+    FormControl,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    FormHelperText,
+    Radio,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { addDegreeDetails } from '../../actions/userActions';
@@ -19,6 +25,8 @@ const Degree = ({
     degreeDetails,
 }) => {
     const [details, setDetails] = useState({});
+    const [markType, setMarkType] = useState('C');
+    const [cgpaError, setCgpaError] = useState(false);
 
     useEffect(() => {
         if (degreeDetails.id) {
@@ -33,6 +41,17 @@ const Degree = ({
 
     const addDataToStore = (data) => {
         addDegreeDetails({ id: id, ...data });
+    };
+
+    const checkValidMarks = () => {
+        const value = details.cgpa;
+        if (value) {
+            if (markType === 'C' && (value > 10 || value < 0))
+                setCgpaError(true);
+            else if (markType === 'P' && (value > 100 || value < 0))
+                setCgpaError(true);
+            else setCgpaError(false);
+        }
     };
 
     return (
@@ -62,11 +81,40 @@ const Degree = ({
                         }
                         value={details ? details.degree : ''}
                     />
+                    <FormControl component='fieldset'>
+                        <FormLabel component='legend'></FormLabel>
+                        <RadioGroup
+                            name='cgpa'
+                            row
+                            value={markType}
+                            onChange={(event) =>
+                                setMarkType(event.target.value)
+                            }
+                        >
+                            <FormControlLabel
+                                value='C'
+                                label='CGPA'
+                                control={<Radio />}
+                            />
+                            <FormControlLabel
+                                value='P'
+                                label='Percentage'
+                                control={<Radio />}
+                            />
+                        </RadioGroup>
+                        <FormHelperText style={{ marginTop: '-2px' }}>
+                            {/* {!!formik.errors.gender && formik.touched.gender
+                                    ? formik.errors.gender
+                                    : false} */}
+                        </FormHelperText>
+                    </FormControl>{' '}
                     <TextField
                         className={classes.textField}
                         label='CGPA/Percentage'
                         variant='outlined'
                         type='number'
+                        helperText='Invalid value'
+                        error={cgpaError}
                         onChange={(event) =>
                             addDataToStore({ cgpa: event.target.value })
                         }
