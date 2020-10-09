@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typography, Grid } from "@material-ui/core";
 import AdListing from './AdListing/index';
 import TextAd from './TextAd';
+import PhotoAd from "./PhotoAd";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,6 +47,7 @@ function AdManager() {
             <Switch>
                 <Route exact path="/app/ad" component={AdListing} />
                 <Route exact path="/app/ad/textad" component={TextAd} />
+                <Route exact path="/app/ad/photoad" component={PhotoAd}/>
             </Switch>
         </Container>
     )

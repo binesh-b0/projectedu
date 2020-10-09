@@ -22,6 +22,7 @@ import {
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllAds, deleteAd } from '../../../actions/adActions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,30 +32,29 @@ const useStyles = makeStyles((theme) => ({
 
 const AdTable = (props) => {
     const classes = useStyles();
+    const ads = useSelector((state) => state.ads);
+    const { loading, data } = ads;
+    const dispatch = useDispatch();
 
-    const tableData = [
-        {
-            id: 1,
-            AdName: "Infosys Ad",
-            AdType: "Text",
-            AdZone: "Zone 1",
-            Status: "active"
-        },
-        {
-            id: 2,
-            AdName: "TCS Ad",
-            AdType: "Text",
-            AdZone: "Zone 2",
-            Status: "active"
-        }
-    ];
+    useEffect(() => {
+        dispatch(getAllAds());
+    }, []);
+
+
     const tableColumns = [
         { title: "Id", field: "id", align: "left" },
         { title: "Ad Name", field: "AdName", align: "left" },
         { title: "Ad Type", field: "AdType", align: "left" },
         { title: "Ad Zone", field: "AdZone", align: "left" },
-        { title: "Status", field: "Status", align: "left", lookup: { active: "active", inactive: 'inactive' } },
     ];
+
+    const editable = {
+        onRowDelete: oldData =>
+            new Promise((resolve, reject) => {
+                console.log("OLD", oldData);
+                dispatch(deleteAd(oldData.id));
+            })
+    }
 
     const tableOptions = {
         search: true,
@@ -92,11 +92,13 @@ const AdTable = (props) => {
     return (
         <div className={classes.root}>
             <MaterialTable
+                editable={editable}
+                isLoading={ads.loading}
                 options={tableOptions}
                 icons={tableIcons}
-                title="Exams"
+                title="Advertisements"
                 columns={tableColumns}
-                data={tableData}>
+                data={data}>
             </MaterialTable>
         </div>
     );

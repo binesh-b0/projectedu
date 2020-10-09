@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect,useState } from "react";
 import MaterialTable from "material-table";
-import api from "../../../api/api";
+import api from "../../../api/api"; 
 import { getCredentials } from "../../../services/authService";
 import { getAllExams } from "../../../actions/examActions";
 import { setSelectedStudents } from "../../../actions/studentActions";

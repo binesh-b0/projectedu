@@ -12,6 +12,7 @@ import {
 } from './reducers/userReducers';
 
 import { sidebarReducer } from './reducers/layoutReducers';
+import { adsReducer } from './reducers/adReducers';
 import { selectedStudentsReducer } from './reducers/studentReducer';
 import {allExamsReducer,publishExamReducer,examReducer} from './reducers/examReducers'
 
@@ -29,7 +30,8 @@ const reducer = combineReducers({
     allExams:allExamsReducer,
     publishExam:publishExamReducer,
     exam:examReducer,
-    selectedStudents:selectedStudentsReducer
+    selectedStudents:selectedStudentsReducer,
+    ads:adsReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

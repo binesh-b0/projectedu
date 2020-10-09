@@ -7,7 +7,7 @@ import { Switch, Route, Redirect, withRouter,useLocation } from "react-router-do
 import { useDispatch, useSelector } from "react-redux";
 import StudentList from "./StudentList";
 import StudentDetails from "./StudentDetails";
-// import StudentMail from "./StudentMail";
+import StudentMail from "./StudentMail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ function Students(props) {
       </div>
       <Switch>
         <Route exact path="/app/students" component={StudentList} />
-        {/* <Route exact path="/app/students/mail" component={StudentMail} /> */}
+        <Route exact path="/app/students/mail" component={StudentMail} />
         <Route path="/app/students/details/:id" component={StudentDetails} />
       </Switch>
     </Container>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -10,34 +10,77 @@ import {
     Select,
     Grid, Card, CardContent, Typography
 } from '@material-ui/core';
+import { useDispatch, useSelector } from "react-redux";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AdTextField from '../AdTextField';
 import { StyleSharp } from '@material-ui/icons';
+import api from '../../api/api';
+import { getCredentials } from '../../services/authService';
+import SnackBar from '../SnackBar';
+
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+    container: {
+        display: 'flex',
+        flex: 1
+    },
+    form: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column'
+    },
+    heading: {
+        fontSize: 14,
+        fontWeight: 600
+    },
+    buttonZoneContainer: {
+        marginTop: 18
+    }
+}));
 
 const AddTextAdComponent = () => {
 
+    const styleClasses = useStyles();
     const [adZone, setAdZone] = useState('adZone1');
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [message, setMesssage] = useState('');
+    const [severity, setSeverity] = useState('');
 
+    const { selected } = useSelector((state) => state.selectedStudents);
 
-    const useStyle = makeStyles({
-        container: {
-            display: 'flex',
-            flex: 1
-        },
-        form: {
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column'
-        },
-        heading: {
-            fontSize: 14,
-            fontWeight: 600
-        },
-        buttonZoneContainer: {
-            marginTop: 18
+    const saveAd = async (ad, students) => {
+        try {
+            setLoading(true);
+            const res = await api.post(
+                "/admin/createTextAd",
+                { ad: ad, students: students },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${getCredentials()}`,
+                    },
+                },
+                { timeout: 1000 }
+            );
+            handleReset();
+            setLoading(false);
+            setMesssage('Ad succesfully created');
+            setSeverity('success');
+            setOpen(true);
+            console.log("res em", res);
+        } catch (err) {
+            setLoading(false);
+            setMesssage('Ad creation failed');
+            setSeverity('error');
+            setOpen(true);
+            console.log(err);
         }
-    });
-
-    const styleClasses = useStyle();
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -49,7 +92,7 @@ const AddTextAdComponent = () => {
             experience: '',
             email: '',
             domain: '',
-            adZone: ''
+            adZone: 'adZone1'
         },
         validationSchema: Yup.object({
             adName: Yup.string().required('This field is required'),
@@ -63,14 +106,31 @@ const AddTextAdComponent = () => {
             adZone: Yup.string().required('This field is required')
         }),
         onSubmit: (values) => {
-            console.log(values);
+            const formValue = { ...values, adZone };
+            saveAd(formValue, selected);
         }
     });
+
+    const formRef = useRef(null);
+    //reset form with ref
+    const handleReset = () => {
+        console.log("ENTERED RESET"); 
+        formik.resetForm();
+        formRef.current.reset();
+    };
 
 
     return (
         <div className={styleClasses.container}>
-            <form className={styleClasses.form} onSubmit={formik.handleSubmit}>
+            {loading && (
+                <Backdrop className={styleClasses.backdrop} open={loading} >
+                    <CircularProgress color="primary" />
+                </Backdrop>
+            )}
+            {open && (
+                <SnackBar open={open} message={message} severity={severity} setOpen={setOpen}/>
+            )}
+            <form ref={formRef} noValidate className={styleClasses.form} onSubmit={formik.handleSubmit}>
                 <Card>
                     <CardContent>
                         <Grid
@@ -80,6 +140,20 @@ const AddTextAdComponent = () => {
                             <Typography variant="h6" className={styleClasses.heading}>
                                 Upload Text Ad
                             </Typography>
+                        </Grid>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-end"
+                        >
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                size='small'
+                                type='submit'
+                            >
+                                Upload
+                             </Button>
                         </Grid>
                         <Grid
                             container
@@ -211,7 +285,9 @@ const AddTextAdComponent = () => {
                                 labelId='demo-simple-select-label'
                                 id='adZone'
                                 variant='outlined'
+                                size="small"
                                 value={adZone}
+                                onChange={(event) => setAdZone(event.target.value)}
                             >
                                 <MenuItem value='adZone1'>Ad Zone 1</MenuItem>
                                 <MenuItem value='adZone2'>Ad Zone 2</MenuItem>

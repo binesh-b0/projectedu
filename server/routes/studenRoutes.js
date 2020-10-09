@@ -21,4 +21,6 @@ routes.post('/rest/v1/getExamInstructions', [requireAuth], studentController.get
 
 routes.get('/rest/v1/getProfile', [requireAuth], studentController.getStudentProfile);
 
+routes.post('/rest/v1/getTextAd', [requireAuth], studentController.getTextAd);
+
 module.exports = routes;

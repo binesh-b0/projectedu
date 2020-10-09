@@ -257,26 +257,68 @@ exports.getStudents = async function (req, res) {
     try {
         if (user.Role == 'SUPER_USER') {
             const resultSet = await adminQueries.getStudents();
-            return res.status(200).send({response: resultSet});
-        }else{
+            return res.status(200).send({ response: resultSet });
+        } else {
             const resultSubSet = await adminQueries.getAssignedStudents(user.id);
-            return res.status(200).send({response: resultSubSet});
+            return res.status(200).send({ response: resultSubSet });
         }
     } catch (error) {
         return res.status(500).send({ error: error });
     }
 }
 
-exports.sendBulkEmail = async function (req, res){
+exports.sendBulkEmail = async function (req, res) {
     const { emails, subject, content } = req.body;
 
-    if(!emails || !subject || !content ){
-        return res.status(400).send({error: 'Required Parameters are missing'});
+    if (!emails || !subject || !content) {
+        return res.status(400).send({ error: 'Required Parameters are missing' });
     }
     try {
         const result = await mailer.sendBulkEmail(emails, subject, content);
         console.log("EMAIL ", result);
-        return res.status(200).send({response: result});
+        return res.status(200).send({ response: result });
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+}
+
+exports.createTextAd = async function (req, res) {
+    const { ad, students } = req.body;
+
+    if (!ad) {
+        return res.status(400).send({ error: 'Required Parameters are missing' });
+    }
+
+    try {
+        const resultId = await adminQueries.createTextAd(ad);
+        if (students.length > 0) {
+            await adminQueries.assignTextAdTo(students, resultId);
+        }
+        return res.status(200).send({ response: 'Ad created successfully' });
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+}
+
+exports.getAllAds = async function (req, res) {
+    try {
+        const resultSet = await adminQueries.getAllAds();
+        return res.status(200).send({ response: resultSet });
+    } catch (error) {
+        return res.status(500).send({ error: error });
+    }
+}
+
+exports.deleteAd = async function (req, res) {
+    const {id} = req.body;
+    
+    if(!id){
+        return res.status(400).send({ error: 'Required Parameters are missing' });
+    }
+
+    try {
+        const result = await adminQueries.deleteAd(id);
+        return res.status(200).send({ response: result });
     } catch (error) {
         return res.status(500).send({ error: error });
     }

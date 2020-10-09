@@ -331,3 +331,72 @@ exports.getAssignedStudents = function(adminId){
         );
     });
 }
+
+exports.createTextAd = function(ad){
+    return new Promise((resolve, reject) => {
+        connection.query(
+            "INSERT INTO TextAd (AdName, AdZone, CompanyName, Skills, Designation, PhoneNo, Experience, Email, Domain) VALUES (?,?,?,?,?,?,?,?,?)",
+            [ad.adName, ad.adZone, ad.companyName, ad.skills, ad.designation, ad.phoneNo, ad.experience, ad.email, ad.domain],
+            function(error, results){
+                if(error){
+                    reject(new Error(error));
+                }
+                resolve(results.insertId);
+            }
+        );
+    });
+}
+
+exports.assignTextAdTo = function (students, adId){
+    return new Promise((resolve, reject) => {
+        var query = "INSERT INTO TextAdAssignedTo (AdId, StudentId) VALUES ";
+        students.forEach(student => {
+            query += "('"+adId+"', '"+student.id+"'),";
+        });
+
+        query = query.slice(0,-1);
+
+        connection.query(
+            query,[], function(error, results){
+                if(error){
+                    reject(new Error(error));
+                }
+                resolve();
+            }
+        );
+    });
+}
+
+exports.getAllAds = function () {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            "SELECT * FROM TextAd",[], function(error, results){
+                if(error){
+                    reject(new Error(error));
+                }
+                resolve(results);
+            }
+        );
+    });
+}
+
+exports.deleteAd = function(id){
+    return new Promise((resolve, reject) => {
+        connection.query(
+            "DELETE FROM TextAd WHERE id = ?",[id], function(error, results){
+                if(error){
+                    reject(new Error(error));
+                }
+                connection.query(
+                    "DELETE FROM TextAdAssignedTo WHERE AdId = ?", [id], function(error, results){
+                        if(error){
+                            reject(new Error(error));
+                        }
+
+                        resolve("Ad deleted");
+                    }
+                );
+            }
+        );
+    });
+}

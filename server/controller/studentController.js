@@ -281,3 +281,25 @@ exports.getStudentProfile = async function (req, res) {
         return res.status(500).send({ error: error });
     }
 }
+
+exports.getTextAd = async function (req, res) {
+    const user = req.user;
+    try {
+        var ads = {};
+        const resultSet = await studentQueries.getTextAd(user.id);
+        if(resultSet.length > 0){
+            resultSet.forEach(ad => {
+                console.log(ad);
+                ads[ad.AdZone] = []
+            });
+            resultSet.forEach(ad => {
+                ads[ad.AdZone].push(ad);
+            });
+        }
+        console.log("ADSS ", ads);
+        return res.status(200).send({response: ads});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ error: error });
+    }
+}

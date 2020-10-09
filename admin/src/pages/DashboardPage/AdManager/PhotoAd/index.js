@@ -1,13 +1,13 @@
 import React from 'react';
-import AddTextAdComponent from '../../../../components/AddTextAdComponent';
+import AddPhotoAdComponent from '../../../../components/AddPhotoAdComponent';
 import AdStudentTable from '../../../../components/tables/AdStudentTable';
 
-export default function TextAd(props) {
+export default function PhotoAd(props) {
 
     return (
         <div>
-            <AddTextAdComponent />
+            <AddPhotoAdComponent />
             <AdStudentTable />
         </div>
     );
-}   
+} 

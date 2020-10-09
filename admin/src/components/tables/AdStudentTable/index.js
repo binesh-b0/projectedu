@@ -21,7 +21,10 @@ import {
     PersonAddDisabled,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import api from "../../../api/api";
+import { getCredentials } from "../../../services/authService";
 import { useDispatch, useSelector } from "react-redux";
+import { setSelectedStudents } from "../../../actions/studentActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,25 +35,47 @@ const useStyles = makeStyles((theme) => ({
 const AdStudentTable = () => {
 
     const classes = useStyles();
+    const [data, setData] = useState([]);
 
-    const tableData = [
-        {
-            id: 1,
-            email: "test@gmail.com",
-            name: "Amal",
-            dob: "24-39-2333",
-            interviews: 10,
-            city: "Ernakulam"
-        }
-    ];
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        remoteData();
+    },[]);
+
+    const remoteData =async ()=>{
+        // setLoading(true)
+          api.post(
+                '/admin/getStudents',
+                {},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${getCredentials()}`,
+                    },
+                },
+                {timeout:1000}
+            ).then((res)=>{
+              console.log("res",res.data.response)
+              setData(res.data.response)
+            //   setLoading(false)
+              })
+            .catch((err)=>{
+                console.log(err);
+                // setLoading(false)
+            })
+           
+      
+     } 
+
 
     const tableColumns = [
         { title: "Id", field: "id", align: "left" },
-        { title: "Email", field: "email", align: "left" },
-        { title: "Name", field: "name", align: "left" },
-        { title: "Date of Birth", field: "dob", align: "left" },
-        { title: "Interviews Attended", field: "interviews", align: "left" },
-        { title: "City", field: "city", align: "left" },
+        { title: "Email", field: "Email", align: "left" },
+        { title: "Name", field: "FullName", align: "left" },
+        { title: "Date of Birth", field: "Dob", align: "left" },
+        { title: "Interviews Attended", field: "InterviewsAttended", align: "left" },
+        { title: "City", field: "City", align: "left" },
     ];
 
     const tableOptions = {
@@ -95,7 +120,8 @@ const AdStudentTable = () => {
             icons={tableIcons}
             title="Students"
             columns={tableColumns}
-            data={tableData}
+            data={data}
+            onSelectionChange={(rows) => dispatch(setSelectedStudents(rows))}
           />
         </div>
       );

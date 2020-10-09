@@ -31,4 +31,11 @@ routes.post('/rest/v1/admin/getStudents', requireAdminAuth, adminController.getS
 
 routes.post('/rest/v1/admin/sendBulkEmail', requireAdminAuth, adminController.sendBulkEmail);
 
+routes.post('/rest/v1/admin/createTextAd', requireAdminAuth, adminController.createTextAd);
+
+routes.post('/rest/v1/admin/getAllAds', requireAdminAuth, adminController.getAllAds);
+
+routes.post('/rest/v1/admin/deleteAd', requireAdminAuth, adminController.deleteAd);
+
+
 module.exports = routes;

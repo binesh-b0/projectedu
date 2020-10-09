@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { removeCertificateDetail } from '../../../actions/userActions';
 
 const FourthRoute = ({
-    handlePrev,
+    handlePrev, 
     handleSubmit,
     certificateDetails,
     removeCertificateDetail,

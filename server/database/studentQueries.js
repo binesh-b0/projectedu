@@ -119,3 +119,19 @@ exports.getStudentAcademics = function (studentId) {
         );
     });
 }
+
+exports.getTextAd = function (studentId){
+    return new Promise((resolve, reject) => {
+        const query = "SELECT * FROM TextAd WHERE AdType = 'text' and id IN (SELECT AdId FROM TextAdAssignedTo WHERE StudentId = "+studentId+")";
+        console.log("EDSS ", query);
+        connection.query(
+            query,[], function(error, results){
+                if(error){
+                    console.log("ERRI ", error);
+                    reject(new Error(error));
+                }
+                resolve(results);
+            }
+        );
+    });
+}

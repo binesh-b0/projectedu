@@ -50,7 +50,10 @@ export default function AdListing(props) {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleClose}>Photo Ad</MenuItem>
+                    <MenuItem onClick={() => {
+                        handleClose();
+                        props.history.push('/app/ad/photoad');
+                    }}>Photo Ad</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         props.history.push('/app/ad/textad');

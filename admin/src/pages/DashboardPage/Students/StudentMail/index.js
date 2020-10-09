@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     flexWrap: "wrap",
     listStyle: "none",
@@ -50,18 +51,18 @@ export default function StudentMail(props) {
   const [open, setOpen] = useState(false);
   const [emails, setEmails] = useState([]);
   useEffect(() => {
-    if(selected.length===0) props.history.goBack()
+    if (selected.length === 0) props.history.goBack()
 
     selected.map((item) => {
       setEmails((emails) => emails.concat(item.Email));
     });
-    return () => {};
-  }, []); 
+    return () => { };
+  }, []);
 
   const handleDelete = (email) => {
     console.log(email)
     setEmails((chips) => chips.filter((chip) => chip !== email));
-    if(emails.length===0) props.history.goBack()
+    if (emails.length === 0) props.history.goBack()
   };
   const sendEmail = async (emails, values) => {
     setLoading(true);
@@ -92,7 +93,7 @@ export default function StudentMail(props) {
     if (reason === "clickaway") {
       return;
     }
-setOpen(false)
+    setOpen(false)
     setComplete(false);
   };
   const formik = useFormik({
@@ -170,7 +171,7 @@ setOpen(false)
             variant="contained"
             color="primary"
             type="submit"
-            disabled={loading || emails.length<1}
+            disabled={loading || emails.length < 1}
           >
             send
           </Button>
