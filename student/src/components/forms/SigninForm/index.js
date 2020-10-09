@@ -105,7 +105,7 @@ const SigninForm = ({ onSubmit }) => {
                 errors,
             }) => (
                 <Form ref={formRef} noValidate onSubmit={handleSubmit}>
-                    {renderAlert(errors, touched)}
+                    {/* {renderAlert(errors, touched)} */}
 
                     <Form.Group controlId='formBasicEmail'>
                         <Form.Label className={styles.label222}>
@@ -118,6 +118,8 @@ const SigninForm = ({ onSubmit }) => {
                             onChange={handleChange}
                             type='email'
                             required
+                            placeholder='Email'
+
                         />
                         <Form.Control.Feedback
                             className={styles.invalid}

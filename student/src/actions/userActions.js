@@ -26,7 +26,7 @@ import {
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
-const BASE_URL = 'http://2ec8c8822c9b.ngrok.io';
+const BASE_URL = 'http://ef536af0ccd0.ngrok.io';
 
 const getUserInfo = () => async (dispatch, getState) => {
     try {
