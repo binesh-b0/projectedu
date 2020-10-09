@@ -15,6 +15,7 @@ import {
     Create,
 } from '@material-ui/icons';
 import styles from './sidepanel.module.css';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     nested: {
@@ -38,7 +39,7 @@ const SidePanel = () => {
     return (
         <div className={styles.container}>
             <List component='nav' aria-labelledby='nested-list-subheader'>
-                <ListItem button className={styleClasses.listItem}>
+                <ListItem button className={styleClasses.listItem} component={"/home" && Link} to='/home' >
                     <ListItemIcon>
                         <Dashboard className={styleClasses.icon} />
                     </ListItemIcon>

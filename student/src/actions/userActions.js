@@ -26,7 +26,7 @@ import {
 } from '../constants/userConstants';
 import { setCredentials, removeCredentials } from '../services/authService';
 
-const BASE_URL = 'http://2a7ba3d5d49c.ngrok.io';
+const BASE_URL = 'http://2ec8c8822c9b.ngrok.io';
 
 const getUserInfo = () => async (dispatch, getState) => {
     try {
@@ -36,10 +36,8 @@ const getUserInfo = () => async (dispatch, getState) => {
             url,
             method: 'GET',
             headers: {
-                Authorization:
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjQ4LCJpYXQiOjE2MDE1NTUxNTJ9.a77ii7J2K4DfprIK0OwxYaxoQVy4OQ6wNM_h4xnQy1E', //`Bearer ${getCredentials()}`,
-                'Content-Type': 'multipart/form-data',
-                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${getCredentials()}`,
             },
         };
 

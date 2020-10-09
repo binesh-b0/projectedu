@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { GuardProvider, GuardedRoute } from 'react-router-guards';
 import { NotFound } from '../pages';
 import { requireLogin, waitOneSecond } from './guards';
@@ -13,7 +13,8 @@ const Router = () => {
     return (
         <BrowserRouter>
             <GuardProvider guards={GLOBAL_GUARDS} error={NotFound}>
-                <Switch>
+                <Switch> 
+                    <Redirect exact path='/' to="/home" />
                     {routes.map(
                         (
                             {

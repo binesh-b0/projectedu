@@ -1,11 +1,10 @@
-import { Home, NotFound, Signin, Signup, Verify, Register } from '../pages';
+import { Dashboard, NotFound, Signin, Signup, Verify, Register } from '../pages';
 import { AUTH_ONLY } from './types';
 
 export default () => [
     {
-        path: '/',
-        exact: true,
-        component: Home,
+        path: '/home',
+        component: Dashboard,
 
         meta: {
             [AUTH_ONLY]: true,
