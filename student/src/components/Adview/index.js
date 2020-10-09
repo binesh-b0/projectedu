@@ -29,39 +29,40 @@ export default function Adview({ item }) {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+    {console.log("item",item)}
+      <Paper className={classes.paper} variant="outlined">
         <Typography className={classes.title} color="secondary">Jobs of the week</Typography>
         <Grid container direction="row">
           <Grid item xs>
           <Grid container direction="row">
             <Typography className={classes.label}>Company Name :</Typography>
-            <Typography className={classes.value}>{item.company}</Typography>
+            <Typography className={classes.value}>{item.CompanyName}</Typography>
           </Grid>
           <Grid container direction="row">
             <Typography className={classes.label}>Designation :</Typography>
-            <Typography className={classes.value}>{item.designation}</Typography>
+            <Typography className={classes.value}>{item.Designation}</Typography>
             </Grid>
             <Grid container direction="row">
             <Typography className={classes.label}>Experience :</Typography>
-            <Typography className={classes.value}>{item.exp}</Typography>
+            <Typography className={classes.value}>{item.Experience}</Typography>
             </Grid>
             <Grid container direction="row">
             <Typography className={classes.label}>Domain :</Typography>
-            <Typography className={classes.value}>{item.domain}</Typography>
+            <Typography className={classes.value}>{item.Domain}</Typography>
             </Grid>
           </Grid>
           <Grid item xs>
           <Grid container direction="row">
             <Typography className={classes.label}>Phone no. :</Typography>
-            <Typography className={classes.value}>{item.phone}</Typography>
+            <Typography className={classes.value}>{item.PhoneNo}</Typography>
             </Grid>
             <Grid container direction="row">
             <Typography className={classes.label}>Email :</Typography>
-            <Typography className={classes.value}>{item.email}</Typography>
+            <Typography className={classes.value}>{item.Email}</Typography>
             </Grid>
             <Grid container direction="row">
             <Typography className={classes.label}>Skills :</Typography>
-            <Typography className={classes.value}>{item.skills}</Typography>
+            <Typography className={classes.value}>{item.Skills}</Typography>
             </Grid>
           </Grid>
         </Grid>

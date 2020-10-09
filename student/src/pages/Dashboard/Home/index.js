@@ -8,12 +8,31 @@ import UpcomingExamTable from "../../../components/UpcomingExamsTable";
 import Adview from "../../../components/Adview";
 import { connect } from "react-redux";
 import { getUpcommingExams, getUserInfo } from "../../../actions/userActions";
+import api from "../../../api/api";
+import { getCredentials } from "../../../services/authService";
 
 const DashboardHome = ({ getExams, exams, profileInfo, getUserInfo }) => {
   useEffect(() => {
     getExams();
     getUserInfo();
+    getAds();
   }, []);
+  const [item, setItem] = useState([])
+  const getAds = async () => {
+    try {
+      const { data } = await api.post(
+        "/getTextAd",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getCredentials()}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setItem(data.response.adZone1[data.response.adZone1.length -1])
+    } catch (err) {}
+  };
 
   if (Object.keys(profileInfo).length === 0) return null;
 
@@ -40,18 +59,22 @@ const DashboardHome = ({ getExams, exams, profileInfo, getUserInfo }) => {
       <Row>
         {/* <p className={styles.subHeadings}>Upcoming Exams</p> */}
         <Col>
+        {item && (
+
           <Adview
-            item={{
-              company: "TCS Karappakom Chennai",
-              designation: "Junior PHP deeveloper",
-              exp:"0-2 years",
-              domain:"IT",
-              phone:"134651231",
-              email:"test@email.com",
-              skills:"PHP,Web development",
-            }}
+            // item={{
+            //   company: "TCS Karappakom Chennai",
+            //   designation: "Junior PHP deeveloper",
+            //   exp: "0-2 years",
+            //   domain: "IT",
+            //   phone: "134651231",
+            //   email: "test@email.com",
+            //   skills: "PHP,Web development",
+            // }}
+            item={item}
             style={{ marginTop: "16px" }}
           />
+        )}
           <UpcomingExamTable data={exams} />
         </Col>
       </Row>
